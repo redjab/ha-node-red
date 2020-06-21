@@ -1,8 +1,10 @@
 {
     "name": "nodered",
-    "description": "A Node-RED Project",
+    "description": "A Home Assistant Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-home-assistant-websocket": "0.22.3"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
