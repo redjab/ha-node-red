@@ -329,7 +329,7 @@
         "env": [
             {
                 "name": "notification",
-                "value": "{\"title\":\"\",\"message\":\"⛅ It stopped raining\",\"data\":{\"tag\":\"weather.rain.stop\",\"priority\":\"normal\",\"ttl\":0}}",
+                "value": "{\"title\":\"Weather\",\"message\":\"⛅ It stopped raining\",\"data\":{\"tag\":\"weather.rain.stop\",\"priority\":\"normal\",\"ttl\":0}}",
                 "type": "json"
             },
             {
@@ -380,7 +380,7 @@
         "env": [
             {
                 "name": "notification",
-                "value": "{\"title\":\"\",\"message\":\"🌧️ It might be raining\",\"data\":{\"tag\":\"weather.rain.start\",\"priority\":\"high\",\"ttl\":0}}",
+                "value": "{\"title\":\"Weather\",\"message\":\"🌧️ It might be raining\",\"data\":{\"tag\":\"weather.rain.start\",\"priority\":\"high\",\"ttl\":0}}",
                 "type": "json"
             },
             {
@@ -421,7 +421,7 @@
         "env": [
             {
                 "name": "notification",
-                "value": "{\"title\":\"\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
+                "value": "{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
                 "type": "json"
             },
             {
@@ -544,6 +544,201 @@
         "mustacheAltTags": false,
         "x": 620,
         "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86155ad9.0e3948",
+        "type": "trigger-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Returning -> idle",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "vacuum.roborock",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "h1ngdedqwxn",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "idle"
+            },
+            {
+                "id": "b1079kse1vh",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "propertyValue": "old_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "returning"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "x": 120,
+        "y": 500,
+        "wires": [
+            [
+                "757b6e2f.9ab07"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "757b6e2f.9ab07",
+        "type": "counter",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": "1",
+        "x": 320,
+        "y": 500,
+        "wires": [
+            [
+                "3a0ece42.9ee4a2"
+            ]
+        ]
+    },
+    {
+        "id": "ae0bccbd.b0688",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "Reset per hour",
+        "topic": "",
+        "payload": "{\"reset\":true}",
+        "payloadType": "json",
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 560,
+        "wires": [
+            [
+                "757b6e2f.9ab07"
+            ]
+        ]
+    },
+    {
+        "id": "3a0ece42.9ee4a2",
+        "type": "switch",
+        "z": "d9fe96b5.8701c8",
+        "name": "Counter > 2",
+        "property": "payload.count",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "a757987a.0ac398",
+                "cd020188.01388"
+            ]
+        ]
+    },
+    {
+        "id": "a757987a.0ac398",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum could not return to dock\",\"data\":{\"tag\":\"\",\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}",
+                "type": "json"
+            },
+            {
+                "name": "message",
+                "value": "🧹️ ⚠️ Vacuum in error state",
+                "type": "str"
+            },
+            {
+                "name": "log.name",
+                "value": "Roborock (Node Red)",
+                "type": "str"
+            },
+            {
+                "name": "log.entity_id",
+                "value": "vacuum.roborock",
+                "type": "str"
+            },
+            {
+                "name": "log.message",
+                "value": "notified error",
+                "type": "str"
+            },
+            {
+                "name": "log_name",
+                "value": "Weather (Node Red)",
+                "type": "str"
+            },
+            {
+                "name": "log_message",
+                "value": "notified rain stopped",
+                "type": "str"
+            }
+        ],
+        "x": 680,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "cd020188.01388",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Stop vacuum",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "vacuum",
+        "service": "stop",
+        "entityId": "vacuum.roborock",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 670,
+        "y": 560,
         "wires": [
             []
         ]
