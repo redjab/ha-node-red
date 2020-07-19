@@ -611,8 +611,8 @@
         "name": "",
         "init": "0",
         "step": "1",
-        "lower": null,
-        "upper": null,
+        "lower": "",
+        "upper": "",
         "mode": "increment",
         "outputs": "1",
         "x": 320,
@@ -630,11 +630,9 @@
         "name": "Reset per hour",
         "props": [
             {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
+                "p": "reset",
+                "v": "true",
+                "vt": "bool"
             }
         ],
         "repeat": "3600",
@@ -642,8 +640,6 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"reset\":true}",
-        "payloadType": "json",
         "x": 120,
         "y": 560,
         "wires": [
@@ -796,10 +792,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "reset",
                 "pt": "msg",
-                "to": "{\"reset\":true}",
-                "tot": "str"
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
