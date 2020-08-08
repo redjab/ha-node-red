@@ -815,42 +815,6 @@
         "wires": []
     },
     {
-        "id": "efa9a7e6.005a28",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Get home",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "binary_sensor.minh_home",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 100,
-        "y": 740,
-        "wires": [
-            [
-                "221dbd01.cfcc72"
-            ],
-            []
-        ]
-    },
-    {
         "id": "221dbd01.cfcc72",
         "type": "subflow:670bc302.cb732c",
         "z": "d9fe96b5.8701c8",
@@ -983,5 +947,61 @@
         "x": 120,
         "y": 700,
         "wires": []
+    },
+    {
+        "id": "83569a96.d150f8",
+        "type": "trigger-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Get home",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.minh_home",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "josb7w1otd",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "True"
+            },
+            {
+                "id": "bcqqpcgvs1",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "propertyValue": "old_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "False"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "x": 100,
+        "y": 740,
+        "wires": [
+            [
+                "221dbd01.cfcc72"
+            ],
+            []
+        ]
     }
 ]
