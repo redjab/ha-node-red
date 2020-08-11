@@ -21,6 +21,13 @@
         "info": ""
     },
     {
+        "id": "9889ef6.6e2771",
+        "type": "tab",
+        "label": "Event listeners",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -1002,6 +1009,218 @@
                 "221dbd01.cfcc72"
             ],
             []
+        ]
+    },
+    {
+        "id": "2faaed33.b1c292",
+        "type": "server-events",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "event_type": "homeassistant_start",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "8d434d29.85a88"
+            ]
+        ]
+    },
+    {
+        "id": "8d434d29.85a88",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Set noctis theme",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "frontend",
+        "service": "set_theme",
+        "entityId": "",
+        "data": "{\"name\":\"noctis\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a99c435.39e9ec",
+        "type": "inject",
+        "z": "e2c67c6c.68265",
+        "name": "9 PM everyday",
+        "props": [],
+        "repeat": "",
+        "crontab": "00 21 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 260,
+        "wires": [
+            [
+                "c1faf23d.8072d"
+            ]
+        ]
+    },
+    {
+        "id": "c1faf23d.8072d",
+        "type": "subflow:670bc302.cb732c",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Watering\",\"message\":\"🌿 Don't forget to water the herbs!\",\"data\":{\"tag\":\"plant.reminder\"}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Plant watering reminder\",\"message\":\"reminded water plants\",\"domain\":\"notify\"}",
+                "type": "json"
+            }
+        ],
+        "x": 320,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f848aa1a.681a98",
+        "type": "comment",
+        "z": "e2c67c6c.68265",
+        "name": "Reminder to water herbs",
+        "info": "",
+        "x": 150,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ddad8919.724b68",
+        "type": "server-events",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "event_type": "call_service",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "e6aad269.ff5ad"
+            ]
+        ]
+    },
+    {
+        "id": "9d20323.83cacd",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Update state",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "homeassistant",
+        "service": "update_entity",
+        "entityId": "switch.living_room_light",
+        "data": "{ \"entity_id\": \"switch.living_room_light\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 870,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6aad269.ff5ad",
+        "type": "function",
+        "z": "9889ef6.6e2771",
+        "name": "Living Room Light Toggle",
+        "func": "if (msg.payload.event.service_data.entity_id === 'switch.living_room_light' && msg.payload.event.domain === 'switch') {\n    return { payload: true };\n}\nreturn { payload: false };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "dd5dfbbd.bbbf28"
+            ]
+        ]
+    },
+    {
+        "id": "dd5dfbbd.bbbf28",
+        "type": "switch",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "7762f7b.23ab408"
+            ]
+        ]
+    },
+    {
+        "id": "7762f7b.23ab408",
+        "type": "delay",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "500",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "9d20323.83cacd"
+            ]
         ]
     }
 ]
