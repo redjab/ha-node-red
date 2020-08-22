@@ -39,24 +39,13 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "84ad30fc.48f4e"
+                        "id": "5a2b4568.2d2c5c"
                     }
                 ]
             }
         ],
         "out": [],
-        "env": [
-            {
-                "name": "notification",
-                "type": "json",
-                "value": "{\"title\":\"\",\"message\":\"\",\"data\":{\"tag\":\"\",\"priority\":\"normal\",\"ttl\":0}}"
-            },
-            {
-                "name": "log",
-                "type": "json",
-                "value": "{\"name\":\"\",\"entity_id\":\"\",\"message\":\"\",\"domain\":\"notify\"}"
-            }
-        ],
+        "env": [],
         "color": "#DDAA99"
     },
     {
@@ -112,7 +101,7 @@
         "y": 100,
         "wires": [
             [
-                "f5b4874.c820978"
+                "27015fcf.eaa1e"
             ],
             []
         ]
@@ -226,7 +215,7 @@
         "y": 420,
         "wires": [
             [
-                "35e31cc.f48d0e4"
+                "d46beef9.4f088"
             ],
             []
         ]
@@ -282,56 +271,8 @@
         "y": 180,
         "wires": [
             [
-                "442ab0e0.9b202"
+                "228dd1fe.a262ce"
             ],
-            []
-        ]
-    },
-    {
-        "id": "84ad30fc.48f4e",
-        "type": "api-call-service",
-        "z": "670bc302.cb732c",
-        "name": "Notify HA apps",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": true,
-        "service_domain": "notify",
-        "service": "all_phone_app",
-        "entityId": "",
-        "data": "$env('notification')",
-        "dataType": "jsonata",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 240,
-        "y": 100,
-        "wires": [
-            [
-                "771ce7d6.d75c18"
-            ]
-        ]
-    },
-    {
-        "id": "771ce7d6.d75c18",
-        "type": "api-call-service",
-        "z": "670bc302.cb732c",
-        "name": "Log",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "logbook",
-        "service": "log",
-        "entityId": "",
-        "data": "$env('log')",
-        "dataType": "jsonata",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 450,
-        "y": 100,
-        "wires": [
             []
         ]
     },
@@ -352,7 +293,7 @@
                 "type": "json"
             }
         ],
-        "x": 300,
+        "x": 480,
         "y": 180,
         "wires": []
     },
@@ -373,7 +314,7 @@
                 "type": "json"
             }
         ],
-        "x": 300,
+        "x": 480,
         "y": 100,
         "wires": []
     },
@@ -394,7 +335,7 @@
                 "type": "json"
             }
         ],
-        "x": 340,
+        "x": 480,
         "y": 420,
         "wires": []
     },
@@ -499,246 +440,13 @@
         ]
     },
     {
-        "id": "86155ad9.0e3948",
-        "type": "trigger-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Returning -> idle",
-        "server": "3efaa203.1c443e",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityid": "vacuum.roborock",
-        "entityidfiltertype": "exact",
-        "debugenabled": false,
-        "constraints": [
-            {
-                "id": "h1ngdedqwxn",
-                "targetType": "this_entity",
-                "targetValue": "",
-                "propertyType": "current_state",
-                "propertyValue": "new_state.state",
-                "comparatorType": "is",
-                "comparatorValueDatatype": "str",
-                "comparatorValue": "idle"
-            },
-            {
-                "id": "b1079kse1vh",
-                "targetType": "this_entity",
-                "targetValue": "",
-                "propertyType": "previous_state",
-                "propertyValue": "old_state.state",
-                "comparatorType": "is",
-                "comparatorValueDatatype": "str",
-                "comparatorValue": "returning"
-            }
-        ],
-        "constraintsmustmatch": "all",
-        "outputs": 2,
-        "customoutputs": [],
-        "outputinitially": false,
-        "state_type": "str",
-        "x": 120,
-        "y": 500,
-        "wires": [
-            [
-                "757b6e2f.9ab07"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "757b6e2f.9ab07",
-        "type": "counter",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "init": "0",
-        "step": "1",
-        "lower": "",
-        "upper": "",
-        "mode": "increment",
-        "outputs": "1",
-        "x": 320,
-        "y": 500,
-        "wires": [
-            [
-                "3a0ece42.9ee4a2"
-            ]
-        ]
-    },
-    {
-        "id": "ae0bccbd.b0688",
-        "type": "inject",
-        "z": "d9fe96b5.8701c8",
-        "name": "Reset per hour",
-        "props": [
-            {
-                "p": "reset",
-                "v": "true",
-                "vt": "bool"
-            }
-        ],
-        "repeat": "3600",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 120,
-        "y": 560,
-        "wires": [
-            [
-                "757b6e2f.9ab07"
-            ]
-        ]
-    },
-    {
-        "id": "3a0ece42.9ee4a2",
-        "type": "switch",
-        "z": "d9fe96b5.8701c8",
-        "name": "Counter >= 2",
-        "property": "count",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gte",
-                "v": "2",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 490,
-        "y": 500,
-        "wires": [
-            [
-                "a757987a.0ac398",
-                "cd020188.01388"
-            ]
-        ]
-    },
-    {
-        "id": "a757987a.0ac398",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum could not return to dock\",\"data\":{\"tag\":\"vaccuum.error.cannot_return\",\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified cannot return to dock\",\"domain\":\"notify\"}",
-                "type": "json"
-            }
-        ],
-        "x": 680,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "cd020188.01388",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Stop vacuum",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "vacuum",
-        "service": "pause",
-        "entityId": "vacuum.roborock",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 670,
-        "y": 560,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "3f169e74.4b1ff2",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Docked",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "vacuum.roborock",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "docked",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 90,
-        "y": 620,
-        "wires": [
-            [
-                "38efc85c.2a0738"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "38efc85c.2a0738",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "Reset",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 210,
-        "y": 620,
-        "wires": [
-            [
-                "757b6e2f.9ab07"
-            ]
-        ]
-    },
-    {
         "id": "3ea02219.60e39e",
         "type": "inject",
         "z": "e2c67c6c.68265",
-        "name": "9 PM Wednesday",
+        "name": "8 PM Wednesday",
         "props": [],
         "repeat": "",
-        "crontab": "00 21 * * 3",
+        "crontab": "00 20 * * 3",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -746,7 +454,7 @@
         "y": 100,
         "wires": [
             [
-                "5cad1124.07924"
+                "e6e88d4e.59b0e"
             ]
         ]
     },
@@ -767,7 +475,7 @@
                 "type": "json"
             }
         ],
-        "x": 320,
+        "x": 580,
         "y": 100,
         "wires": []
     },
@@ -788,7 +496,7 @@
         "name": "4 PM Thursday",
         "props": [],
         "repeat": "",
-        "crontab": "00 21 * * 3",
+        "crontab": "00 16 * * 4",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -796,7 +504,7 @@
         "y": 160,
         "wires": [
             [
-                "a73fc1db.8105"
+                "e3a8c10d.9e079"
             ]
         ]
     },
@@ -817,7 +525,7 @@
                 "type": "json"
             }
         ],
-        "x": 320,
+        "x": 580,
         "y": 160,
         "wires": []
     },
@@ -838,8 +546,8 @@
                 "type": "json"
             }
         ],
-        "x": 280,
-        "y": 740,
+        "x": 500,
+        "y": 560,
         "wires": []
     },
     {
@@ -916,10 +624,10 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 110,
-        "y": 820,
+        "y": 640,
         "wires": [
             [
-                "82e5cfd.7e9fd3"
+                "cacdd83b.903998"
             ],
             []
         ]
@@ -941,8 +649,8 @@
                 "type": "json"
             }
         ],
-        "x": 280,
-        "y": 820,
+        "x": 500,
+        "y": 640,
         "wires": []
     },
     {
@@ -952,7 +660,7 @@
         "name": "Get/ leave home",
         "info": "",
         "x": 120,
-        "y": 700,
+        "y": 520,
         "wires": []
     },
     {
@@ -1003,38 +711,12 @@
         "outputinitially": false,
         "state_type": "str",
         "x": 100,
-        "y": 740,
+        "y": 560,
         "wires": [
             [
-                "221dbd01.cfcc72"
+                "35bc2563.b521fa"
             ],
             []
-        ]
-    },
-    {
-        "id": "2faaed33.b1c292",
-        "type": "server-events",
-        "z": "9889ef6.6e2771",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "event_type": "homeassistant_start",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "x": 140,
-        "y": 60,
-        "wires": [
-            [
-                "8d434d29.85a88"
-            ]
         ]
     },
     {
@@ -1054,7 +736,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 410,
+        "x": 310,
         "y": 60,
         "wires": [
             []
@@ -1064,10 +746,10 @@
         "id": "a99c435.39e9ec",
         "type": "inject",
         "z": "e2c67c6c.68265",
-        "name": "9 PM everyday",
+        "name": "8 PM everyday",
         "props": [],
         "repeat": "",
-        "crontab": "00 21 * * *",
+        "crontab": "00 20 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -1075,7 +757,7 @@
         "y": 260,
         "wires": [
             [
-                "c1faf23d.8072d"
+                "a349aaf7.243f98"
             ]
         ]
     },
@@ -1096,7 +778,7 @@
                 "type": "json"
             }
         ],
-        "x": 320,
+        "x": 580,
         "y": 260,
         "wires": []
     },
@@ -1114,6 +796,7 @@
         "id": "ddad8919.724b68",
         "type": "server-events",
         "z": "9889ef6.6e2771",
+        "d": true,
         "name": "",
         "server": "3efaa203.1c443e",
         "event_type": "call_service",
@@ -1128,6 +811,7 @@
                 "value": ""
             }
         ],
+        "waitForRunning": true,
         "x": 110,
         "y": 140,
         "wires": [
@@ -1220,6 +904,684 @@
         "wires": [
             [
                 "9d20323.83cacd"
+            ]
+        ]
+    },
+    {
+        "id": "c10ad374.4a6cd",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "USPS Delivered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.mail_usps_delivered",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "0",
+        "halt_if_type": "num",
+        "halt_if_compare": "gt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 780,
+        "wires": [
+            [
+                "b60867ef.dba148"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4257a54c.c5696c",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "UPS Delivered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.mail_ups_delivered",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "0",
+        "halt_if_type": "num",
+        "halt_if_compare": "gt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 840,
+        "wires": [
+            [
+                "230417ea.7965a8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7a0839f3.3014a8",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Fedex Delivered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.mail_fedex_delivered",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "0",
+        "halt_if_type": "num",
+        "halt_if_compare": "gt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 900,
+        "wires": [
+            [
+                "b43bd907.3ae248"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "601b8ab1.27f8e4",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Mails & Packages\",\"message\":\"📦 New package(s) delivered \",\"data\":{\"tag\":\"package.delivered\",\"priority\":\"high\",\"ttl\":0}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Mail/package (Node Red)\",\"entity_id\":\"sensor.mail_packages_delivered\",\"message\":\"notified delivered\",\"domain\":\"notify\"}",
+                "type": "json"
+            }
+        ],
+        "x": 720,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "b60867ef.dba148",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"count\": $$.data.new_state.state - $$.data.old_state.state, \"carrier\": \"USPS\" }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "ec5c4d8e.e2185"
+            ]
+        ]
+    },
+    {
+        "id": "230417ea.7965a8",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"count\": $$.data.new_state.state - $$.data.old_state.state, \"carrier\": \"UPS\" }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 840,
+        "wires": [
+            [
+                "ec5c4d8e.e2185"
+            ]
+        ]
+    },
+    {
+        "id": "b43bd907.3ae248",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"count\": $$.data.new_state.state - $$.data.old_state.state, \"carrier\": \"Fedex\" }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 900,
+        "wires": [
+            [
+                "ec5c4d8e.e2185"
+            ]
+        ]
+    },
+    {
+        "id": "257351ca.c2b3be",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "New package(s) delivered",
+        "info": "",
+        "x": 150,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "68cc1ff9.b3b1e",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "USPS Mail Coming Today",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.mail_usps_mail",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "0",
+        "halt_if_type": "num",
+        "halt_if_compare": "gt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 1040,
+        "wires": [
+            [
+                "13ac7cce.77c6e3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "15739cae.559ee3",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Mails & Packages\",\"message\":\"✉️️ New mail(s)coming to mailbox today (around 1 PM) \",\"data\":{\"tag\":\"mail.delivered\",\"priority\":\"high\",\"ttl\":0}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Mail (Node Red)\",\"entity_id\":\"sensor.mail_usps_mail\",\"message\":\"notified delivered\",\"domain\":\"notify\"}",
+                "type": "json"
+            }
+        ],
+        "x": 580,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "e2f0473b.d22fe8",
+        "type": "inject",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "8d434d29.85a88"
+            ]
+        ]
+    },
+    {
+        "id": "7434d2eb.da0c3c",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Amazon Delivered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.mail_amazon_packages_delivered",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "0",
+        "halt_if_type": "num",
+        "halt_if_compare": "gt",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 960,
+        "wires": [
+            [
+                "91d7fb52.d922d8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "91d7fb52.d922d8",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"count\": $$.data.new_state.state - $$.data.old_state.state, \"carrier\": \"Amazon\" }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 960,
+        "wires": [
+            [
+                "ec5c4d8e.e2185"
+            ]
+        ]
+    },
+    {
+        "id": "5a2b4568.2d2c5c",
+        "type": "api-call-service",
+        "z": "670bc302.cb732c",
+        "name": "Notify HA apps",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": true,
+        "service_domain": "notify",
+        "service": "all_phone_app",
+        "entityId": "",
+        "data": "$$.payload.notification",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 240,
+        "y": 100,
+        "wires": [
+            [
+                "8495431f.f4f32"
+            ]
+        ]
+    },
+    {
+        "id": "8495431f.f4f32",
+        "type": "api-call-service",
+        "z": "670bc302.cb732c",
+        "name": "Log",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "logbook",
+        "service": "log",
+        "entityId": "",
+        "data": "$$.payload.log",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": true,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec5c4d8e.e2185",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "func": "return {\n    \"payload\": {\n        \"notification\":\n        {\n            \"title\":\"Mails & Packages\",\n            \"message\":`📦 ${msg.payload.count} New package(s) from ${msg.payload.carrier} delivered`,\n            \"data\": {\n                \"tag\":\"package.delivered\",\n                \"priority\":\"high\",\n                \"ttl\":0\n            }\n        },\n        \"log\": {\n            \"name\": msg.payload.carrier,\n            \"entity_id\":\"sensor.mail_usps_mail\",\n            \"message\":\"notified delivered\",\n            \"domain\":\"notify\"\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 540,
+        "y": 840,
+        "wires": [
+            [
+                "601b8ab1.27f8e4"
+            ]
+        ]
+    },
+    {
+        "id": "cacdd83b.903998",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Home\",\"message\":\"Are you leaving?\",\"data\":{\"tag\":\"tracker.away\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close garage\",\"action\":\"notification.garage.close\"}]}},\"log\":{\"name\":\"Phone_M (Node Red)\",\"entity_id\":\"device_tracker.phone_m\",\"message\":\"notified leaving home\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 640,
+        "wires": [
+            [
+                "82e5cfd.7e9fd3"
+            ]
+        ]
+    },
+    {
+        "id": "228dd1fe.a262ce",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Weather\",\"message\":\"⛅ It stopped raining\",\"data\":{\"tag\":\"weather.rain.stop\",\"priority\":\"normal\",\"ttl\":0}},\"log\":{\"name\":\"Weather (Node Red)\",\"entity_id\":\"weather.kpvu_hourly\",\"message\":\"notified rain stopped\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "442ab0e0.9b202"
+            ]
+        ]
+    },
+    {
+        "id": "27015fcf.eaa1e",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Weather\",\"message\":\"🌧️ It might be raining\",\"data\":{\"tag\":\"weather.rain.start\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Weather (Node Red)\",\"entity_id\":\"weather.kpvu_hourly\",\"message\":\"notified rain\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "f5b4874.c820978"
+            ]
+        ]
+    },
+    {
+        "id": "35bc2563.b521fa",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Home\",\"message\":\"Are you home?\",\"data\":{\"tag\":\"tracker.home\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Open garage\",\"action\":\"notification.garage.open\"}]}},\"log\":{\"name\":\"Phone_M (Node Red)\",\"entity_id\":\"device_tracker.phone_m\",\"message\":\"notified getting home\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 560,
+        "wires": [
+            [
+                "221dbd01.cfcc72"
+            ]
+        ]
+    },
+    {
+        "id": "d46beef9.4f088",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"vacuum.error\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}},\"log\":{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "35e31cc.f48d0e4"
+            ]
+        ]
+    },
+    {
+        "id": "13ac7cce.77c6e3",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Mails & Packages\",\"message\":\"✉️ New mail(s) coming today (around 1 PM)\",\"data\":{\"tag\":\"mail.coming\"}},\"log\":{\"name\":\"msg.payload\",\"entity_id\":\"sensor.mail_usps_mail\",\"message\":\"notified coming today\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 1040,
+        "wires": [
+            [
+                "15739cae.559ee3"
+            ]
+        ]
+    },
+    {
+        "id": "e6e88d4e.59b0e",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Trash day\",\"message\":\"🗑Don't forget to take the trash out!\",\"data\":{\"tag\":\"trash.reminder\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Trash day reminder\",\"message\":\"reminded to take trash out\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "5cad1124.07924"
+            ]
+        ]
+    },
+    {
+        "id": "e3a8c10d.9e079",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"After trash day\",\"message\":\"🗑Don't forget to take the trash IN!\",\"data\":{\"tag\":\"trash.reminder\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Trash day reminder\",\"message\":\"reminded to take trash IN\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "a73fc1db.8105"
+            ]
+        ]
+    },
+    {
+        "id": "a349aaf7.243f98",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Watering\",\"message\":\"🌿 Don't forget to water the herbs!\",\"data\":{\"tag\":\"plant.reminder\"}},\"log\":{\"name\":\"Plant watering reminder\",\"message\":\"reminded water plants\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 260,
+        "wires": [
+            [
+                "c1faf23d.8072d"
             ]
         ]
     }
