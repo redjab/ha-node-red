@@ -1615,7 +1615,7 @@
         "y": 1180,
         "wires": [
             [
-                "f33e2978.d2d158"
+                "850099cd.2a80e8"
             ],
             []
         ]
@@ -1639,15 +1639,13 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 510,
-        "y": 1240,
+        "x": 330,
+        "y": 1180,
         "wires": [
             [
-                "36b728b3.a353a8"
+                "f33e2978.d2d158"
             ],
-            [
-                "c18c5894.0ea148"
-            ]
+            []
         ]
     },
     {
@@ -1668,7 +1666,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "light.living_room",
+        "entityidfilter": "media_player.living_room_tv",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -1727,7 +1725,7 @@
         "y": 1320,
         "wires": [
             [
-                "1e464e19.dc8ed2"
+                "206210f1.2395d"
             ]
         ]
     },
@@ -1748,8 +1746,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 760,
-        "y": 1340,
+        "x": 720,
+        "y": 1320,
         "wires": [
             []
         ]
@@ -1763,35 +1761,6 @@
         "x": 220,
         "y": 1120,
         "wires": []
-    },
-    {
-        "id": "1e464e19.dc8ed2",
-        "type": "switch",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "false"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 370,
-        "y": 1320,
-        "wires": [
-            [
-                "850099cd.2a80e8"
-            ],
-            [
-                "c18c5894.0ea148"
-            ]
-        ]
     },
     {
         "id": "36b728b3.a353a8",
@@ -1812,35 +1781,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 710,
-        "y": 1220,
-        "wires": [
-            [
-                "d3b259b7.fccef8"
-            ]
-        ]
-    },
-    {
-        "id": "c18c5894.0ea148",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "Brightness null",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "null",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 720,
-        "y": 1260,
+        "x": 530,
+        "y": 1320,
         "wires": [
             [
                 "d3b259b7.fccef8"
@@ -1936,6 +1878,33 @@
             [
                 "d3b259b7.fccef8"
             ]
+        ]
+    },
+    {
+        "id": "206210f1.2395d",
+        "type": "switch",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 370,
+        "y": 1320,
+        "wires": [
+            [
+                "36b728b3.a353a8"
+            ],
+            []
         ]
     }
 ]
