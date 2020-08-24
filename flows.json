@@ -1676,7 +1676,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 90,
-        "y": 1240,
+        "y": 1300,
         "wires": [
             [
                 "f33e2978.d2d158"
@@ -1688,45 +1688,28 @@
         "id": "f33e2978.d2d158",
         "type": "api-current-state",
         "z": "d9fe96b5.8701c8",
-        "name": "Sun",
+        "name": "After dark? (-1 hour offset)",
         "server": "3efaa203.1c443e",
         "version": 1,
-        "outputs": 1,
-        "halt_if": "",
+        "outputs": 2,
+        "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
-        "entity_id": "sun.sun",
+        "entity_id": "input_boolean.after_dark_offset",
         "state_type": "str",
         "state_location": "payload",
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 310,
-        "y": 1240,
+        "x": 540,
+        "y": 1180,
         "wires": [
             [
-                "98f13ae0.e632b8"
-            ]
-        ]
-    },
-    {
-        "id": "98f13ae0.e632b8",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "After dark? (offset -1 hour)",
-        "func": "if (msg.payload === 'below_horizon') {\n    return { payload: true };\n} else {\n    const duskTime = msg.data.attributes.next_dusk;\n    const offset = new Date(duskTime).getTime() - 1*60*60*1000;\n    return { payload: new Date(offset) < new Date() }\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 160,
-        "y": 1320,
-        "wires": [
-            [
-                "206210f1.2395d"
-            ]
+                "36b728b3.a353a8"
+            ],
+            []
         ]
     },
     {
@@ -1746,8 +1729,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 720,
-        "y": 1320,
+        "x": 640,
+        "y": 1300,
         "wires": [
             []
         ]
@@ -1781,8 +1764,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
-        "y": 1320,
+        "x": 450,
+        "y": 1300,
         "wires": [
             [
                 "d3b259b7.fccef8"
@@ -1817,7 +1800,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 90,
-        "y": 1400,
+        "y": 1380,
         "wires": [
             [
                 "75fc1d63.768cc4"
@@ -1844,8 +1827,8 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 300,
-        "y": 1400,
+        "x": 260,
+        "y": 1380,
         "wires": [
             [
                 "583192e7.17a02c"
@@ -1872,8 +1855,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 520,
-        "y": 1400,
+        "x": 460,
+        "y": 1380,
         "wires": [
             [
                 "d3b259b7.fccef8"
@@ -1881,28 +1864,37 @@
         ]
     },
     {
-        "id": "206210f1.2395d",
-        "type": "switch",
+        "id": "e80845f5.8c8a68",
+        "type": "server-state-changed",
         "z": "d9fe96b5.8701c8",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
+        "name": "After dark (-1 hour offset)",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
             {
-                "t": "true"
+                "property": "name",
+                "value": ""
             },
             {
-                "t": "false"
+                "property": "icon",
+                "value": ""
             }
         ],
-        "checkall": "true",
-        "repair": false,
+        "entityidfilter": "input_boolean.after_dark_offset",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
         "outputs": 2,
-        "x": 370,
-        "y": 1320,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 1240,
         "wires": [
             [
-                "36b728b3.a353a8"
+                "850099cd.2a80e8"
             ],
             []
         ]
