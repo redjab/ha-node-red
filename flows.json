@@ -9,14 +9,7 @@
     {
         "id": "b88bc227.1b73f",
         "type": "tab",
-        "label": "Listen to mobile actions",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "e2c67c6c.68265",
-        "type": "tab",
-        "label": "Reminders",
+        "label": "Mobile action listeners",
         "disabled": false,
         "info": ""
     },
@@ -24,6 +17,13 @@
         "id": "9889ef6.6e2771",
         "type": "tab",
         "label": "Event listeners",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e2c67c6c.68265",
+        "type": "tab",
+        "label": "Reminders",
         "disabled": false,
         "info": ""
     },
@@ -46,6 +46,43 @@
         ],
         "out": [],
         "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "cfb8073e.876f88",
+        "type": "subflow",
+        "name": "Update light state",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 20,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "b62cc54a.e92368"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [
+            {
+                "name": "entity_id",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "interval",
+                "type": "num",
+                "value": "50"
+            },
+            {
+                "name": "delay",
+                "type": "num",
+                "value": "0"
+            }
+        ],
         "color": "#DDAA99"
     },
     {
@@ -811,98 +848,12 @@
             }
         ],
         "waitForRunning": true,
-        "x": 110,
-        "y": 140,
+        "x": 90,
+        "y": 120,
         "wires": [
             [
-                "e6aad269.ff5ad"
-            ]
-        ]
-    },
-    {
-        "id": "9d20323.83cacd",
-        "type": "api-call-service",
-        "z": "9889ef6.6e2771",
-        "name": "Update state",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "homeassistant",
-        "service": "update_entity",
-        "entityId": "switch.living_room_light",
-        "data": "{ \"entity_id\": \"switch.living_room_light\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 870,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e6aad269.ff5ad",
-        "type": "function",
-        "z": "9889ef6.6e2771",
-        "name": "Living Room Light Toggle",
-        "func": "if (msg.payload.event.service_data.entity_id === 'switch.cabinet_light' && msg.payload.event.domain === 'switch') {\n    return { payload: true };\n}\nreturn { payload: false };",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 350,
-        "y": 140,
-        "wires": [
-            [
-                "dd5dfbbd.bbbf28"
-            ]
-        ]
-    },
-    {
-        "id": "dd5dfbbd.bbbf28",
-        "type": "switch",
-        "z": "9889ef6.6e2771",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 550,
-        "y": 140,
-        "wires": [
-            [
-                "7762f7b.23ab408"
-            ]
-        ]
-    },
-    {
-        "id": "7762f7b.23ab408",
-        "type": "delay",
-        "z": "9889ef6.6e2771",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "500",
-        "timeoutUnits": "milliseconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 710,
-        "y": 140,
-        "wires": [
-            [
-                "9d20323.83cacd"
+                "61d5e76f.eaa9d8",
+                "901be019.50f94"
             ]
         ]
     },
@@ -1640,7 +1591,7 @@
         "override_data": "msg",
         "blockInputOverrides": false,
         "x": 330,
-        "y": 1180,
+        "y": 1200,
         "wires": [
             [
                 "f33e2978.d2d158"
@@ -1703,8 +1654,8 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 540,
-        "y": 1180,
+        "x": 500,
+        "y": 1240,
         "wires": [
             [
                 "36b728b3.a353a8"
@@ -1897,6 +1848,537 @@
                 "850099cd.2a80e8"
             ],
             []
+        ]
+    },
+    {
+        "id": "38735664.29c46a",
+        "type": "server-state-changed",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.cabinet_light",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "6fc54a8c.45b3d4"
+            ]
+        ]
+    },
+    {
+        "id": "ef9ac3fa.d4873",
+        "type": "server-state-changed",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.hallway_light",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 240,
+        "y": 220,
+        "wires": [
+            [
+                "2d5828c1.2bcb68"
+            ]
+        ]
+    },
+    {
+        "id": "bf7a5591.a95cc8",
+        "type": "api-call-service",
+        "z": "cfb8073e.876f88",
+        "name": "Update state",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "homeassistant",
+        "service": "update_entity",
+        "entityId": "",
+        "data": "{ \"entity_id\": $env('entity_id') }",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 730,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2282d523.7b19ca",
+        "type": "function",
+        "z": "cfb8073e.876f88",
+        "name": "Light Toggle",
+        "func": "const entity = env.get('entity_id');\nreturn { \n    payload: msg.payload.event.service_data.entity_id === entity && msg.payload.event.domain === 'switch' \n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 210,
+        "y": 40,
+        "wires": [
+            [
+                "e944a0e9.8f98b"
+            ]
+        ]
+    },
+    {
+        "id": "e944a0e9.8f98b",
+        "type": "switch",
+        "z": "cfb8073e.876f88",
+        "name": "true",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 40,
+        "wires": [
+            [
+                "e60caf73.30a49"
+            ]
+        ]
+    },
+    {
+        "id": "e79da058.cfc2f",
+        "type": "trigger",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-50",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 470,
+        "y": 320,
+        "wires": [
+            [
+                "bf7a5591.a95cc8",
+                "18d7822a.92842e"
+            ]
+        ]
+    },
+    {
+        "id": "1241bdd8.2da8c2",
+        "type": "change",
+        "z": "cfb8073e.876f88",
+        "name": "Reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "18d7822a.92842e",
+                "46f4751b.1d84fc"
+            ]
+        ]
+    },
+    {
+        "id": "18d7822a.92842e",
+        "type": "counter",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": "1",
+        "x": 600,
+        "y": 520,
+        "wires": [
+            [
+                "48443e86.5bc42"
+            ]
+        ]
+    },
+    {
+        "id": "48443e86.5bc42",
+        "type": "switch",
+        "z": "cfb8073e.876f88",
+        "name": ">10",
+        "property": "count",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 520,
+        "wires": [
+            [
+                "1241bdd8.2da8c2"
+            ]
+        ]
+    },
+    {
+        "id": "f4c630e6.7fcef",
+        "type": "subflow:cfb8073e.876f88",
+        "z": "9889ef6.6e2771",
+        "name": "Update light state",
+        "env": [],
+        "x": 480,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "b62cc54a.e92368",
+        "type": "function",
+        "z": "cfb8073e.876f88",
+        "name": "Input handler",
+        "func": "if (msg.topic === 'service') {\n    return [msg, null];\n}\n\nreturn [null, msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "2282d523.7b19ca"
+            ],
+            [
+                "1241bdd8.2da8c2"
+            ]
+        ]
+    },
+    {
+        "id": "46f4751b.1d84fc",
+        "type": "switch",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "property": "interval",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "50",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "125",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 340,
+        "wires": [
+            [
+                "e79da058.cfc2f"
+            ],
+            [
+                "878b8c84.67094"
+            ]
+        ]
+    },
+    {
+        "id": "878b8c84.67094",
+        "type": "trigger",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-125",
+        "extend": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "18d7822a.92842e",
+                "bf7a5591.a95cc8"
+            ]
+        ]
+    },
+    {
+        "id": "9d0384ee.324008",
+        "type": "delay",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "50",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "46f4751b.1d84fc"
+            ]
+        ]
+    },
+    {
+        "id": "e60caf73.30a49",
+        "type": "switch",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "property": "delay",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "50",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "100",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "9ccfb807.631b88"
+            ],
+            [
+                "9d0384ee.324008"
+            ],
+            [
+                "893055ff.24d938"
+            ]
+        ]
+    },
+    {
+        "id": "893055ff.24d938",
+        "type": "delay",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "46f4751b.1d84fc"
+            ]
+        ]
+    },
+    {
+        "id": "9ccfb807.631b88",
+        "type": "delay",
+        "z": "cfb8073e.876f88",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "46f4751b.1d84fc"
+            ]
+        ]
+    },
+    {
+        "id": "2d5828c1.2bcb68",
+        "type": "subflow:cfb8073e.876f88",
+        "z": "9889ef6.6e2771",
+        "name": "Hallway Light",
+        "env": [
+            {
+                "name": "entity_id",
+                "value": "switch.hallway_light",
+                "type": "str"
+            },
+            {
+                "name": "interval",
+                "value": "125",
+                "type": "num"
+            },
+            {
+                "name": "delay",
+                "value": "100",
+                "type": "num"
+            }
+        ],
+        "x": 530,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "61d5e76f.eaa9d8",
+        "type": "change",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "service",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "2d5828c1.2bcb68"
+            ]
+        ]
+    },
+    {
+        "id": "6fc54a8c.45b3d4",
+        "type": "subflow:cfb8073e.876f88",
+        "z": "9889ef6.6e2771",
+        "name": "Cabinet Light",
+        "env": [
+            {
+                "name": "entity_id",
+                "value": "switch.cabinet_light",
+                "type": "str"
+            },
+            {
+                "name": "delay",
+                "value": "100",
+                "type": "num"
+            }
+        ],
+        "x": 530,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "901be019.50f94",
+        "type": "change",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "service",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "6fc54a8c.45b3d4"
+            ]
         ]
     }
 ]
