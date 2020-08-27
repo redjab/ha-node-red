@@ -2481,7 +2481,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "After 11 PM?",
-        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(18);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nif (now > cutoff) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
+        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(23);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nif (now > cutoff) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
