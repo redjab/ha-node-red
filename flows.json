@@ -44,7 +44,28 @@
                 ]
             }
         ],
-        "out": [],
+        "out": [
+            {
+                "x": 360,
+                "y": 180,
+                "wires": [
+                    {
+                        "id": "5a2b4568.2d2c5c",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 560,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "8495431f.f4f32",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
         "env": [],
         "color": "#DDAA99"
     },
@@ -65,7 +86,18 @@
                 ]
             }
         ],
-        "out": [],
+        "out": [
+            {
+                "x": 860,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "bf7a5591.a95cc8",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
         "env": [
             {
                 "name": "entity_id",
@@ -332,7 +364,10 @@
         ],
         "x": 480,
         "y": 180,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "f5b4874.c820978",
@@ -353,7 +388,10 @@
         ],
         "x": 480,
         "y": 100,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "35e31cc.f48d0e4",
@@ -374,7 +412,10 @@
         ],
         "x": 480,
         "y": 420,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "7c8c59df.9fc818",
@@ -514,7 +555,10 @@
         ],
         "x": 580,
         "y": 100,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "815f4d5.29d7fb",
@@ -564,7 +608,10 @@
         ],
         "x": 580,
         "y": 160,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "221dbd01.cfcc72",
@@ -585,7 +632,10 @@
         ],
         "x": 500,
         "y": 560,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "586abfa1.56235",
@@ -688,7 +738,10 @@
         ],
         "x": 500,
         "y": 640,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "30345639.3b764a",
@@ -817,7 +870,10 @@
         ],
         "x": 580,
         "y": 260,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "f848aa1a.681a98",
@@ -848,7 +904,7 @@
             }
         ],
         "waitForRunning": true,
-        "x": 90,
+        "x": 130,
         "y": 120,
         "wires": [
             [
@@ -984,7 +1040,10 @@
         ],
         "x": 720,
         "y": 840,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "b60867ef.dba148",
@@ -1108,7 +1167,7 @@
         "y": 1040,
         "wires": [
             [
-                "13ac7cce.77c6e3"
+                "34239bb9.636774"
             ],
             []
         ]
@@ -1130,9 +1189,12 @@
                 "type": "json"
             }
         ],
-        "x": 580,
+        "x": 560,
         "y": 1040,
-        "wires": []
+        "wires": [
+            [],
+            []
+        ]
     },
     {
         "id": "e2f0473b.d22fe8",
@@ -1424,33 +1486,6 @@
         "wires": [
             [
                 "35e31cc.f48d0e4"
-            ]
-        ]
-    },
-    {
-        "id": "13ac7cce.77c6e3",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Mails & Packages\",\"message\":\"✉️ New mail(s) coming today (around 1 PM)\",\"data\":{\"tag\":\"mail.coming\"}},\"log\":{\"name\":\"msg.payload\",\"entity_id\":\"sensor.mail_usps_mail\",\"message\":\"notified coming today\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 1040,
-        "wires": [
-            [
-                "15739cae.559ee3"
             ]
         ]
     },
@@ -1937,7 +1972,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 730,
+        "x": 710,
         "y": 340,
         "wires": [
             []
@@ -2028,7 +2063,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 130,
+        "x": 230,
         "y": 520,
         "wires": [
             [
@@ -2048,8 +2083,8 @@
         "upper": "",
         "mode": "increment",
         "outputs": "1",
-        "x": 600,
-        "y": 520,
+        "x": 720,
+        "y": 460,
         "wires": [
             [
                 "48443e86.5bc42"
@@ -2073,7 +2108,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 750,
+        "x": 730,
         "y": 520,
         "wires": [
             [
@@ -2089,7 +2124,9 @@
         "env": [],
         "x": 480,
         "y": 640,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "b62cc54a.e92368",
@@ -2304,7 +2341,9 @@
         ],
         "x": 530,
         "y": 200,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "61d5e76f.eaa9d8",
@@ -2352,7 +2391,9 @@
         ],
         "x": 530,
         "y": 300,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "901be019.50f94",
@@ -2379,6 +2420,102 @@
             [
                 "6fc54a8c.45b3d4"
             ]
+        ]
+    },
+    {
+        "id": "34239bb9.636774",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": \"✉️ New mail(s) coming today (around 1 PM)\",\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": msg.payload,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 1040,
+        "wires": [
+            [
+                "15739cae.559ee3"
+            ]
+        ]
+    },
+    {
+        "id": "c8e0447.3916eb8",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Master Bedroom Light On",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.master_bedroom",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 1500,
+        "wires": [
+            [
+                "71c04cd.e7fc9b4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "71c04cd.e7fc9b4",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "After 11 PM?",
+        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(18);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nif (now > cutoff) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 390,
+        "y": 1500,
+        "wires": [
+            [
+                "d1b99c80.7fc79"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d1b99c80.7fc79",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Set brightness 40",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.master_bedroom",
+        "data": "{\"entity_id\":\"light.master_bedroom\",\"brightness_pct\":40}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 590,
+        "y": 1500,
+        "wires": [
+            []
         ]
     }
 ]
