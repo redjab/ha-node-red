@@ -1341,7 +1341,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"payload\": {\n        \"notification\":\n        {\n            \"title\":\"Mails & Packages\",\n            \"message\":`📦 ${msg.payload.count} New package(s) from ${msg.payload.carrier} delivered`,\n            \"data\": {\n                \"tag\":\"package.delivered\",\n                \"priority\":\"high\",\n                \"ttl\":0\n            }\n        },\n        \"log\": {\n            \"name\": msg.payload.carrier,\n            \"entity_id\":\"sensor.mail_usps_mail\",\n            \"message\":\"notified delivered\",\n            \"domain\":\"notify\"\n        }\n    }\n}",
+        "func": "return {\n    \"payload\": {\n        \"notification\":\n        {\n            \"title\":\"Mails & Packages\",\n            \"message\":`📦 ${msg.payload.count} New package(s) from ${msg.payload.carrier} delivered`,\n            \"data\": {\n                \"tag\":\"package.delivered\",\n                \"priority\":\"high\",\n                \"ttl\":0\n            }\n        },\n        \"log\": {\n            \"name\": msg.payload.carrier,\n            \"entity_id\": msg.data.entity_id,\n            \"message\":\"notified delivered\",\n            \"domain\":\"notify\"\n        }\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
