@@ -46,8 +46,8 @@
         ],
         "out": [
             {
-                "x": 360,
-                "y": 180,
+                "x": 560,
+                "y": 160,
                 "wires": [
                     {
                         "id": "5a2b4568.2d2c5c",
@@ -77,7 +77,7 @@
         "category": "",
         "in": [
             {
-                "x": 20,
+                "x": 40,
                 "y": 140,
                 "wires": [
                     {
@@ -88,7 +88,7 @@
         ],
         "out": [
             {
-                "x": 860,
+                "x": 880,
                 "y": 340,
                 "wires": [
                     {
@@ -1735,13 +1735,13 @@
         "id": "36b728b3.a353a8",
         "type": "change",
         "z": "d9fe96b5.8701c8",
-        "name": "Bightness 40",
+        "name": "Bightness 50",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "40",
+                "to": "50",
                 "tot": "str"
             }
         ],
@@ -1832,7 +1832,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "100",
+                "to": "80",
                 "tot": "str"
             }
         ],
@@ -1972,7 +1972,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 710,
+        "x": 730,
         "y": 340,
         "wires": [
             []
@@ -1983,12 +1983,12 @@
         "type": "function",
         "z": "cfb8073e.876f88",
         "name": "Light Toggle",
-        "func": "const entity = env.get('entity_id');\nreturn { \n    payload: msg.payload.event.service_data.entity_id === entity && msg.payload.event.domain === 'switch' \n};\n",
+        "func": "const entity = env.get('entity_id');\nconst payloadEntity = msg.payload.event.service_data.entity_id;\nconst payloadDomain = msg.payload.event.domain;\n\nconst correctEntity = Array.isArray(payloadEntity) ? payloadEntity.includes(entity) : payloadEntity === entity;\nconst correctDomain = payloadDomain === 'switch' || payloadDomain === 'light'\nreturn { \n    payload: correctEntity && correctDomain\n};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 210,
+        "x": 230,
         "y": 40,
         "wires": [
             [
@@ -2011,7 +2011,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 370,
+        "x": 390,
         "y": 40,
         "wires": [
             [
@@ -2035,7 +2035,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 470,
+        "x": 490,
         "y": 320,
         "wires": [
             [
@@ -2063,7 +2063,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 230,
+        "x": 250,
         "y": 520,
         "wires": [
             [
@@ -2083,7 +2083,7 @@
         "upper": "",
         "mode": "increment",
         "outputs": "1",
-        "x": 720,
+        "x": 740,
         "y": 460,
         "wires": [
             [
@@ -2108,7 +2108,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 730,
+        "x": 750,
         "y": 520,
         "wires": [
             [
@@ -2138,7 +2138,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 130,
+        "x": 150,
         "y": 140,
         "wires": [
             [
@@ -2171,7 +2171,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 310,
+        "x": 330,
         "y": 340,
         "wires": [
             [
@@ -2198,7 +2198,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 480,
+        "x": 500,
         "y": 360,
         "wires": [
             [
@@ -2222,7 +2222,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 470,
+        "x": 490,
         "y": 180,
         "wires": [
             [
@@ -2257,7 +2257,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 310,
+        "x": 330,
         "y": 180,
         "wires": [
             [
@@ -2286,7 +2286,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 470,
+        "x": 490,
         "y": 220,
         "wires": [
             [
@@ -2309,7 +2309,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 470,
+        "x": 490,
         "y": 140,
         "wires": [
             [
@@ -2427,7 +2427,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": \"✉️ New mail(s) coming today (around 1 PM)\",\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": msg.payload,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": `✉️ ${msg.payload} New mail(s) coming today (around 1 PM)`,\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": msg.payload,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
