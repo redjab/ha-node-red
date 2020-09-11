@@ -2773,7 +2773,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"notification\": {\n        \"title\": \"Ip address changed\",\n        \"message\": `🌐 ⚠️ Your IP address is now ${msg.payload}`,\n        \"data\": {\n            \"tag\": \"internet.ip.warn\",\n            \"priority\": \"high\",\n            \"ttl\": 0\n        }\n    },\n    \"log\": {\n        \"name\": \"IP address (Node Red)\",\n        \"entity_id\": \"sensor.ip_address\",\n        \"message\": \"notified changed\",\n        \"domain\": \"notify\"\n    }\n}\n\n",
+        "func": "return {\n    \"payload\": {\n        \"notification\": {\n            \"title\": \"IP address changed\",\n            \"message\": `🌐 ⚠️ Your IP address is now ${msg.payload}`,\n            \"data\": {\n                \"tag\": \"internet.ip.warn\",\n                \"priority\": \"high\",\n                \"ttl\": 0\n            }\n        },\n        \"log\": {\n            \"name\": \"IP address (Node Red)\",\n            \"entity_id\": \"sensor.ip_address\",\n            \"message\": \"notified changed\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
