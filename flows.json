@@ -1983,7 +1983,7 @@
         "type": "function",
         "z": "cfb8073e.876f88",
         "name": "Light Toggle",
-        "func": "const entity = env.get('entity_id');\nconst payloadEntity = msg.payload.event.service_data.entity_id;\nconst payloadDomain = msg.payload.event.domain;\n\nconst correctEntity = Array.isArray(payloadEntity) ? payloadEntity.includes(entity) : payloadEntity === entity;\nconst correctDomain = payloadDomain === 'switch' || payloadDomain === 'light'\nreturn { \n    payload: correctEntity && correctDomain\n};\n",
+        "func": "const entity = env.get('entity_id');\nconst payloadEntity = msg.payload.event.service_data.entity_id;\nconst payloadDomain = msg.payload.event.domain;\n\nconst correctEntity = Array.isArray(payloadEntity) ? payloadEntity.includes(entity) : payloadEntity === entity;\nconst correctDomain = payloadDomain === 'switch' || payloadDomain === 'light';\nreturn { \n    payload: correctEntity && correctDomain\n};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2515,6 +2515,317 @@
         "x": 590,
         "y": 1500,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f083f14.47fa71",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Internet Usage >= 1000 GB",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.internet_monthly",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "1000",
+        "halt_if_type": "num",
+        "halt_if_compare": "gte",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 160,
+        "y": 380,
+        "wires": [
+            [
+                "48c4e4a2.43e3bc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "48c4e4a2.43e3bc",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Not warned yet?",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.internet_usage_warned",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "6e45d80e.63eab8",
+                "d17016fc.c86768"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bb31d941.e17f28",
+        "type": "subflow:670bc302.cb732c",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"vacuum.error\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}",
+                "type": "json"
+            }
+        ],
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6e45d80e.63eab8",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Internet Usage\",\"message\":\"📶️ ⚠️ Internet usage near limit\",\"data\":{\"tag\":\"internet.usage.warn\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Internet Sensor (Node Red)\",\"entity_id\":\"sensor.internet_monthly\",\"message\":\"notified near limit\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "bb31d941.e17f28"
+            ]
+        ]
+    },
+    {
+        "id": "568292bb.39d2ac",
+        "type": "cronplus",
+        "z": "e2c67c6c.68265",
+        "name": "First day of month",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "schedule1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 0 0 1 * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "e9af206b.6f4e2"
+            ]
+        ]
+    },
+    {
+        "id": "e9af206b.6f4e2",
+        "type": "api-call-service",
+        "z": "e2c67c6c.68265",
+        "name": "Turn off already warned",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.internet_usage_warned",
+        "data": "{\"entity_id\":\"input_boolean.internet_usage_warned\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 370,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d17016fc.c86768",
+        "type": "api-call-service",
+        "z": "e2c67c6c.68265",
+        "name": "Turn on already warned",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.internet_usage_warned",
+        "data": "{\"entity_id\":\"input_boolean.internet_usage_warned\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 650,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fcb006ea.4c4138",
+        "type": "comment",
+        "z": "e2c67c6c.68265",
+        "name": "Internet Usage Warning",
+        "info": "",
+        "x": 140,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c8d3225.cb870e",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "IP address changed",
+        "info": "",
+        "x": 130,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "2aed5089.0f3de",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "IP address",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.ip_address",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 100,
+        "y": 1720,
+        "wires": [
+            [
+                "f7fc21a3.40a44",
+                "19ab0dfe.37a172"
+            ]
+        ]
+    },
+    {
+        "id": "f7fc21a3.40a44",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "func": "return {\n    \"notification\": {\n        \"title\": \"Ip address changed\",\n        \"message\": `🌐 ⚠️ Your IP address is now ${msg.payload}`,\n        \"data\": {\n            \"tag\": \"internet.ip.warn\",\n            \"priority\": \"high\",\n            \"ttl\": 0\n        }\n    },\n    \"log\": {\n        \"name\": \"IP address (Node Red)\",\n        \"entity_id\": \"sensor.ip_address\",\n        \"message\": \"notified changed\",\n        \"domain\": \"notify\"\n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 280,
+        "y": 1720,
+        "wires": [
+            [
+                "10fff99c.cccc06"
+            ]
+        ]
+    },
+    {
+        "id": "10fff99c.cccc06",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"vacuum.error\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}}",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}",
+                "type": "json"
+            }
+        ],
+        "x": 460,
+        "y": 1720,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "19ab0dfe.37a172",
+        "type": "exec",
+        "z": "d9fe96b5.8701c8",
+        "command": "/data/projects/nodered/update-ip.sh",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Run update-ip.sh",
+        "x": 310,
+        "y": 1780,
+        "wires": [
+            [],
+            [],
             []
         ]
     }
