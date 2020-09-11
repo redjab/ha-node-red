@@ -2754,10 +2754,10 @@
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
+        "haltifstate": "(\\d*)\\.(\\d*)\\.(\\d*)\\.(\\d*)\\b",
+        "halt_if_type": "re",
         "halt_if_compare": "is",
-        "outputs": 1,
+        "outputs": 2,
         "output_only_on_state_change": true,
         "x": 100,
         "y": 1720,
@@ -2765,7 +2765,8 @@
             [
                 "f7fc21a3.40a44",
                 "19ab0dfe.37a172"
-            ]
+            ],
+            []
         ]
     },
     {
