@@ -118,6 +118,61 @@
         "color": "#DDAA99"
     },
     {
+        "id": "ef414ae2.294578",
+        "type": "subflow",
+        "name": "Water plant reminder",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3814e557.ab860a"
+                    },
+                    {
+                        "id": "724f9552.1779dc"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 520,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3814e557.ab860a",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 520,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "e56514f4.e1bd78",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 520,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "e56514f4.e1bd78",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
         "id": "3efaa203.1c443e",
         "type": "server",
         "z": "",
@@ -475,13 +530,19 @@
                 "t": "eq",
                 "v": "notification.garage.close",
                 "vt": "str"
+            },
+            {
+                "t": "regex",
+                "v": "notification\\.plant\\.input_boolean\\..*\\.watered",
+                "vt": "str",
+                "case": true
             }
         ],
         "checkall": "false",
         "repair": false,
-        "outputs": 3,
-        "x": 450,
-        "y": 60,
+        "outputs": 4,
+        "x": 430,
+        "y": 180,
         "wires": [
             [
                 "752d962a.3714c8"
@@ -491,6 +552,9 @@
             ],
             [
                 "e38a2c4c.2afee"
+            ],
+            [
+                "1c92d211.4bdb8e"
             ]
         ]
     },
@@ -512,7 +576,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 620,
-        "y": 60,
+        "y": 80,
         "wires": [
             []
         ]
@@ -655,7 +719,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 630,
-        "y": 120,
+        "y": 140,
         "wires": [
             []
         ]
@@ -678,7 +742,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 630,
-        "y": 180,
+        "y": 200,
         "wires": [
             []
         ]
@@ -908,7 +972,6 @@
         "y": 120,
         "wires": [
             [
-                "61d5e76f.eaa9d8",
                 "901be019.50f94"
             ]
         ]
@@ -2117,18 +2180,6 @@
         ]
     },
     {
-        "id": "f4c630e6.7fcef",
-        "type": "subflow:cfb8073e.876f88",
-        "z": "9889ef6.6e2771",
-        "name": "Update light state",
-        "env": [],
-        "x": 480,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "b62cc54a.e92368",
         "type": "function",
         "z": "cfb8073e.876f88",
@@ -2339,37 +2390,10 @@
                 "type": "num"
             }
         ],
-        "x": 530,
-        "y": 200,
+        "x": 570,
+        "y": 220,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "61d5e76f.eaa9d8",
-        "type": "change",
-        "z": "9889ef6.6e2771",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "service",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 310,
-        "y": 180,
-        "wires": [
-            [
-                "2d5828c1.2bcb68"
-            ]
         ]
     },
     {
@@ -2389,8 +2413,8 @@
                 "type": "num"
             }
         ],
-        "x": 530,
-        "y": 300,
+        "x": 570,
+        "y": 320,
         "wires": [
             []
         ]
@@ -2414,11 +2438,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 310,
-        "y": 280,
+        "x": 330,
+        "y": 120,
         "wires": [
             [
-                "6fc54a8c.45b3d4"
+                "6fc54a8c.45b3d4",
+                "2d5828c1.2bcb68"
             ]
         ]
     },
@@ -2828,6 +2853,671 @@
             [],
             [],
             []
+        ]
+    },
+    {
+        "id": "148dd72b.ccef89",
+        "type": "comment",
+        "z": "e2c67c6c.68265",
+        "name": "Water Plants",
+        "info": "",
+        "x": 110,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "4205df72.bac4b",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "ZZ",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_zz",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 90,
+        "y": 600,
+        "wires": [
+            [
+                "ee4c629e.b840e"
+            ],
+            [
+                "4d15f337.d6238c"
+            ]
+        ]
+    },
+    {
+        "id": "3814e557.ab860a",
+        "type": "api-call-service",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 260,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e56514f4.e1bd78",
+        "type": "subflow:670bc302.cb732c",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "724f9552.1779dc",
+        "type": "function",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.new_state.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ]\n        }\n    },\n    \"log\": {\n        \"name\": \"Plant\",\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "e56514f4.e1bd78"
+            ]
+        ]
+    },
+    {
+        "id": "90499b36.8a5898",
+        "type": "subflow:ef414ae2.294578",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "env": [],
+        "x": 580,
+        "y": 880,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d3a0d90.e0b4228",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Pothos Big",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_pothos_big",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 100,
+        "y": 700,
+        "wires": [
+            [
+                "b4a1240f.9ea478"
+            ],
+            [
+                "d9cb0f88.4f107"
+            ]
+        ]
+    },
+    {
+        "id": "beb05877.d30cf8",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Pothos Small",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_pothos_small",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 110,
+        "y": 800,
+        "wires": [
+            [
+                "c3d8ad1c.53a4a"
+            ],
+            [
+                "f4f0b0c.3c8b65"
+            ]
+        ]
+    },
+    {
+        "id": "bc9bea1e.673028",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Jade",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_jade",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 90,
+        "y": 900,
+        "wires": [
+            [
+                "53950955.a77348"
+            ],
+            [
+                "129067a9.eed3b8"
+            ]
+        ]
+    },
+    {
+        "id": "32932262.3e8f3e",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Mums",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_mums",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 90,
+        "y": 1000,
+        "wires": [
+            [
+                "69f0e801.412128"
+            ],
+            [
+                "987ac4ed.7ac288"
+            ]
+        ]
+    },
+    {
+        "id": "7a9001e9.b68d3",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Cactuses",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_cactuses",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 100,
+        "y": 1100,
+        "wires": [
+            [
+                "8e543368.d549f"
+            ],
+            [
+                "5e6a727a.394abc"
+            ]
+        ]
+    },
+    {
+        "id": "ee4c629e.b840e",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "3 weeks",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "504",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 300,
+        "y": 560,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "b4a1240f.9ea478",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "2 weeks",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "336",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 280,
+        "y": 680,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "c3d8ad1c.53a4a",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "2 weeks",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "336",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 280,
+        "y": 780,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "53950955.a77348",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "3 weeks",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "504",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 280,
+        "y": 880,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "69f0e801.412128",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "2.5 days",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "60",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 280,
+        "y": 980,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "8e543368.d549f",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "1 month",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "672",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 280,
+        "y": 1080,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "1c92d211.4bdb8e",
+        "type": "function",
+        "z": "b88bc227.1b73f",
+        "name": "Find correct plant",
+        "func": "const action = msg.payload.event.action;\nconst re = /notification\\.plant\\.(input_boolean\\..*)\\.watered/;\nconst groups = re.exec(action);\nif (groups && groups.length > 0) {\n    return [{ payload: groups[1] }, null];\n}\nreturn [null, { payload: false }];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "5dc4ce70.cb33"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5dc4ce70.cb33",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Watered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 820,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e6a727a.394abc",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 1120,
+        "wires": [
+            [
+                "8e543368.d549f"
+            ]
+        ]
+    },
+    {
+        "id": "987ac4ed.7ac288",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 1020,
+        "wires": [
+            [
+                "69f0e801.412128"
+            ]
+        ]
+    },
+    {
+        "id": "129067a9.eed3b8",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 920,
+        "wires": [
+            [
+                "53950955.a77348"
+            ]
+        ]
+    },
+    {
+        "id": "f4f0b0c.3c8b65",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 820,
+        "wires": [
+            [
+                "c3d8ad1c.53a4a"
+            ]
+        ]
+    },
+    {
+        "id": "d9cb0f88.4f107",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 720,
+        "wires": [
+            [
+                "b4a1240f.9ea478"
+            ]
+        ]
+    },
+    {
+        "id": "4d15f337.d6238c",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 620,
+        "wires": [
+            [
+                "ee4c629e.b840e"
+            ]
         ]
     }
 ]
