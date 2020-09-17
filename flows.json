@@ -39,14 +39,14 @@
                 "y": 100,
                 "wires": [
                     {
-                        "id": "5a2b4568.2d2c5c"
+                        "id": "5934701d.5e303"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 560,
+                "x": 660,
                 "y": 160,
                 "wires": [
                     {
@@ -56,7 +56,7 @@
                 ]
             },
             {
-                "x": 560,
+                "x": 660,
                 "y": 100,
                 "wires": [
                     {
@@ -897,59 +897,6 @@
         ]
     },
     {
-        "id": "a99c435.39e9ec",
-        "type": "inject",
-        "z": "e2c67c6c.68265",
-        "name": "8 PM everyday",
-        "props": [],
-        "repeat": "",
-        "crontab": "00 20 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 120,
-        "y": 260,
-        "wires": [
-            [
-                "a349aaf7.243f98"
-            ]
-        ]
-    },
-    {
-        "id": "c1faf23d.8072d",
-        "type": "subflow:670bc302.cb732c",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 580,
-        "y": 260,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "f848aa1a.681a98",
-        "type": "comment",
-        "z": "e2c67c6c.68265",
-        "name": "Reminder to water herbs",
-        "info": "",
-        "x": 150,
-        "y": 220,
-        "wires": []
-    },
-    {
         "id": "ddad8919.724b68",
         "type": "server-events",
         "z": "9889ef6.6e2771",
@@ -1102,7 +1049,7 @@
             }
         ],
         "x": 720,
-        "y": 840,
+        "y": 880,
         "wires": [
             [],
             []
@@ -1368,7 +1315,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 240,
+        "x": 340,
         "y": 100,
         "wires": [
             [
@@ -1393,7 +1340,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": true,
-        "x": 450,
+        "x": 550,
         "y": 100,
         "wires": [
             []
@@ -1410,7 +1357,7 @@
         "initialize": "",
         "finalize": "",
         "x": 540,
-        "y": 840,
+        "y": 880,
         "wires": [
             [
                 "601b8ab1.27f8e4"
@@ -1603,33 +1550,6 @@
         "wires": [
             [
                 "a73fc1db.8105"
-            ]
-        ]
-    },
-    {
-        "id": "a349aaf7.243f98",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Watering\",\"message\":\"🌿 Don't forget to water the herbs!\",\"data\":{\"tag\":\"plant.reminder\"}},\"log\":{\"name\":\"Plant watering reminder\",\"message\":\"reminded water plants\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 360,
-        "y": 260,
-        "wires": [
-            [
-                "c1faf23d.8072d"
             ]
         ]
     },
@@ -2452,7 +2372,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": `✉️ ${msg.payload} New mail(s) coming today (around 1 PM)`,\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": msg.payload,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": `✉️ ${msg.payload} New mail(s) coming today (around 1 PM)`,\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": `USPS (${msg.payload})`,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2754,7 +2674,7 @@
         "name": "IP address changed",
         "info": "",
         "x": 130,
-        "y": 1680,
+        "y": 1620,
         "wires": []
     },
     {
@@ -2785,7 +2705,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 100,
-        "y": 1720,
+        "y": 1660,
         "wires": [
             [
                 "f7fc21a3.40a44",
@@ -2805,7 +2725,7 @@
         "initialize": "",
         "finalize": "",
         "x": 280,
-        "y": 1720,
+        "y": 1660,
         "wires": [
             [
                 "10fff99c.cccc06"
@@ -2830,7 +2750,7 @@
             }
         ],
         "x": 460,
-        "y": 1720,
+        "y": 1660,
         "wires": [
             [],
             []
@@ -2848,7 +2768,7 @@
         "oldrc": false,
         "name": "Run update-ip.sh",
         "x": 310,
-        "y": 1780,
+        "y": 1720,
         "wires": [
             [],
             [],
@@ -2955,7 +2875,7 @@
         "type": "function",
         "z": "ef414ae2.294578",
         "name": "",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.new_state.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ]\n        }\n    },\n    \"log\": {\n        \"name\": \"Plant\",\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.new_state.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.data.new_state.attributes.friendly_name})`,\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3188,8 +3108,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 300,
-        "y": 560,
+        "x": 280,
+        "y": 580,
         "wires": [
             [
                 "90499b36.8a5898"
@@ -3517,6 +3437,235 @@
         "wires": [
             [
                 "ee4c629e.b840e"
+            ]
+        ]
+    },
+    {
+        "id": "740e1525.b521ec",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Aero Herbs",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_aero_herbs",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 110,
+        "y": 1200,
+        "wires": [
+            [
+                "527bcb22.750ae4"
+            ],
+            [
+                "ff77e5b2.04d948"
+            ]
+        ]
+    },
+    {
+        "id": "527bcb22.750ae4",
+        "type": "trigger",
+        "z": "e2c67c6c.68265",
+        "name": "2 days",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "47",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 270,
+        "y": 1180,
+        "wires": [
+            [
+                "90499b36.8a5898"
+            ]
+        ]
+    },
+    {
+        "id": "ff77e5b2.04d948",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 1220,
+        "wires": [
+            [
+                "527bcb22.750ae4"
+            ]
+        ]
+    },
+    {
+        "id": "c5ec2597.8245f8",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Media player paused",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "media_player",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "paused",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 1860,
+        "wires": [
+            [
+                "49856246.1d1fcc"
+            ],
+            [
+                "d5ac8e28.031f3"
+            ]
+        ]
+    },
+    {
+        "id": "49856246.1d1fcc",
+        "type": "trigger",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "10",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 1860,
+        "wires": [
+            [
+                "5abde545.1ca3cc"
+            ]
+        ]
+    },
+    {
+        "id": "d5ac8e28.031f3",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 1920,
+        "wires": [
+            [
+                "49856246.1d1fcc"
+            ]
+        ]
+    },
+    {
+        "id": "5abde545.1ca3cc",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Turn off",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "media_player",
+        "service": "turn_off",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 540,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b61e899.329287",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Turn off speaker after 10 mins paused",
+        "info": "",
+        "x": 190,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "5934701d.5e303",
+        "type": "function",
+        "z": "670bc302.cb732c",
+        "name": "",
+        "func": "if (msg && msg.payload && msg.payload.notification) {\n    let data = msg.payload.notification.data || {};\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "5a2b4568.2d2c5c"
             ]
         ]
     }
