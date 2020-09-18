@@ -125,22 +125,19 @@
         "category": "",
         "in": [
             {
-                "x": 60,
+                "x": 40,
                 "y": 80,
                 "wires": [
                     {
-                        "id": "3814e557.ab860a"
-                    },
-                    {
-                        "id": "724f9552.1779dc"
+                        "id": "323c7315.72f0dc"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 520,
-                "y": 80,
+                "x": 1060,
+                "y": 260,
                 "wires": [
                     {
                         "id": "3814e557.ab860a",
@@ -149,7 +146,7 @@
                 ]
             },
             {
-                "x": 520,
+                "x": 1380,
                 "y": 140,
                 "wires": [
                     {
@@ -159,12 +156,22 @@
                 ]
             },
             {
-                "x": 520,
-                "y": 200,
+                "x": 1380,
+                "y": 180,
                 "wires": [
                     {
                         "id": "e56514f4.e1bd78",
                         "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 980,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "1663eec8.b40e21",
+                        "port": 0
                     }
                 ]
             }
@@ -1494,9 +1501,7 @@
         "x": 300,
         "y": 420,
         "wires": [
-            [
-                "35e31cc.f48d0e4"
-            ]
+            []
         ]
     },
     {
@@ -2789,7 +2794,7 @@
         "id": "4205df72.bac4b",
         "type": "server-state-changed",
         "z": "e2c67c6c.68265",
-        "name": "ZZ",
+        "name": "Any plant",
         "server": "3efaa203.1c443e",
         "version": 1,
         "exposeToHomeAssistant": false,
@@ -2803,23 +2808,20 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "input_boolean.plant_zz",
-        "entityidfiltertype": "exact",
+        "entityidfilter": "input_boolean.plant_",
+        "entityidfiltertype": "substring",
         "outputinitially": false,
         "state_type": "str",
-        "haltifstate": "on",
+        "haltifstate": "",
         "halt_if_type": "str",
         "halt_if_compare": "is",
-        "outputs": 2,
+        "outputs": 1,
         "output_only_on_state_change": true,
-        "x": 90,
+        "x": 100,
         "y": 600,
         "wires": [
             [
-                "ee4c629e.b840e"
-            ],
-            [
-                "4d15f337.d6238c"
+                "90499b36.8a5898"
             ]
         ]
     },
@@ -2840,8 +2842,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 260,
-        "y": 80,
+        "x": 880,
+        "y": 260,
         "wires": [
             []
         ]
@@ -2863,7 +2865,7 @@
                 "type": "json"
             }
         ],
-        "x": 380,
+        "x": 1260,
         "y": 160,
         "wires": [
             [],
@@ -2874,13 +2876,13 @@
         "id": "724f9552.1779dc",
         "type": "function",
         "z": "ef414ae2.294578",
-        "name": "",
+        "name": "Format for notification/log",
         "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.new_state.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.data.new_state.attributes.friendly_name})`,\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 200,
+        "x": 1030,
         "y": 160,
         "wires": [
             [
@@ -2894,346 +2896,13 @@
         "z": "e2c67c6c.68265",
         "name": "",
         "env": [],
-        "x": 580,
-        "y": 880,
+        "x": 320,
+        "y": 600,
         "wires": [
+            [],
             [],
             [],
             []
-        ]
-    },
-    {
-        "id": "d3a0d90.e0b4228",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Pothos Big",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_pothos_big",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 100,
-        "y": 700,
-        "wires": [
-            [
-                "b4a1240f.9ea478"
-            ],
-            [
-                "d9cb0f88.4f107"
-            ]
-        ]
-    },
-    {
-        "id": "beb05877.d30cf8",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Pothos Small",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_pothos_small",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 110,
-        "y": 800,
-        "wires": [
-            [
-                "c3d8ad1c.53a4a"
-            ],
-            [
-                "f4f0b0c.3c8b65"
-            ]
-        ]
-    },
-    {
-        "id": "bc9bea1e.673028",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Jade",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_jade",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 90,
-        "y": 900,
-        "wires": [
-            [
-                "53950955.a77348"
-            ],
-            [
-                "129067a9.eed3b8"
-            ]
-        ]
-    },
-    {
-        "id": "32932262.3e8f3e",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Mums",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_mums",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 90,
-        "y": 1000,
-        "wires": [
-            [
-                "69f0e801.412128"
-            ],
-            [
-                "987ac4ed.7ac288"
-            ]
-        ]
-    },
-    {
-        "id": "7a9001e9.b68d3",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Cactuses",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_cactuses",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 100,
-        "y": 1100,
-        "wires": [
-            [
-                "8e543368.d549f"
-            ],
-            [
-                "5e6a727a.394abc"
-            ]
-        ]
-    },
-    {
-        "id": "ee4c629e.b840e",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "3 weeks",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "504",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 580,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "b4a1240f.9ea478",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "2 weeks",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "336",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 680,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "c3d8ad1c.53a4a",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "2 weeks",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "336",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 780,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "53950955.a77348",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "3 weeks",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "504",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 880,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "69f0e801.412128",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "2.5 days",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "60",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 980,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "8e543368.d549f",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "1 month",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "672",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 280,
-        "y": 1080,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
         ]
     },
     {
@@ -3276,257 +2945,6 @@
         "y": 260,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "5e6a727a.394abc",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 1120,
-        "wires": [
-            [
-                "8e543368.d549f"
-            ]
-        ]
-    },
-    {
-        "id": "987ac4ed.7ac288",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 1020,
-        "wires": [
-            [
-                "69f0e801.412128"
-            ]
-        ]
-    },
-    {
-        "id": "129067a9.eed3b8",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 920,
-        "wires": [
-            [
-                "53950955.a77348"
-            ]
-        ]
-    },
-    {
-        "id": "f4f0b0c.3c8b65",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 820,
-        "wires": [
-            [
-                "c3d8ad1c.53a4a"
-            ]
-        ]
-    },
-    {
-        "id": "d9cb0f88.4f107",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 720,
-        "wires": [
-            [
-                "b4a1240f.9ea478"
-            ]
-        ]
-    },
-    {
-        "id": "4d15f337.d6238c",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 620,
-        "wires": [
-            [
-                "ee4c629e.b840e"
-            ]
-        ]
-    },
-    {
-        "id": "740e1525.b521ec",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Aero Herbs",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_aero_herbs",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 110,
-        "y": 1200,
-        "wires": [
-            [
-                "527bcb22.750ae4"
-            ],
-            [
-                "ff77e5b2.04d948"
-            ]
-        ]
-    },
-    {
-        "id": "527bcb22.750ae4",
-        "type": "trigger",
-        "z": "e2c67c6c.68265",
-        "name": "2 days",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "47",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 270,
-        "y": 1180,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "ff77e5b2.04d948",
-        "type": "change",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 1220,
-        "wires": [
-            [
-                "527bcb22.750ae4"
-            ]
         ]
     },
     {
@@ -3666,6 +3084,216 @@
         "wires": [
             [
                 "5a2b4568.2d2c5c"
+            ]
+        ]
+    },
+    {
+        "id": "1663eec8.b40e21",
+        "type": "api-call-service",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{ entity_id }}\",\"datetime\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 800,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4194646b.6a59ac",
+        "type": "function",
+        "z": "ef414ae2.294578",
+        "name": "Get correct input_datetime",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nreturn {\n    \"entity_id\": dateEntity,\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 340,
+        "y": 40,
+        "wires": [
+            [
+                "cedd4555.8c5a38"
+            ]
+        ]
+    },
+    {
+        "id": "cedd4555.8c5a38",
+        "type": "api-current-state",
+        "z": "ef414ae2.294578",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 570,
+        "y": 40,
+        "wires": [
+            [
+                "1663eec8.b40e21"
+            ]
+        ]
+    },
+    {
+        "id": "29a846be.f790ba",
+        "type": "function",
+        "z": "ef414ae2.294578",
+        "name": "Get duration",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\n\nlet duration = 0;\nswitch(entity) {\n  case 'input_boolean.plant_aero_herbs':\n    // 2 days\n    duration = 60*60*24*2;\n    break;\n  case 'input_boolean.plant_cactuses':\n    // 1 month\n    duration = 60*60*24*30;\n    break;\n  case 'input_boolean.plant_jade':\n    // 3 weeks\n    duration = 60*60*24*7*3;\n    break;\n  case 'input_boolean.plant_mums':\n    // 2.5 days\n    duration = 60*60*24*2.5;\n    break;\n  case 'input_boolean.plant_pothos_big':\n    // 2 weeks\n    duration = 60*60*24*7*2;\n    break;\n  case 'input_boolean.plant_pothos_small':\n    // 2 weeks\n    duration = 60*60*24*7*2;\n    break;\n  case 'input_boolean.plant_zz':\n    // 3 weeks\n    duration = 60*60*24*7*3;\n    break;\n  case 'input_boolean.plant_basil':\n    // 1 weeks\n    duration = 60*60*24*7;\n    break;\n  case 'input_boolean.plant_fake':\n    // 10 secs\n    duration = 70;\n    break;\n  case 'input_boolean.plant_fake_2':\n    // 10 secs\n    duration = 125;\n    break;\n  default:\n}\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "a64950e.7a083b"
+            ]
+        ]
+    },
+    {
+        "id": "c144037f.3d928",
+        "type": "function",
+        "z": "ef414ae2.294578",
+        "name": "Long enough?",
+        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 21;\n    const isWeekendTime = hour >= 9 && hour <= 21;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 760,
+        "y": 160,
+        "wires": [
+            [
+                "724f9552.1779dc",
+                "3814e557.ab860a",
+                "567390d9.53765"
+            ]
+        ]
+    },
+    {
+        "id": "a64950e.7a083b",
+        "type": "api-current-state",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "{{date_entity}}",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "date_date",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "c144037f.3d928"
+            ]
+        ]
+    },
+    {
+        "id": "e10bb0f2.06b16",
+        "type": "trigger",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-30",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "data.entity_id",
+        "outputs": 1,
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "29a846be.f790ba"
+            ]
+        ]
+    },
+    {
+        "id": "323c7315.72f0dc",
+        "type": "switch",
+        "z": "ef414ae2.294578",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "4194646b.6a59ac",
+                "29a846be.f790ba",
+                "e10bb0f2.06b16"
+            ],
+            [
+                "567390d9.53765"
+            ]
+        ]
+    },
+    {
+        "id": "567390d9.53765",
+        "type": "function",
+        "z": "ef414ae2.294578",
+        "name": "Reset",
+        "func": "return {\n    data: {\n        entity_id: msg.data.entity_id\n    },\n    reset: true\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [
+                "e10bb0f2.06b16"
             ]
         ]
     }
