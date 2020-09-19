@@ -28,6 +28,13 @@
         "info": ""
     },
     {
+        "id": "955dbfd5.2d3eb",
+        "type": "tab",
+        "label": "Water plants",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -115,68 +122,6 @@
                 "value": "0"
             }
         ],
-        "color": "#DDAA99"
-    },
-    {
-        "id": "ef414ae2.294578",
-        "type": "subflow",
-        "name": "Water plant reminder",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 40,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "323c7315.72f0dc"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 1060,
-                "y": 260,
-                "wires": [
-                    {
-                        "id": "3814e557.ab860a",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1380,
-                "y": 140,
-                "wires": [
-                    {
-                        "id": "e56514f4.e1bd78",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1380,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "e56514f4.e1bd78",
-                        "port": 1
-                    }
-                ]
-            },
-            {
-                "x": 980,
-                "y": 40,
-                "wires": [
-                    {
-                        "id": "1663eec8.b40e21",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
         "color": "#DDAA99"
     },
     {
@@ -2781,131 +2726,6 @@
         ]
     },
     {
-        "id": "148dd72b.ccef89",
-        "type": "comment",
-        "z": "e2c67c6c.68265",
-        "name": "Water Plants",
-        "info": "",
-        "x": 110,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "4205df72.bac4b",
-        "type": "server-state-changed",
-        "z": "e2c67c6c.68265",
-        "name": "Any plant",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_",
-        "entityidfiltertype": "substring",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "x": 100,
-        "y": 600,
-        "wires": [
-            [
-                "90499b36.8a5898"
-            ]
-        ]
-    },
-    {
-        "id": "3814e557.ab860a",
-        "type": "api-call-service",
-        "z": "ef414ae2.294578",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_off",
-        "entityId": "",
-        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 880,
-        "y": 260,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e56514f4.e1bd78",
-        "type": "subflow:670bc302.cb732c",
-        "z": "ef414ae2.294578",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 1260,
-        "y": 160,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "724f9552.1779dc",
-        "type": "function",
-        "z": "ef414ae2.294578",
-        "name": "Format for notification/log",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.new_state.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.data.new_state.attributes.friendly_name})`,\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1030,
-        "y": 160,
-        "wires": [
-            [
-                "e56514f4.e1bd78"
-            ]
-        ]
-    },
-    {
-        "id": "90499b36.8a5898",
-        "type": "subflow:ef414ae2.294578",
-        "z": "e2c67c6c.68265",
-        "name": "",
-        "env": [],
-        "x": 320,
-        "y": 600,
-        "wires": [
-            [],
-            [],
-            [],
-            []
-        ]
-    },
-    {
         "id": "1c92d211.4bdb8e",
         "type": "function",
         "z": "b88bc227.1b73f",
@@ -3088,9 +2908,76 @@
         ]
     },
     {
-        "id": "1663eec8.b40e21",
+        "id": "ec5786c1.c3a078",
         "type": "api-call-service",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1140,
+        "y": 100,
+        "wires": [
+            [
+                "4b7072a0.47fa7c"
+            ]
+        ]
+    },
+    {
+        "id": "8906138a.b5a3c",
+        "type": "subflow:670bc302.cb732c",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 1100,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e8487d1a.4b6d3",
+        "type": "function",
+        "z": "955dbfd5.2d3eb",
+        "name": "Format for notification/log",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.data.attributes.friendly_name})`,\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1130,
+        "y": 160,
+        "wires": [
+            [
+                "8906138a.b5a3c"
+            ]
+        ]
+    },
+    {
+        "id": "8135cd3.b1f253",
+        "type": "api-call-service",
+        "z": "955dbfd5.2d3eb",
         "name": "",
         "server": "3efaa203.1c443e",
         "version": 1,
@@ -3104,34 +2991,34 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 800,
+        "x": 1160,
         "y": 40,
         "wires": [
             []
         ]
     },
     {
-        "id": "4194646b.6a59ac",
+        "id": "380ddbb1.7506c4",
         "type": "function",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "Get correct input_datetime",
         "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nreturn {\n    \"entity_id\": dateEntity,\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 340,
+        "x": 520,
         "y": 40,
         "wires": [
             [
-                "cedd4555.8c5a38"
+                "15c2344c.a3941c"
             ]
         ]
     },
     {
-        "id": "cedd4555.8c5a38",
+        "id": "15c2344c.a3941c",
         "type": "api-current-state",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "Current time",
         "server": "3efaa203.1c443e",
         "version": 1,
@@ -3147,56 +3034,56 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 570,
+        "x": 810,
         "y": 40,
         "wires": [
             [
-                "1663eec8.b40e21"
+                "8135cd3.b1f253"
             ]
         ]
     },
     {
-        "id": "29a846be.f790ba",
+        "id": "6905188a.2cbe08",
         "type": "function",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "Get duration",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\n\nlet duration = 0;\nswitch(entity) {\n  case 'input_boolean.plant_aero_herbs':\n    // 2 days\n    duration = 60*60*24*2;\n    break;\n  case 'input_boolean.plant_cactuses':\n    // 1 month\n    duration = 60*60*24*30;\n    break;\n  case 'input_boolean.plant_jade':\n    // 3 weeks\n    duration = 60*60*24*7*3;\n    break;\n  case 'input_boolean.plant_mums':\n    // 2.5 days\n    duration = 60*60*24*2.5;\n    break;\n  case 'input_boolean.plant_pothos_big':\n    // 2 weeks\n    duration = 60*60*24*7*2;\n    break;\n  case 'input_boolean.plant_pothos_small':\n    // 2 weeks\n    duration = 60*60*24*7*2;\n    break;\n  case 'input_boolean.plant_zz':\n    // 3 weeks\n    duration = 60*60*24*7*3;\n    break;\n  case 'input_boolean.plant_basil':\n    // 1 weeks\n    duration = 60*60*24*7;\n    break;\n  case 'input_boolean.plant_fake':\n    // 10 secs\n    duration = 70;\n    break;\n  case 'input_boolean.plant_fake_2':\n    // 10 secs\n    duration = 125;\n    break;\n  default:\n}\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst durationMap = {\n    // 2 days\n    'input_boolean.plant_aero_herbs': 60*60*24*2,\n    \n    // 1 month\n    'input_boolean.plant_cactuses': 60*60*24*30,\n    \n    // 3 weeks\n    'input_boolean.plant_jade': 60*60*24*7*3,\n    \n    // 2.5 days\n    'input_boolean.plant_mums': 60*60*24*2.5,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_big': 60*60*24*7*2,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_small': 60*60*24*7*2,\n    \n    // 3 weeks\n    'input_boolean.plant_zz': 60*60*24*7*3,\n    \n    // 1 week\n    'input_boolean.plant_basil': 60*60*24*7,\n    \n    'input_boolean.plant_fake': 70,\n    \n    'input_boolean.plant_fake_2': 125,\n}\n\nconst duration = durationMap[entity] || 0;\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
+        "x": 470,
         "y": 160,
         "wires": [
             [
-                "a64950e.7a083b"
+                "ec755d5e.5db34"
             ]
         ]
     },
     {
-        "id": "c144037f.3d928",
+        "id": "fdcae5ac.b73578",
         "type": "function",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "Long enough?",
-        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 21;\n    const isWeekendTime = hour >= 9 && hour <= 21;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
+        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 21;\n    const isWeekendTime = hour >= 9 && hour <= 22;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 760,
+        "x": 900,
         "y": 160,
         "wires": [
             [
-                "724f9552.1779dc",
-                "3814e557.ab860a",
-                "567390d9.53765"
+                "e8487d1a.4b6d3",
+                "ec5786c1.c3a078",
+                "5da531f4.e1346"
             ]
         ]
     },
     {
-        "id": "a64950e.7a083b",
+        "id": "ec755d5e.5db34",
         "type": "api-current-state",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "",
         "server": "3efaa203.1c443e",
         "version": 1,
@@ -3212,42 +3099,42 @@
         "entity_location": "date_date",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 540,
+        "x": 680,
         "y": 160,
         "wires": [
             [
-                "c144037f.3d928"
+                "fdcae5ac.b73578"
             ]
         ]
     },
     {
-        "id": "e10bb0f2.06b16",
+        "id": "3bc50a55.b9af76",
         "type": "trigger",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "",
         "op1": "",
         "op2": "0",
         "op1type": "pay",
         "op2type": "str",
-        "duration": "-30",
+        "duration": "-15",
         "extend": false,
         "units": "min",
         "reset": "",
         "bytopic": "topic",
         "topic": "data.entity_id",
         "outputs": 1,
-        "x": 330,
+        "x": 670,
         "y": 260,
         "wires": [
             [
-                "29a846be.f790ba"
+                "6905188a.2cbe08"
             ]
         ]
     },
     {
-        "id": "323c7315.72f0dc",
+        "id": "9c7f0498.01f188",
         "type": "switch",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -3266,35 +3153,201 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 130,
-        "y": 80,
+        "x": 250,
+        "y": 140,
         "wires": [
             [
-                "4194646b.6a59ac",
-                "29a846be.f790ba",
-                "e10bb0f2.06b16"
+                "380ddbb1.7506c4",
+                "6905188a.2cbe08",
+                "a22622e9.a714d",
+                "5da531f4.e1346"
             ],
             [
-                "567390d9.53765"
+                "5da531f4.e1346"
             ]
         ]
     },
     {
-        "id": "567390d9.53765",
+        "id": "5da531f4.e1346",
         "type": "function",
-        "z": "ef414ae2.294578",
+        "z": "955dbfd5.2d3eb",
         "name": "Reset",
         "func": "return {\n    data: {\n        entity_id: msg.data.entity_id\n    },\n    reset: true\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 630,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "3bc50a55.b9af76"
+            ]
+        ]
+    },
+    {
+        "id": "5cd02ad8.fdb3f4",
+        "type": "server-state-changed",
+        "z": "955dbfd5.2d3eb",
+        "name": "Any plant",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_",
+        "entityidfiltertype": "substring",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "c38c160d.9af028"
+            ]
+        ]
+    },
+    {
+        "id": "89ccd596.ca4428",
+        "type": "server-state-changed",
+        "z": "955dbfd5.2d3eb",
+        "name": "Any plant watered time",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_datetime.plant_",
+        "entityidfiltertype": "substring",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "de996c7f.4fa89"
+            ]
+        ]
+    },
+    {
+        "id": "de996c7f.4fa89",
+        "type": "function",
+        "z": "955dbfd5.2d3eb",
+        "name": "Get correct input_boolean",
+        "func": "const entity = msg.data.entity_id;\nconst booleanEntity = entity.replace('input_datetime', 'input_boolean');\nreturn {\n    data: {\n        \"entity_id\": booleanEntity   \n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "c38c160d.9af028"
+            ]
+        ]
+    },
+    {
+        "id": "c38c160d.9af028",
+        "type": "api-current-state",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "{{data.entity_id}}",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 170,
         "y": 260,
         "wires": [
             [
-                "e10bb0f2.06b16"
+                "9c7f0498.01f188"
             ]
         ]
+    },
+    {
+        "id": "a22622e9.a714d",
+        "type": "delay",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 460,
+        "y": 260,
+        "wires": [
+            [
+                "3bc50a55.b9af76"
+            ]
+        ]
+    },
+    {
+        "id": "3228deac.d96982",
+        "type": "comment",
+        "z": "955dbfd5.2d3eb",
+        "name": "Duration Update",
+        "info": "Change Get duration node to update the time between watering any plant",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4b7072a0.47fa7c",
+        "type": "debug",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 100,
+        "wires": []
     }
 ]
