@@ -673,7 +673,10 @@
         "x": 630,
         "y": 140,
         "wires": [
-            []
+            [
+                "be42f3e1.aa2a1",
+                "499f21fb.529f2"
+            ]
         ]
     },
     {
@@ -730,7 +733,8 @@
         "y": 640,
         "wires": [
             [
-                "cacdd83b.903998"
+                "cacdd83b.903998",
+                "51638189.eed75"
             ],
             []
         ]
@@ -1668,13 +1672,13 @@
         "id": "36b728b3.a353a8",
         "type": "change",
         "z": "d9fe96b5.8701c8",
-        "name": "Bightness 50",
+        "name": "Bightness 65",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "50",
+                "to": "65",
                 "tot": "str"
             }
         ],
@@ -2372,25 +2376,6 @@
         ]
     },
     {
-        "id": "71c04cd.e7fc9b4",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "After 11 PM?",
-        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(23);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nif (now > cutoff) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 390,
-        "y": 1500,
-        "wires": [
-            [
-                "d1b99c80.7fc79"
-            ],
-            []
-        ]
-    },
-    {
         "id": "d1b99c80.7fc79",
         "type": "api-call-service",
         "z": "d9fe96b5.8701c8",
@@ -2407,7 +2392,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 590,
+        "x": 650,
         "y": 1500,
         "wires": [
             []
@@ -3063,7 +3048,7 @@
         "type": "function",
         "z": "955dbfd5.2d3eb",
         "name": "Long enough?",
-        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 21;\n    const isWeekendTime = hour >= 9 && hour <= 22;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
+        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3156,7 +3141,6 @@
         "wires": [
             [
                 "380ddbb1.7506c4",
-                "6905188a.2cbe08",
                 "a22622e9.a714d",
                 "5da531f4.e1346"
             ],
@@ -3214,7 +3198,8 @@
         "y": 140,
         "wires": [
             [
-                "e532b4bb.4cc058"
+                "e532b4bb.4cc058",
+                "3ac1873d.18c6d8"
             ]
         ]
     },
@@ -3347,6 +3332,744 @@
             [
                 "c38c160d.9af028"
             ]
+        ]
+    },
+    {
+        "id": "71c04cd.e7fc9b4",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "After 11 PM or before 5 AM?",
+        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(23);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nlet cutoffMorning = new Date();\ncutoff.setHours(5);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\n\nif (now > cutoff || now < cutoffMorning) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 1500,
+        "wires": [
+            [
+                "d1b99c80.7fc79"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "be42f3e1.aa2a1",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Turn on light",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.cabinet_light",
+        "data": "{ \"entity_id\": \"switch.cabinet_light\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 830,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "499f21fb.529f2",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Open back door",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "unlock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 840,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "51638189.eed75",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Lock back door",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "lock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 300,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cad44f85.13f6a",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Back Door unlocked",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "lock.back_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "unlocked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 2000,
+        "wires": [
+            [
+                "c4559723.437258"
+            ],
+            [
+                "95826ba6.719328"
+            ]
+        ]
+    },
+    {
+        "id": "c4559723.437258",
+        "type": "trigger",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "15",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 2000,
+        "wires": [
+            [
+                "7ce5cedf.20459"
+            ]
+        ]
+    },
+    {
+        "id": "95826ba6.719328",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 2060,
+        "wires": [
+            [
+                "c4559723.437258"
+            ]
+        ]
+    },
+    {
+        "id": "7ce5cedf.20459",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Lock back door",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "lock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 560,
+        "y": 2000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ac1873d.18c6d8",
+        "type": "switch",
+        "z": "955dbfd5.2d3eb",
+        "name": "Not watered",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 110,
+        "y": 480,
+        "wires": [
+            [
+                "e1196b91.e22938"
+            ],
+            [
+                "206aa37a.3ec14c"
+            ]
+        ]
+    },
+    {
+        "id": "e1196b91.e22938",
+        "type": "trigger",
+        "z": "955dbfd5.2d3eb",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "24",
+        "extend": false,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 350,
+        "y": 480,
+        "wires": [
+            [
+                "8906138a.b5a3c"
+            ]
+        ]
+    },
+    {
+        "id": "206aa37a.3ec14c",
+        "type": "change",
+        "z": "955dbfd5.2d3eb",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 540,
+        "wires": [
+            [
+                "e1196b91.e22938"
+            ]
+        ]
+    },
+    {
+        "id": "a292cecd.4bde6",
+        "type": "comment",
+        "z": "955dbfd5.2d3eb",
+        "name": "Keep reminding every 24 hours",
+        "info": "",
+        "x": 410,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "69368e4a.f5ef",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Back Door jammed",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.back_door_status",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "Deadbolt Jammed",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 2140,
+        "wires": [
+            [
+                "e7ef2c28.29f4b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e7ef2c28.29f4b",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ ⚠️ Back door lock jammed!\",\"data\":{\"tag\":\"lock.back_door.error\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified jammed\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 2140,
+        "wires": [
+            [
+                "62f0d6b3.3db638"
+            ]
+        ]
+    },
+    {
+        "id": "62f0d6b3.3db638",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "x": 560,
+        "y": 2140,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6811e4c7.efddec",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Back Door low battery",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.back_door_status",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "Low Battery",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 140,
+        "y": 2220,
+        "wires": [
+            [
+                "6810334d.3823cc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6810334d.3823cc",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ Back door lock has low battery\",\"data\":{\"tag\":\"lock.back_door.low_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified low battery\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 2220,
+        "wires": [
+            [
+                "2a7d9855.ce21e8"
+            ]
+        ]
+    },
+    {
+        "id": "2a7d9855.ce21e8",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "x": 560,
+        "y": 2220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c4cfbfda.92011",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Back Door critical battery",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.back_door_status",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "Critical Battery Level",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 2300,
+        "wires": [
+            [
+                "6887c24b.752f6c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6887c24b.752f6c",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ ⚠️ Back door lock has at critical battery level!\",\"data\":{\"tag\":\"lock.back_door.critical_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified critical battery level\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 2300,
+        "wires": [
+            [
+                "72cfcbbd.9cf054"
+            ]
+        ]
+    },
+    {
+        "id": "72cfcbbd.9cf054",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [],
+        "x": 560,
+        "y": 2300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "86849de1.7c9e3",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "10:30 PM weekday ",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 22 * * 1,2,3,4,0",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 2440,
+        "wires": [
+            [
+                "36cbf9fa.832436"
+            ]
+        ]
+    },
+    {
+        "id": "36cbf9fa.832436",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Start humidifier",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.master_bedroom_humidifier",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 360,
+        "y": 2440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44d80759.960018",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Humidifier",
+        "info": "",
+        "x": 100,
+        "y": 2400,
+        "wires": []
+    },
+    {
+        "id": "d77576d6.333c78",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "11:30 PM weekend",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 23 * * 5,6",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 2500,
+        "wires": [
+            [
+                "35f4852.4157a7a"
+            ]
+        ]
+    },
+    {
+        "id": "35f4852.4157a7a",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Start humidifier",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.master_bedroom_humidifier",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 360,
+        "y": 2500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b208104b.c619c",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "8:00 AM weekday ",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 08 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 2560,
+        "wires": [
+            [
+                "39525052.942af"
+            ]
+        ]
+    },
+    {
+        "id": "39525052.942af",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Stop humidifier",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.master_bedroom_humidifier",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 360,
+        "y": 2560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a204f83.aa742",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "9:00 AM weekend",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 09 * * 6,0",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 2620,
+        "wires": [
+            [
+                "ecca453f.83fc38"
+            ]
+        ]
+    },
+    {
+        "id": "ecca453f.83fc38",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Stop humidifier",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.master_bedroom_humidifier",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 360,
+        "y": 2620,
+        "wires": [
+            []
         ]
     }
 ]
