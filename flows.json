@@ -35,6 +35,13 @@
         "info": ""
     },
     {
+        "id": "7593ec4d.460434",
+        "type": "tab",
+        "label": "Garage door notification",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -3030,7 +3037,7 @@
         "type": "function",
         "z": "955dbfd5.2d3eb",
         "name": "Get duration",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst durationMap = {\n    // 2 days\n    'input_boolean.plant_aero_herbs': 60*60*24*2,\n    \n    // 1 month\n    'input_boolean.plant_cactuses': 60*60*24*30,\n    \n    // 3 weeks\n    'input_boolean.plant_jade': 60*60*24*7*3,\n    \n    // 2.5 days\n    'input_boolean.plant_mums': 60*60*24*2.5,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_big': 60*60*24*7*2,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_small': 60*60*24*7*2,\n    \n    // 3 weeks\n    'input_boolean.plant_zz': 60*60*24*7*3,\n    \n    // 1 week\n    'input_boolean.plant_basil': 60*60*24*7,\n    \n    'input_boolean.plant_fake': 70,\n    \n    'input_boolean.plant_fake_2': 125,\n}\n\nconst duration = durationMap[entity] || 0;\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst durationMap = {\n    // 2 days\n    'input_boolean.plant_aero_herbs': 60*60*24*2,\n    \n    // 1 month\n    'input_boolean.plant_cactuses': 60*60*24*30,\n    \n    // 3 weeks\n    'input_boolean.plant_jade': 60*60*24*7*3,\n    \n    // 2.5 days\n    'input_boolean.plant_mums': 60*60*24*2.5,\n    \n    // 1.5 weeks\n    'input_boolean.plant_pothos_big': 60*60*24*7*1.5,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_small': 60*60*24*7*2,\n    \n    // 2.5 weeks\n    'input_boolean.plant_zz': 60*60*24*7*2.5,\n    \n    // 6 days\n    'input_boolean.plant_basil': 60*60*24*6,\n    \n    'input_boolean.plant_fake': 70,\n    \n    'input_boolean.plant_fake_2': 125,\n}\n\nconst duration = durationMap[entity] || 0;\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3048,7 +3055,7 @@
         "type": "function",
         "z": "955dbfd5.2d3eb",
         "name": "Long enough?",
-        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 16 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
+        "func": "const current = new Date();\nconst whenToWater = new Date(msg.payload);\n// minus 6 hours so it can notify earlier\nwhenToWater.setSeconds(whenToWater.getSeconds() + msg.duration - 60*60*6);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 19 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3339,7 +3346,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "After 11 PM or before 5 AM?",
-        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(23);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nlet cutoffMorning = new Date();\ncutoff.setHours(5);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\n\nif (now > cutoff || now < cutoffMorning) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
+        "func": "const now = new Date();\nlet cutoff = new Date();\ncutoff.setHours(23);\ncutoff.setMinutes(0);\ncutoff.setSeconds(0);\ncutoff.setMilliseconds(0);\n\nlet cutoffMorning = new Date();\ncutoffMorning.setHours(5);\ncutoffMorning.setMinutes(0);\ncutoffMorning.setSeconds(0);\ncutoffMorning.setMilliseconds(0);\n\n\nif (now > cutoff || now < cutoffMorning) {\n    return [{ payload: true }, null]\n}\n\nreturn [null, { payload: true }];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -3573,9 +3580,9 @@
         "z": "955dbfd5.2d3eb",
         "name": "",
         "op1": "",
-        "op2": "0",
+        "op2": "",
         "op1type": "nul",
-        "op2type": "str",
+        "op2type": "pay",
         "duration": "24",
         "extend": false,
         "units": "hr",
@@ -3858,7 +3865,7 @@
         "id": "86849de1.7c9e3",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "10:30 PM weekday ",
+        "name": "9 PM weekday ",
         "props": [
             {
                 "p": "payload"
@@ -3869,13 +3876,13 @@
             }
         ],
         "repeat": "",
-        "crontab": "30 22 * * 1,2,3,4,0",
+        "crontab": "00 21 * * 1,2,3,4,0",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
+        "x": 120,
         "y": 2440,
         "wires": [
             [
@@ -3920,7 +3927,7 @@
         "id": "d77576d6.333c78",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "11:30 PM weekend",
+        "name": "10:30 PM weekend",
         "props": [
             {
                 "p": "payload"
@@ -3931,7 +3938,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "30 23 * * 5,6",
+        "crontab": "30 22 * * 5,6",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -3941,38 +3948,15 @@
         "y": 2500,
         "wires": [
             [
-                "35f4852.4157a7a"
+                "36cbf9fa.832436"
             ]
-        ]
-    },
-    {
-        "id": "35f4852.4157a7a",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Start humidifier",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "switch",
-        "service": "turn_on",
-        "entityId": "switch.master_bedroom_humidifier",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 360,
-        "y": 2500,
-        "wires": [
-            []
         ]
     },
     {
         "id": "b208104b.c619c",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "8:00 AM weekday ",
+        "name": "8:30 AM weekday ",
         "props": [
             {
                 "p": "payload"
@@ -3983,7 +3967,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 08 * * 1,2,3,4,5",
+        "crontab": "30 08 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -4024,7 +4008,7 @@
         "id": "4a204f83.aa742",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "9:00 AM weekend",
+        "name": "9:30 AM weekend",
         "props": [
             {
                 "p": "payload"
@@ -4035,7 +4019,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 09 * * 6,0",
+        "crontab": "30 09 * * 6,0",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -4045,31 +4029,664 @@
         "y": 2620,
         "wires": [
             [
-                "ecca453f.83fc38"
+                "39525052.942af"
             ]
         ]
     },
     {
-        "id": "ecca453f.83fc38",
+        "id": "a9609c01.ce21b",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "347b9f53.a8da"
+            ],
+            [
+                "da9fa58a.72ff18"
+            ]
+        ]
+    },
+    {
+        "id": "347b9f53.a8da",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Warning enabled",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.gargage_door_warning",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "9ac99fb8.a6ed"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c4a08510.ca05d8",
+        "type": "trigger",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "-10",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 550,
+        "y": 120,
+        "wires": [
+            [
+                "3aa9a529.29ef6a"
+            ]
+        ]
+    },
+    {
+        "id": "da9fa58a.72ff18",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "9ac99fb8.a6ed",
+                "c4a08510.ca05d8"
+            ]
+        ]
+    },
+    {
+        "id": "111871a0.bad0ae",
+        "type": "subflow:670bc302.cb732c",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "x": 740,
+        "y": 260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "984dd037.9e4b4",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 200,
+        "wires": [
+            [
+                "111871a0.bad0ae"
+            ]
+        ]
+    },
+    {
+        "id": "d86eb4ce.54d518",
+        "type": "trigger-state",
+        "z": "7593ec4d.460434",
+        "name": "Get home",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.minh_home",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "josb7w1otd",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "True"
+            },
+            {
+                "id": "bcqqpcgvs1",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "previous_state",
+                "propertyValue": "old_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "False"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "e1b46cde.5dab5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "aaf19894.a381b8",
+        "type": "trigger",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "10",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 550,
+        "y": 400,
+        "wires": [
+            [
+                "5685809b.c0085"
+            ]
+        ]
+    },
+    {
+        "id": "e1b46cde.5dab5",
         "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Stop humidifier",
+        "z": "7593ec4d.460434",
+        "name": "Disable garage warning",
         "server": "3efaa203.1c443e",
         "version": 1,
         "debugenabled": false,
-        "service_domain": "switch",
+        "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "switch.master_bedroom_humidifier",
+        "entityId": "input_boolean.gargage_door_warning",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 360,
-        "y": 2620,
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "aaf19894.a381b8"
+            ]
+        ]
+    },
+    {
+        "id": "5685809b.c0085",
+        "type": "api-call-service",
+        "z": "7593ec4d.460434",
+        "name": "Enable garage warning",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.gargage_door_warning",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 770,
+        "y": 400,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "3aa9a529.29ef6a",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Warning enabled",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.gargage_door_warning",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 750,
+        "y": 120,
+        "wires": [
+            [
+                "e41223ca.c24a6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9ac99fb8.a6ed",
+        "type": "trigger",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "2",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 530,
+        "y": 60,
+        "wires": [
+            [
+                "c4a08510.ca05d8"
+            ]
+        ]
+    },
+    {
+        "id": "2a40a77b.5a7148",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Enable garage warning",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.gargage_door_warning",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "809e99b1.f2ba98"
+            ],
+            [
+                "da9fa58a.72ff18"
+            ]
+        ]
+    },
+    {
+        "id": "809e99b1.f2ba98",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Garage open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "cover.garage_door",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "9ac99fb8.a6ed"
+            ],
+            [
+                "da9fa58a.72ff18"
+            ]
+        ]
+    },
+    {
+        "id": "e41223ca.c24a6",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Garage open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "cover.garage_door",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "984dd037.9e4b4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b043ac1b.3f68a",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 500,
+        "wires": [
+            [
+                "62325850.5356e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "62325850.5356e8",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Sun set",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "below_horizon",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sun.sun",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 320,
+        "y": 500,
+        "wires": [
+            [
+                "6464d7fb.bb0678"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6464d7fb.bb0678",
+        "type": "trigger",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "15",
+        "extend": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "9648c538.59c178"
+            ]
+        ]
+    },
+    {
+        "id": "9648c538.59c178",
+        "type": "api-call-service",
+        "z": "7593ec4d.460434",
+        "name": "Close garage",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "close_cover",
+        "entityId": "cover.garage_door",
+        "data": "{ \"entity_id\": \"cover.garage_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 670,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2b48b11f.ca6a7e",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Disable garage warning",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.gargage_door_warning",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 140,
+        "y": 580,
+        "wires": [
+            [
+                "fa99b072.45622"
+            ],
+            [
+                "24457bf.84a1d84"
+            ]
+        ]
+    },
+    {
+        "id": "fa99b072.45622",
+        "type": "trigger",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "1",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 580,
+        "wires": [
+            [
+                "cd8b8ef3.f628d"
+            ]
+        ]
+    },
+    {
+        "id": "cd8b8ef3.f628d",
+        "type": "api-call-service",
+        "z": "7593ec4d.460434",
+        "name": "Enable garage warning",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.gargage_door_warning",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 590,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24457bf.84a1d84",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 90,
+        "y": 640,
+        "wires": [
+            [
+                "fa99b072.45622"
+            ]
         ]
     }
 ]
