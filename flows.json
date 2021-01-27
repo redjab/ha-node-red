@@ -4781,10 +4781,10 @@
         "outputinitially": false,
         "state_type": "str",
         "x": 100,
-        "y": 800,
+        "y": 860,
         "wires": [
             [
-                "848bdc33.a57dd"
+                "f5d444ad.1f8228"
             ],
             []
         ]
@@ -4806,7 +4806,7 @@
                 "type": "json"
             }
         ],
-        "x": 500,
+        "x": 540,
         "y": 800,
         "wires": [
             [],
@@ -4832,7 +4832,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 320,
+        "x": 340,
         "y": 800,
         "wires": [
             [
@@ -4863,7 +4863,7 @@
         "y": 740,
         "wires": [
             [
-                "ef87250c.b33c88"
+                "937ce12.014472"
             ],
             [
                 "5b0ed22c.3d17dc"
@@ -4874,13 +4874,13 @@
         "id": "ef87250c.b33c88",
         "type": "switch",
         "z": "7593ec4d.460434",
-        "name": "Gone for >30mins",
-        "property": "data.timeSinceChangedMs",
+        "name": "Gone for >20 mins",
+        "property": "custom.time_passed_minutes",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "gte",
-                "v": "1.8e+6",
+                "v": "20",
                 "vt": "num"
             },
             {
@@ -4890,7 +4890,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 330,
+        "x": 490,
         "y": 740,
         "wires": [
             [
@@ -4918,7 +4918,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 830,
+        "x": 990,
         "y": 800,
         "wires": [
             []
@@ -4941,7 +4941,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 840,
+        "x": 1000,
         "y": 840,
         "wires": [
             []
@@ -4964,7 +4964,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 830,
+        "x": 990,
         "y": 740,
         "wires": [
             [
@@ -4984,7 +4984,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Home\",\"message\":\"Welcome home! Gargage and back door have been unlocked.\",\"data\":{\"tag\":\"tracker.home.warning\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close garage\",\"action\":\"notification.garage.close\"}]}},\"log\":{\"entity_id\":\"sensor.minh_home\",\"message\":\"notified welcome home\",\"domain\":\"notify\"}}",
+                "to": "{\"notification\":{\"title\":\"Home\",\"message\":\"Welcome home! Gargage and back door have been unlocked.\",\"data\":{\"tag\":\"tracker.home.warning\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close garage\",\"action\":\"notification.garage.close\"}]}},\"log\":{\"name\":\"Minh Home (Node Red)\",\"entity_id\":\"sensor.minh_home\",\"message\":\"notified welcome home\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -5035,7 +5035,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 580,
+        "x": 740,
         "y": 740,
         "wires": [
             [
@@ -5079,7 +5079,7 @@
         "wires": [
             [
                 "35ff688c.a37368",
-                "19e4fd1c.9dad93"
+                "d84e8051.7cbaf"
             ],
             []
         ]
@@ -5152,8 +5152,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 300,
-        "y": 1020,
+        "x": 500,
+        "y": 1040,
         "wires": [
             []
         ]
@@ -5174,7 +5174,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 650,
+        "x": 810,
         "y": 680,
         "wires": [
             [
@@ -5199,7 +5199,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 830,
+        "x": 990,
         "y": 680,
         "wires": [
             []
@@ -5232,7 +5232,7 @@
         "halt_if_compare": "is",
         "outputs": 2,
         "output_only_on_state_change": true,
-        "x": 330,
+        "x": 490,
         "y": 680,
         "wires": [
             [
@@ -5260,11 +5260,84 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 650,
         "y": 680,
         "wires": [
             [
                 "c7b8b7d5.b46958"
+            ]
+        ]
+    },
+    {
+        "id": "d84e8051.7cbaf",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Not locked",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "unlocked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "lock.back_door",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 290,
+        "y": 1040,
+        "wires": [
+            [
+                "19e4fd1c.9dad93"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "937ce12.014472",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Home status",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.minh_home",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 310,
+        "y": 740,
+        "wires": [
+            [
+                "ef87250c.b33c88"
+            ]
+        ]
+    },
+    {
+        "id": "f5d444ad.1f8228",
+        "type": "function",
+        "z": "7593ec4d.460434",
+        "name": "Time passed",
+        "func": "const after = new Date(msg.data.event.new_state.last_changed);\nconst before = new Date(msg.data.event.old_state.last_changed);\n\nmsg.custom = {\n    time_passed_minutes: (after - before) / 1000 / 60\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 110,
+        "y": 800,
+        "wires": [
+            [
+                "848bdc33.a57dd"
             ]
         ]
     }
