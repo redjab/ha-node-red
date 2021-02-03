@@ -2788,7 +2788,7 @@
         "type": "function",
         "z": "955dbfd5.2d3eb",
         "name": "Get duration",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst durationMap = {\n    // 2 days\n    'input_boolean.plant_aero_herbs': 60*60*24*2,\n    \n    // 1 month\n    'input_boolean.plant_cactuses': 60*60*24*30,\n    \n    // 3 weeks\n    'input_boolean.plant_jade': 60*60*24*7*3,\n    \n    // 2.5 days\n    'input_boolean.plant_mums': 60*60*24*2.5,\n    \n    // 1.5 weeks\n    'input_boolean.plant_pothos_big': 60*60*24*7*1.5,\n    \n    // 2 weeks\n    'input_boolean.plant_pothos_small': 60*60*24*7*2,\n    \n    // 2.5 weeks\n    'input_boolean.plant_zz': 60*60*24*7*2.5,\n    \n    // 8 days\n    'input_boolean.plant_basil': 60*60*24*8,\n    \n    'input_boolean.plant_fake': 70,\n    \n    'input_boolean.plant_fake_2': 125,\n}\n\nconst duration = durationMap[entity] || 0;\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst duration = entity.replace('input_boolean', 'number');\n\nif (!duration) {\n    node.error(`Not found or zero ${entity}`);\n}\n\nif (duration > 0) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration,\n    }, null];\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
