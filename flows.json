@@ -2806,7 +2806,7 @@
         "type": "function",
         "z": "955dbfd5.2d3eb",
         "name": "Long enough?",
-        "func": "const current = new Date();\nconst whenToWater = new Date(msg.date_payload);\n// convert to seconds\nconst duration = parseFloat(msg.duration_payload) * 24 * 60 * 60;\n\n// minus 6 hours so it can notify earlier\nwhenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*6);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 19 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
+        "func": "const current = new Date();\nconst whenToWater = new Date(msg.date_payload);\n// convert to seconds\nconst duration = parseFloat(msg.duration_payload) * 24 * 60 * 60;\n\n// minus 6 hours so it can notify earlier\nwhenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*6);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 18 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5048,43 +5048,6 @@
         ]
     },
     {
-        "id": "d1d3ff0e.a8c26",
-        "type": "server-state-changed",
-        "z": "7593ec4d.460434",
-        "name": "Leave home",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "device_tracker.phone_m",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "not_home",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 110,
-        "y": 980,
-        "wires": [
-            [
-                "35ff688c.a37368",
-                "d84e8051.7cbaf"
-            ],
-            []
-        ]
-    },
-    {
         "id": "a1c016c8.f65298",
         "type": "subflow:670bc302.cb732c",
         "z": "7593ec4d.460434",
@@ -5419,6 +5382,53 @@
             [
                 "fdcae5ac.b73578"
             ]
+        ]
+    },
+    {
+        "id": "83d1999c.6ec8e8",
+        "type": "trigger-state",
+        "z": "7593ec4d.460434",
+        "name": "Leave home",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "sensor.minh_home",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "p685nuwsn7b",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "False"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": false,
+        "state_type": "str",
+        "x": 110,
+        "y": 980,
+        "wires": [
+            [
+                "35ff688c.a37368",
+                "d84e8051.7cbaf"
+            ],
+            []
         ]
     }
 ]
