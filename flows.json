@@ -134,7 +134,6 @@
     {
         "id": "3efaa203.1c443e",
         "type": "server",
-        "z": "",
         "name": "Home Assistant",
         "legacy": false,
         "addon": false,
@@ -157,6 +156,7 @@
         "id": "a4a51bd5.cbf1a8",
         "type": "server-state-changed",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "If it's rainy",
         "server": "3efaa203.1c443e",
         "version": 1,
@@ -307,6 +307,7 @@
         "id": "d5b4c56e.e9c588",
         "type": "trigger-state",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "Rain stopped",
         "server": "3efaa203.1c443e",
         "exposeToHomeAssistant": false,
@@ -542,10 +543,10 @@
         "id": "3ea02219.60e39e",
         "type": "inject",
         "z": "e2c67c6c.68265",
-        "name": "8 PM Wednesday",
+        "name": "8:30 AM Thursday",
         "props": [],
         "repeat": "",
-        "crontab": "00 20 * * 3",
+        "crontab": "30 08 * * 4",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -2126,7 +2127,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": `✉️ ${msg.payload} New mail(s) coming today (around 1 PM)`,\n        \"data\": {\n            \"tag\": \"mail.coming\"\n        }\n    },\n    \"log\": {\n        \"name\": `USPS (${msg.payload})`,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\nconst url = states[\"sensor.mail_image_url\"].state;\n\nreturn {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Mails & Packages\",\n        \"message\": `✉️ ${msg.payload} New mail(s) coming today (around 1 PM)`,\n        \"data\": {\n            \"tag\": \"mail.coming\",\n            \"image\": url\n        }\n    },\n    \"log\": {\n        \"name\": `USPS (${msg.payload})`,\n        \"entity_id\": \"sensor.mail_usps_mail\",\n        \"message\": \"notified coming today\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3500,7 +3501,7 @@
         "id": "86849de1.7c9e3",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "9 PM weekday ",
+        "name": "10:30 PM weekday ",
         "props": [
             {
                 "p": "payload"
@@ -3511,13 +3512,13 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 21 * * 1,2,3,4,0",
+        "crontab": "30 22 * * 1,2,3,4,0",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 120,
+        "x": 140,
         "y": 2440,
         "wires": [
             [
@@ -3562,7 +3563,7 @@
         "id": "d77576d6.333c78",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "10:30 PM weekend",
+        "name": "11:30 PM weekend",
         "props": [
             {
                 "p": "payload"
@@ -3573,7 +3574,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "30 22 * * 5,6",
+        "crontab": "30 23 * * 5,6",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
