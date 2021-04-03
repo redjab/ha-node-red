@@ -496,11 +496,21 @@
                 "v": "notification\\.plant\\.input_boolean\\..*\\.watered",
                 "vt": "str",
                 "case": true
+            },
+            {
+                "t": "eq",
+                "v": "notification.washing_machine.open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.humidifier.fill",
+                "vt": "str"
             }
         ],
         "checkall": "false",
         "repair": false,
-        "outputs": 4,
+        "outputs": 6,
         "x": 430,
         "y": 180,
         "wires": [
@@ -513,7 +523,13 @@
             [
                 "e38a2c4c.2afee"
             ],
-            []
+            [],
+            [
+                "72da23c9.44b4bc"
+            ],
+            [
+                "da01d7df.4fbd18"
+            ]
         ]
     },
     {
@@ -762,7 +778,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 120,
-        "y": 780,
+        "y": 800,
         "wires": [
             [
                 "b60867ef.dba148"
@@ -798,7 +814,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 120,
-        "y": 840,
+        "y": 860,
         "wires": [
             [
                 "230417ea.7965a8"
@@ -834,7 +850,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 120,
-        "y": 900,
+        "y": 920,
         "wires": [
             [
                 "b43bd907.3ae248"
@@ -860,7 +876,7 @@
             }
         ],
         "x": 720,
-        "y": 880,
+        "y": 900,
         "wires": [
             [],
             []
@@ -886,7 +902,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 780,
+        "y": 800,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -913,7 +929,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 840,
+        "y": 860,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -940,7 +956,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 900,
+        "y": 920,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -954,7 +970,7 @@
         "name": "New package(s) delivered",
         "info": "",
         "x": 150,
-        "y": 720,
+        "y": 760,
         "wires": []
     },
     {
@@ -1074,7 +1090,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 130,
-        "y": 960,
+        "y": 980,
         "wires": [
             [
                 "91d7fb52.d922d8"
@@ -1102,7 +1118,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 960,
+        "y": 980,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -1168,7 +1184,7 @@
         "initialize": "",
         "finalize": "",
         "x": 540,
-        "y": 880,
+        "y": 900,
         "wires": [
             [
                 "601b8ab1.27f8e4"
@@ -1251,7 +1267,9 @@
         "x": 300,
         "y": 420,
         "wires": [
-            []
+            [
+                "35e31cc.f48d0e4"
+            ]
         ]
     },
     {
@@ -5429,6 +5447,395 @@
                 "35ff688c.a37368",
                 "d84e8051.7cbaf"
             ],
+            []
+        ]
+    },
+    {
+        "id": "3a1734ff.f66c3c",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "Check washer open",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "2f36c481.ff36fc"
+            ]
+        ]
+    },
+    {
+        "id": "2f36c481.ff36fc",
+        "type": "api-current-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Washer open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.washing_machine_open",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 350,
+        "y": 520,
+        "wires": [
+            [
+                "ece4b2e0.a9fe6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "58d79d93.8c6ac4",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 720,
+        "y": 520,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ece4b2e0.a9fe6",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Washing machine is closed\",\"message\":\" ⚠️ Washing machine needs to be open!\",\"data\":{\"tag\":\"washing_machine.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.washing_machine.open\"}]}},\"log\":{\"name\":\"Washing Machine (Node Red)\",\"entity_id\":\"input_boolean.washing_machine_open\",\"message\":\"notified closed warning\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 520,
+        "wires": [
+            [
+                "58d79d93.8c6ac4"
+            ]
+        ]
+    },
+    {
+        "id": "7f27f835.6c5048",
+        "type": "inject",
+        "z": "d9fe96b5.8701c8",
+        "name": "Check humidifier filled",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 15 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 580,
+        "wires": [
+            [
+                "444d24d.96311dc"
+            ]
+        ]
+    },
+    {
+        "id": "17e68f4b.b1d7b1",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 820,
+        "y": 580,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8e88caaa.092b08",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Humidifier needs to be filled\",\"message\":\" ⚠️ Humidifier needs to be filled!\",\"data\":{\"tag\":\"humidifier.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.humidifier.fill\"}]}},\"log\":{\"name\":\"Humidifier Filled (Node Red)\",\"entity_id\":\"input_boolean.humidifier_filled\",\"message\":\"notified not filled warning\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 580,
+        "wires": [
+            [
+                "17e68f4b.b1d7b1"
+            ]
+        ]
+    },
+    {
+        "id": "444d24d.96311dc",
+        "type": "api-current-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Last filled",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_datetime.humidifier_filled",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 360,
+        "y": 580,
+        "wires": [
+            [
+                "8de2244e.a54288"
+            ]
+        ]
+    },
+    {
+        "id": "8de2244e.a54288",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "> 36 hours",
+        "func": "const now = Date.now();\nconst lastFilled = new Date(msg.payload).getTime();\n// convert to hours\nconst duration = parseFloat(now - lastFilled) / (1000 * 60 * 60);\n\nif (duration > 36) {\n    return {\n        payload: true\n    };\n}\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 390,
+        "y": 640,
+        "wires": [
+            [
+                "8e88caaa.092b08",
+                "9b7b26f0.3f9c38"
+            ]
+        ]
+    },
+    {
+        "id": "14f44ef5.8a7cf1",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Humidifier filled",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.humidifier_filled",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 700,
+        "wires": [
+            [
+                "f2f853d4.1dfde"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fb6d520f.31ad7",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "",
+        "data": "{\"entity_id\":\"input_datetime.humidifier_filled\",\"datetime\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 580,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f2f853d4.1dfde",
+        "type": "api-current-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 330,
+        "y": 700,
+        "wires": [
+            [
+                "fb6d520f.31ad7"
+            ]
+        ]
+    },
+    {
+        "id": "9b7b26f0.3f9c38",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.humidifer_filled",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 660,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72da23c9.44b4bc",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Washing machine open",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.washing_machine_open",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 670,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da01d7df.4fbd18",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Humidifier filled",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.humidifier_filled",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 640,
+        "y": 320,
+        "wires": [
             []
         ]
     }
