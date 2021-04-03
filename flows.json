@@ -5583,7 +5583,8 @@
         "y": 580,
         "wires": [
             [
-                "444d24d.96311dc"
+                "444d24d.96311dc",
+                "bd47a6eb.3c0138"
             ]
         ]
     },
@@ -5604,8 +5605,8 @@
                 "type": "json"
             }
         ],
-        "x": 820,
-        "y": 580,
+        "x": 880,
+        "y": 640,
         "wires": [
             [],
             []
@@ -5630,7 +5631,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 620,
+        "x": 780,
         "y": 580,
         "wires": [
             [
@@ -5657,8 +5658,8 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 360,
-        "y": 580,
+        "x": 180,
+        "y": 640,
         "wires": [
             [
                 "8de2244e.a54288"
@@ -5675,12 +5676,12 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 390,
+        "x": 370,
         "y": 640,
         "wires": [
             [
-                "8e88caaa.092b08",
-                "9b7b26f0.3f9c38"
+                "9b7b26f0.3f9c38",
+                "28e14b7f.824894"
             ]
         ]
     },
@@ -5787,7 +5788,7 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 660,
+        "x": 640,
         "y": 640,
         "wires": [
             []
@@ -5837,6 +5838,57 @@
         "y": 320,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "bd47a6eb.3c0138",
+        "type": "api-current-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Humidifier not filed",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.humidifier_filled",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 390,
+        "y": 580,
+        "wires": [
+            [
+                "28e14b7f.824894"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "28e14b7f.824894",
+        "type": "delay",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 600,
+        "y": 580,
+        "wires": [
+            [
+                "8e88caaa.092b08"
+            ]
         ]
     }
 ]
