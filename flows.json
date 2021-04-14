@@ -5421,8 +5421,7 @@
         "y": 120,
         "wires": [
             [
-                "56a3295.df430d8",
-                "b00b2762.7f0028"
+                "56a3295.df430d8"
             ]
         ]
     },
@@ -5501,8 +5500,8 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 500,
-        "y": 380,
+        "x": 820,
+        "y": 440,
         "wires": [
             []
         ]
@@ -5516,15 +5515,16 @@
         "op2": "",
         "op1type": "nul",
         "op2type": "pay",
-        "duration": "24",
+        "duration": "90",
         "extend": true,
-        "units": "hr",
+        "overrideDelay": false,
+        "units": "min",
         "reset": "",
         "bytopic": "topic",
         "topic": "payload",
         "outputs": 1,
-        "x": 650,
-        "y": 560,
+        "x": 830,
+        "y": 500,
         "wires": [
             [
                 "f8c4a7e5.e93e88"
@@ -5545,16 +5545,17 @@
         "override_topic": false,
         "entity_id": "{{ payload }}",
         "state_type": "str",
-        "state_location": "payload",
+        "state_location": "state",
         "override_payload": "msg",
-        "entity_location": "data",
+        "entity_location": "payload",
         "override_data": "msg",
         "blockInputOverrides": false,
         "x": 880,
         "y": 560,
         "wires": [
             [
-                "b2663c23.c9e85"
+                "b2663c23.c9e85",
+                "5f9e6e1d.ebc3b"
             ]
         ]
     },
@@ -5580,8 +5581,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 810,
-        "y": 520,
+        "x": 410,
+        "y": 560,
         "wires": [
             [
                 "d709b13b.7f155"
@@ -5608,40 +5609,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 860,
-        "y": 380,
+        "x": 640,
+        "y": 500,
         "wires": [
             [
                 "5b1ced5b.fdb524"
-            ]
-        ]
-    },
-    {
-        "id": "9ac547ff.bb2b78",
-        "type": "inject",
-        "z": "57667353.82973c",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 840,
-        "y": 320,
-        "wires": [
-            [
-                "d709b13b.7f155"
             ]
         ]
     },
@@ -5669,33 +5641,6 @@
         "wires": [
             [
                 "d709b13b.7f155"
-            ]
-        ]
-    },
-    {
-        "id": "2537183.44607e8",
-        "type": "change",
-        "z": "57667353.82973c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "topic",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 440,
-        "y": 560,
-        "wires": [
-            [
-                "5b1ced5b.fdb524"
             ]
         ]
     },
@@ -5760,9 +5705,7 @@
                 "59b50e29.9a074",
                 "b3b4940e.a168f8"
             ],
-            [
-                "2537183.44607e8"
-            ]
+            []
         ]
     },
     {
@@ -5796,7 +5739,7 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Get correct input_datetime",
-        "func": "const entity = msg.payload.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nif (msg.topic === 'datetime') {\n    return null;\n}\n\nif (msg.old_state === 'on') {\n    return null;\n}\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
+        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5864,27 +5807,11 @@
         "type": "subflow:670bc302.cb732c",
         "z": "57667353.82973c",
         "name": "",
-        "x": 580,
+        "x": 660,
         "y": 180,
         "wires": [
             [],
             []
         ]
-    },
-    {
-        "id": "b00b2762.7f0028",
-        "type": "debug",
-        "z": "57667353.82973c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 880,
-        "y": 120,
-        "wires": []
     }
 ]
