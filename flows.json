@@ -5412,7 +5412,7 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Get which plants need to be watered",
-        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet entities = msg.payload || [];\nentities = entities.filter((entity) => !entity.entity_id.includes('fake'));\nconst lastWateredEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_datetime');\n    return states[dateEntityName];\n});\n\nconst daysBetweenEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_number');\n    return states[dateEntityName];\n});\n\nconst current = new Date();\nlet toNotify = [];\n\nfor (let index = 0; index < entities.length; index++) {\n    const whenToWater = new Date(lastWateredEntities[index].state);\n    // convert to seconds\n    const duration = parseFloat(daysBetweenEntities[index].state) * 24 * 60 * 60;\n    \n    // minus 8 hours so it can notify earlier\n    whenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*8);\n    \n    if (whenToWater <= current || entities[index] === 'off') {\n        toNotify.push(entities[index]);\n    }\n\n}\n\nreturn { payload: toNotify };",
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet entities = msg.payload || [];\nentities = entities.filter((entity) => !entity.entity_id.includes('fake'));\nconst lastWateredEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_datetime');\n    return states[dateEntityName];\n});\n\nconst daysBetweenEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_number');\n    return states[dateEntityName];\n});\n\nconst current = new Date();\nlet toNotify = [];\n\nfor (let index = 0; index < entities.length; index++) {\n    const whenToWater = new Date(lastWateredEntities[index].state);\n    // convert to seconds\n    const duration = parseFloat(daysBetweenEntities[index].state) * 24 * 60 * 60;\n    \n    // minus 8 hours so it can notify earlier\n    whenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*8);\n    \n    if (whenToWater <= current || entities[index].state === 'off') {\n        toNotify.push(entities[index]);\n    }\n\n}\n\nreturn { payload: toNotify };",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5421,7 +5421,8 @@
         "y": 120,
         "wires": [
             [
-                "56a3295.df430d8"
+                "56a3295.df430d8",
+                "b00b2762.7f0028"
             ]
         ]
     },
@@ -5869,5 +5870,21 @@
             [],
             []
         ]
+    },
+    {
+        "id": "b00b2762.7f0028",
+        "type": "debug",
+        "z": "57667353.82973c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 120,
+        "wires": []
     }
 ]
