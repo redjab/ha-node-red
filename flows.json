@@ -202,7 +202,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 120,
-        "y": 340,
+        "y": 300,
         "wires": [
             [
                 "c499881d.445368"
@@ -227,7 +227,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 550,
-        "y": 340,
+        "y": 300,
         "wires": [
             []
         ]
@@ -250,7 +250,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 350,
-        "y": 340,
+        "y": 300,
         "wires": [
             [
                 "795b7b3e.e3f064"
@@ -264,7 +264,7 @@
         "name": "Run vacumm every morning",
         "info": "",
         "x": 160,
-        "y": 300,
+        "y": 260,
         "wires": []
     },
     {
@@ -295,7 +295,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 110,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "d46beef9.4f088"
@@ -426,7 +426,7 @@
             }
         ],
         "x": 480,
-        "y": 420,
+        "y": 380,
         "wires": [
             [],
             []
@@ -1265,7 +1265,7 @@
         "to": "",
         "reg": false,
         "x": 300,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "35e31cc.f48d0e4"
@@ -5472,7 +5472,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 520,
+        "y": 460,
         "wires": [
             [
                 "2f36c481.ff36fc"
@@ -5483,7 +5483,7 @@
         "id": "2f36c481.ff36fc",
         "type": "api-current-state",
         "z": "d9fe96b5.8701c8",
-        "name": "Washer open",
+        "name": "Washer closed",
         "server": "3efaa203.1c443e",
         "version": 1,
         "outputs": 2,
@@ -5498,8 +5498,8 @@
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 350,
-        "y": 520,
+        "x": 360,
+        "y": 460,
         "wires": [
             [
                 "ece4b2e0.a9fe6"
@@ -5525,7 +5525,7 @@
             }
         ],
         "x": 720,
-        "y": 520,
+        "y": 460,
         "wires": [
             [],
             []
@@ -5551,7 +5551,7 @@
         "to": "",
         "reg": false,
         "x": 540,
-        "y": 520,
+        "y": 460,
         "wires": [
             [
                 "58d79d93.8c6ac4"
@@ -5573,14 +5573,14 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 15 * * *",
+        "crontab": "00 22 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
         "x": 150,
-        "y": 580,
+        "y": 540,
         "wires": [
             [
                 "444d24d.96311dc",
@@ -5606,7 +5606,7 @@
             }
         ],
         "x": 880,
-        "y": 640,
+        "y": 600,
         "wires": [
             [],
             []
@@ -5632,7 +5632,7 @@
         "to": "",
         "reg": false,
         "x": 780,
-        "y": 580,
+        "y": 540,
         "wires": [
             [
                 "17e68f4b.b1d7b1"
@@ -5659,7 +5659,7 @@
         "override_data": "msg",
         "blockInputOverrides": false,
         "x": 180,
-        "y": 640,
+        "y": 600,
         "wires": [
             [
                 "8de2244e.a54288"
@@ -5677,7 +5677,7 @@
         "initialize": "",
         "finalize": "",
         "x": 370,
-        "y": 640,
+        "y": 600,
         "wires": [
             [
                 "9b7b26f0.3f9c38",
@@ -5713,7 +5713,7 @@
         "outputs": 2,
         "output_only_on_state_change": true,
         "x": 120,
-        "y": 700,
+        "y": 660,
         "wires": [
             [
                 "f2f853d4.1dfde"
@@ -5739,7 +5739,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 580,
-        "y": 700,
+        "y": 660,
         "wires": [
             []
         ]
@@ -5764,7 +5764,7 @@
         "override_data": "msg",
         "blockInputOverrides": false,
         "x": 330,
-        "y": 700,
+        "y": 660,
         "wires": [
             [
                 "fb6d520f.31ad7"
@@ -5781,7 +5781,7 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.humidifer_filled",
+        "entityId": "input_boolean.humidifier_filled",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
@@ -5789,7 +5789,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 640,
-        "y": 640,
+        "y": 600,
         "wires": [
             []
         ]
@@ -5860,7 +5860,7 @@
         "override_data": "msg",
         "blockInputOverrides": false,
         "x": 390,
-        "y": 580,
+        "y": 540,
         "wires": [
             [
                 "28e14b7f.824894"
@@ -5884,11 +5884,321 @@
         "randomUnits": "seconds",
         "drop": true,
         "x": 600,
-        "y": 580,
+        "y": 540,
         "wires": [
             [
                 "8e88caaa.092b08"
             ]
         ]
+    },
+    {
+        "id": "2ea29c74.462574",
+        "type": "trigger-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Winix turbo",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "fan.winix_847207372989",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "bpcwko2qgb6",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "property",
+                "propertyValue": "new_state.attributes.speed",
+                "comparatorType": "is",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "turbo"
+            },
+            {
+                "id": "36265eeapux",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "property",
+                "propertyValue": "old_state.attributes.speed",
+                "comparatorType": "is_not",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "turbo"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": true,
+        "state_type": "str",
+        "x": 90,
+        "y": 2740,
+        "wires": [
+            [
+                "51eb4fd.f6670b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "51eb4fd.f6670b",
+        "type": "trigger",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "1",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 290,
+        "y": 2740,
+        "wires": [
+            [
+                "2dc9c39.e172d3c"
+            ]
+        ]
+    },
+    {
+        "id": "df0907e7.efa2c8",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 2800,
+        "wires": [
+            [
+                "51eb4fd.f6670b"
+            ]
+        ]
+    },
+    {
+        "id": "2dc9c39.e172d3c",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Set to auto",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "fan",
+        "service": "set_speed",
+        "entityId": "fan.winix_847207372989",
+        "data": "{\"entity_id\":\"fan.winix_847207372989\",\"speed\":\"auto\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 470,
+        "y": 2740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5324f899.7268c8",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Winix turn off turbo after 1 hour",
+        "info": "",
+        "x": 150,
+        "y": 2700,
+        "wires": []
+    },
+    {
+        "id": "1787113f.bba83f",
+        "type": "trigger-state",
+        "z": "d9fe96b5.8701c8",
+        "name": "Winix NOT turbo",
+        "server": "3efaa203.1c443e",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityid": "fan.winix_847207372989",
+        "entityidfiltertype": "exact",
+        "debugenabled": false,
+        "constraints": [
+            {
+                "id": "827f2z4zssx",
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "property",
+                "propertyValue": "new_state.attributes.speed",
+                "comparatorType": "is_not",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "turbo"
+            }
+        ],
+        "constraintsmustmatch": "all",
+        "outputs": 2,
+        "customoutputs": [],
+        "outputinitially": true,
+        "state_type": "str",
+        "x": 100,
+        "y": 2800,
+        "wires": [
+            [
+                "df0907e7.efa2c8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b853e4.ecccfc2",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Modem on after 3 mins off",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.modem",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 130,
+        "y": 2920,
+        "wires": [
+            [
+                "92c686bc.e47f38"
+            ],
+            [
+                "93f07550.984f18"
+            ]
+        ]
+    },
+    {
+        "id": "93f07550.984f18",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 190,
+        "y": 2980,
+        "wires": [
+            [
+                "92c686bc.e47f38"
+            ]
+        ]
+    },
+    {
+        "id": "92c686bc.e47f38",
+        "type": "trigger",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "3",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 390,
+        "y": 2920,
+        "wires": [
+            [
+                "240f1e6a.5425f2"
+            ]
+        ]
+    },
+    {
+        "id": "240f1e6a.5425f2",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Turn on",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.modem",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 570,
+        "y": 2920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ba4ecdd.03134",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Modem turn on after 3 mins off",
+        "info": "",
+        "x": 140,
+        "y": 2880,
+        "wires": []
     }
 ]
