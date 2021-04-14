@@ -28,16 +28,16 @@
         "info": ""
     },
     {
-        "id": "955dbfd5.2d3eb",
+        "id": "7593ec4d.460434",
         "type": "tab",
-        "label": "Water plants",
+        "label": "Garage door",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "7593ec4d.460434",
+        "id": "57667353.82973c",
         "type": "tab",
-        "label": "Garage door",
+        "label": "Water plants",
         "disabled": false,
         "info": ""
     },
@@ -2670,447 +2670,6 @@
         ]
     },
     {
-        "id": "ec5786c1.c3a078",
-        "type": "api-call-service",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_off",
-        "entityId": "",
-        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 1140,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8906138a.b5a3c",
-        "type": "subflow:670bc302.cb732c",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 1100,
-        "y": 220,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "e8487d1a.4b6d3",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Format for notification/log",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.data.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.data.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.data.entity_id}.remind`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.data.attributes.friendly_name})`,\n        \"entity_id\": `${msg.data.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1130,
-        "y": 160,
-        "wires": [
-            [
-                "8906138a.b5a3c"
-            ]
-        ]
-    },
-    {
-        "id": "8135cd3.b1f253",
-        "type": "api-call-service",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "input_datetime",
-        "service": "set_datetime",
-        "entityId": "",
-        "data": "{\"entity_id\":\"{{ entity_id }}\",\"datetime\":\"{{ payload }}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 1160,
-        "y": 40,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "380ddbb1.7506c4",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Get correct input_datetime",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nif (msg.topic === 'datetime') {\n    return null;\n}\n\nif (msg.old_state === 'on') {\n    return null;\n}\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 520,
-        "y": 40,
-        "wires": [
-            [
-                "15c2344c.a3941c"
-            ]
-        ]
-    },
-    {
-        "id": "15c2344c.a3941c",
-        "type": "api-current-state",
-        "z": "955dbfd5.2d3eb",
-        "name": "Current time",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "sensor.date_time_iso",
-        "state_type": "str",
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 810,
-        "y": 40,
-        "wires": [
-            [
-                "8135cd3.b1f253"
-            ]
-        ]
-    },
-    {
-        "id": "6905188a.2cbe08",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Get duration",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nconst durationEntity = entity.replace('input_boolean', 'input_number');\n\nif (!durationEntity) {\n    node.error(`Not found or zero ${entity}`);\n}\n\nif (durationEntity) {\n    return [{\n        data: msg.data,\n        entity_id: entity,\n        date_entity: dateEntity,\n        duration_entity: durationEntity,\n    }, null];\n}\nreturn [null, null];",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 470,
-        "y": 160,
-        "wires": [
-            [
-                "ec755d5e.5db34"
-            ]
-        ]
-    },
-    {
-        "id": "fdcae5ac.b73578",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Long enough?",
-        "func": "const current = new Date();\nconst whenToWater = new Date(msg.date_payload);\n// convert to seconds\nconst duration = parseFloat(msg.duration_payload) * 24 * 60 * 60;\n\n// minus 6 hours so it can notify earlier\nwhenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*6);\n\nif (whenToWater <= current) {\n    const day = current.getDay();\n    const hour = current.getHours();\n    const isWeekend = (day === 6) || (day === 0);\n    const isWeekdayTime = hour >= 18 && hour <= 22;\n    const isWeekendTime = hour >= 9 && hour <= 23;\n    \n    if ((isWeekend && isWeekendTime) || (!isWeekend && isWeekdayTime)) {\n        return [{\n            data: msg.data,\n            entity_id: msg.entity_id,\n        }, null];\n    }\n}\nreturn [null, null];",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 920,
-        "y": 160,
-        "wires": [
-            [
-                "e8487d1a.4b6d3",
-                "ec5786c1.c3a078",
-                "5da531f4.e1346"
-            ]
-        ]
-    },
-    {
-        "id": "ec755d5e.5db34",
-        "type": "api-current-state",
-        "z": "955dbfd5.2d3eb",
-        "name": "last water",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "{{date_entity}}",
-        "state_type": "str",
-        "state_location": "date_payload",
-        "override_payload": "msg",
-        "entity_location": "date_date",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 620,
-        "y": 160,
-        "wires": [
-            [
-                "ad8dab1.eb69a58"
-            ]
-        ]
-    },
-    {
-        "id": "3bc50a55.b9af76",
-        "type": "trigger",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "op1": "",
-        "op2": "0",
-        "op1type": "pay",
-        "op2type": "str",
-        "duration": "-15",
-        "extend": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "topic",
-        "topic": "data.entity_id",
-        "outputs": 1,
-        "x": 670,
-        "y": 260,
-        "wires": [
-            [
-                "6905188a.2cbe08"
-            ]
-        ]
-    },
-    {
-        "id": "9c7f0498.01f188",
-        "type": "switch",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "on",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 270,
-        "y": 100,
-        "wires": [
-            [
-                "380ddbb1.7506c4",
-                "a22622e9.a714d",
-                "5da531f4.e1346"
-            ],
-            [
-                "5da531f4.e1346"
-            ]
-        ]
-    },
-    {
-        "id": "5da531f4.e1346",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Reset",
-        "func": "return {\n    data: {\n        entity_id: msg.data.entity_id\n    },\n    reset: true\n};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 450,
-        "y": 100,
-        "wires": [
-            [
-                "3bc50a55.b9af76"
-            ]
-        ]
-    },
-    {
-        "id": "5cd02ad8.fdb3f4",
-        "type": "server-state-changed",
-        "z": "955dbfd5.2d3eb",
-        "name": "Any plant",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_",
-        "entityidfiltertype": "substring",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "x": 100,
-        "y": 140,
-        "wires": [
-            [
-                "e532b4bb.4cc058"
-            ]
-        ]
-    },
-    {
-        "id": "89ccd596.ca4428",
-        "type": "server-state-changed",
-        "z": "955dbfd5.2d3eb",
-        "name": "Any plant watered time",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_datetime.plant_",
-        "entityidfiltertype": "substring",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "x": 140,
-        "y": 380,
-        "wires": [
-            [
-                "de996c7f.4fa89"
-            ]
-        ]
-    },
-    {
-        "id": "de996c7f.4fa89",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Get correct input_boolean",
-        "func": "const entity = msg.data.entity_id;\nconst booleanEntity = entity.replace('input_datetime', 'input_boolean');\nreturn {\n    topic: 'datetime',\n    data: {\n        \"entity_id\": booleanEntity   \n    }\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 150,
-        "y": 320,
-        "wires": [
-            [
-                "c38c160d.9af028"
-            ]
-        ]
-    },
-    {
-        "id": "c38c160d.9af028",
-        "type": "api-current-state",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "{{data.entity_id}}",
-        "state_type": "str",
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 170,
-        "y": 260,
-        "wires": [
-            [
-                "9c7f0498.01f188"
-            ]
-        ]
-    },
-    {
-        "id": "a22622e9.a714d",
-        "type": "delay",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "2",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 460,
-        "y": 260,
-        "wires": [
-            [
-                "3bc50a55.b9af76"
-            ]
-        ]
-    },
-    {
-        "id": "3228deac.d96982",
-        "type": "comment",
-        "z": "955dbfd5.2d3eb",
-        "name": "Duration Update",
-        "info": "Change Get duration node to update the time between watering any plant",
-        "x": 120,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "e532b4bb.4cc058",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Get old state",
-        "func": "msg.old_state = msg.data.old_state.state;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 110,
-        "y": 200,
-        "wires": [
-            [
-                "c38c160d.9af028"
-            ]
-        ]
-    },
-    {
         "id": "71c04cd.e7fc9b4",
         "type": "function",
         "z": "d9fe96b5.8701c8",
@@ -4344,335 +3903,6 @@
         ]
     },
     {
-        "id": "8fa2404f.3c815",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Find correct plant",
-        "func": "const action = msg.payload.event.action;\nconst re = /notification\\.plant\\.(input_boolean\\..*)\\..*/;\nconst groups = re.exec(action);\nif (groups && groups.length > 0) {\n    if (action.includes(\"watered\")) {\n        return [{ payload: groups[1] }, null];\n    }\n    \n    if (action.includes(\"remind\")) {\n        return [null, { payload: groups[1] }];\n    }\n\n}\nreturn [null, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 650,
-        "y": 500,
-        "wires": [
-            [
-                "d909dcb6.a7d45"
-            ],
-            [
-                "58e02d6d.121c54"
-            ]
-        ]
-    },
-    {
-        "id": "d909dcb6.a7d45",
-        "type": "api-call-service",
-        "z": "955dbfd5.2d3eb",
-        "name": "Watered",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_on",
-        "entityId": "",
-        "data": "{\"entity_id\":\"{{payload}}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "output_location": "",
-        "output_location_type": "none",
-        "mustacheAltTags": false,
-        "x": 860,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4100d430.15c68c",
-        "type": "server-events",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "event_type": "mobile_app_notification_action",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "waitForRunning": true,
-        "x": 190,
-        "y": 500,
-        "wires": [
-            [
-                "3c68977b.43f078"
-            ]
-        ]
-    },
-    {
-        "id": "3c68977b.43f078",
-        "type": "switch",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "property": "payload.event.action",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "regex",
-                "v": "notification\\.plant\\.input_boolean\\..*\\..*",
-                "vt": "str",
-                "case": true
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 450,
-        "y": 500,
-        "wires": [
-            [
-                "8fa2404f.3c815"
-            ]
-        ]
-    },
-    {
-        "id": "58e02d6d.121c54",
-        "type": "trigger",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "pay",
-        "duration": "24",
-        "extend": true,
-        "units": "hr",
-        "reset": "",
-        "bytopic": "topic",
-        "topic": "payload",
-        "outputs": 1,
-        "x": 870,
-        "y": 560,
-        "wires": [
-            [
-                "e1eb2791.f2b408"
-            ]
-        ]
-    },
-    {
-        "id": "e1eb2791.f2b408",
-        "type": "api-current-state",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "{{ payload }}",
-        "state_type": "str",
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 1100,
-        "y": 560,
-        "wires": [
-            [
-                "7ffeec88.3b97b4"
-            ]
-        ]
-    },
-    {
-        "id": "7ffeec88.3b97b4",
-        "type": "switch",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "on",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1030,
-        "y": 500,
-        "wires": [
-            [
-                "bb242b83.ace9e8"
-            ],
-            [
-                "e8487d1a.4b6d3"
-            ]
-        ]
-    },
-    {
-        "id": "bb242b83.ace9e8",
-        "type": "change",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 880,
-        "y": 440,
-        "wires": [
-            [
-                "58e02d6d.121c54"
-            ]
-        ]
-    },
-    {
-        "id": "4cde0340.990cec",
-        "type": "inject",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 690,
-        "y": 440,
-        "wires": [
-            [
-                "bb242b83.ace9e8"
-            ]
-        ]
-    },
-    {
-        "id": "5fb4b596.c747fc",
-        "type": "server-state-changed",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.plant_",
-        "entityidfiltertype": "substring",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "x": 180,
-        "y": 580,
-        "wires": [
-            [
-                "33ba7dbc.d08a12"
-            ],
-            [
-                "5a86280a.6f68f8"
-            ]
-        ]
-    },
-    {
-        "id": "33ba7dbc.d08a12",
-        "type": "change",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "topic",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 560,
-        "wires": [
-            [
-                "bb242b83.ace9e8"
-            ]
-        ]
-    },
-    {
-        "id": "5a86280a.6f68f8",
-        "type": "change",
-        "z": "955dbfd5.2d3eb",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "topic",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 460,
-        "y": 620,
-        "wires": [
-            [
-                "58e02d6d.121c54"
-            ]
-        ]
-    },
-    {
         "id": "9ef1f0da.1fa7e",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
@@ -5320,86 +4550,6 @@
         "wires": [
             [
                 "848bdc33.a57dd"
-            ]
-        ]
-    },
-    {
-        "id": "94baf0cc.44e5a",
-        "type": "server-state-changed",
-        "z": "955dbfd5.2d3eb",
-        "name": "Days between water change",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "number.plant_",
-        "entityidfiltertype": "substring",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "x": 420,
-        "y": 380,
-        "wires": [
-            [
-                "ae37436e.51662"
-            ]
-        ]
-    },
-    {
-        "id": "ae37436e.51662",
-        "type": "function",
-        "z": "955dbfd5.2d3eb",
-        "name": "Get correct input_boolean",
-        "func": "const entity = msg.data.entity_id;\nconst booleanEntity = entity.replace('input_number', 'input_boolean');\nreturn {\n    topic: 'number',\n    data: {\n        \"entity_id\": booleanEntity   \n    }\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 430,
-        "y": 320,
-        "wires": [
-            [
-                "c38c160d.9af028"
-            ]
-        ]
-    },
-    {
-        "id": "ad8dab1.eb69a58",
-        "type": "api-current-state",
-        "z": "955dbfd5.2d3eb",
-        "name": "duration",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "override_topic": false,
-        "entity_id": "{{duration_entity}}",
-        "state_type": "str",
-        "state_location": "duration_payload",
-        "override_payload": "msg",
-        "entity_location": "duration_duration",
-        "override_data": "msg",
-        "blockInputOverrides": false,
-        "x": 760,
-        "y": 160,
-        "wires": [
-            [
-                "fdcae5ac.b73578"
             ]
         ]
     },
@@ -6200,5 +5350,524 @@
         "x": 140,
         "y": 2880,
         "wires": []
+    },
+    {
+        "id": "5ed62372.70f88c",
+        "type": "inject",
+        "z": "57667353.82973c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 18 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "822040b7.781e7"
+            ]
+        ]
+    },
+    {
+        "id": "822040b7.781e7",
+        "type": "ha-get-entities",
+        "z": "57667353.82973c",
+        "server": "3efaa203.1c443e",
+        "name": "Get input_boolean",
+        "rules": [
+            {
+                "property": "entity_id",
+                "logic": "starts_with",
+                "value": "input_boolean.plant_",
+                "valueType": "str"
+            }
+        ],
+        "output_type": "array",
+        "output_empty_results": false,
+        "output_location_type": "msg",
+        "output_location": "payload",
+        "output_results_count": 1,
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "9d29e940.eba4f8"
+            ]
+        ]
+    },
+    {
+        "id": "9d29e940.eba4f8",
+        "type": "function",
+        "z": "57667353.82973c",
+        "name": "Get which plants need to be watered",
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet entities = msg.payload || [];\nentities = entities.filter((entity) => !entity.entity_id.includes('fake'));\nconst lastWateredEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_datetime');\n    return states[dateEntityName];\n});\n\nconst daysBetweenEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_number');\n    return states[dateEntityName];\n});\n\nconst current = new Date();\nlet toNotify = [];\n\nfor (let index = 0; index < entities.length; index++) {\n    const whenToWater = new Date(lastWateredEntities[index].state);\n    // convert to seconds\n    const duration = parseFloat(daysBetweenEntities[index].state) * 24 * 60 * 60;\n    \n    // minus 8 hours so it can notify earlier\n    whenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*8);\n    \n    if (whenToWater <= current || entities[index] === 'off') {\n        toNotify.push(entities[index]);\n    }\n\n}\n\nreturn { payload: toNotify };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 590,
+        "y": 120,
+        "wires": [
+            [
+                "56a3295.df430d8"
+            ]
+        ]
+    },
+    {
+        "id": "56a3295.df430d8",
+        "type": "split",
+        "z": "57667353.82973c",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "5f9e6e1d.ebc3b"
+            ]
+        ]
+    },
+    {
+        "id": "5f9e6e1d.ebc3b",
+        "type": "function",
+        "z": "57667353.82973c",
+        "name": "Format for notification/log",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.payload.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.payload.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.remind`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.payload.attributes.friendly_name})`,\n        \"entity_id\": `${msg.payload.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "cd5c5706.73dae8"
+            ]
+        ]
+    },
+    {
+        "id": "a799b137.84642",
+        "type": "function",
+        "z": "57667353.82973c",
+        "name": "Find correct plant",
+        "func": "const action = msg.payload.event.action;\nconst re = /notification\\.plant\\.(input_boolean\\..*)\\..*/;\nconst groups = re.exec(action);\nif (groups && groups.length > 0) {\n    if (action.includes(\"watered\")) {\n        return [{ payload: groups[1] }, null];\n    }\n    \n    if (action.includes(\"remind\")) {\n        return [null, { payload: groups[1] }];\n    }\n\n}\nreturn [null, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 630,
+        "y": 440,
+        "wires": [
+            [
+                "51294e2f.c12d"
+            ],
+            [
+                "5b1ced5b.fdb524"
+            ]
+        ]
+    },
+    {
+        "id": "51294e2f.c12d",
+        "type": "api-call-service",
+        "z": "57667353.82973c",
+        "name": "Watered",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 500,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b1ced5b.fdb524",
+        "type": "trigger",
+        "z": "57667353.82973c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "24",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "payload",
+        "outputs": 1,
+        "x": 650,
+        "y": 560,
+        "wires": [
+            [
+                "f8c4a7e5.e93e88"
+            ]
+        ]
+    },
+    {
+        "id": "f8c4a7e5.e93e88",
+        "type": "api-current-state",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "{{ payload }}",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 880,
+        "y": 560,
+        "wires": [
+            [
+                "b2663c23.c9e85"
+            ]
+        ]
+    },
+    {
+        "id": "b2663c23.c9e85",
+        "type": "switch",
+        "z": "57667353.82973c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 810,
+        "y": 520,
+        "wires": [
+            [
+                "d709b13b.7f155"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d709b13b.7f155",
+        "type": "change",
+        "z": "57667353.82973c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 380,
+        "wires": [
+            [
+                "5b1ced5b.fdb524"
+            ]
+        ]
+    },
+    {
+        "id": "9ac547ff.bb2b78",
+        "type": "inject",
+        "z": "57667353.82973c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 840,
+        "y": 320,
+        "wires": [
+            [
+                "d709b13b.7f155"
+            ]
+        ]
+    },
+    {
+        "id": "59b50e29.9a074",
+        "type": "change",
+        "z": "57667353.82973c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "d709b13b.7f155"
+            ]
+        ]
+    },
+    {
+        "id": "2537183.44607e8",
+        "type": "change",
+        "z": "57667353.82973c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 560,
+        "wires": [
+            [
+                "5b1ced5b.fdb524"
+            ]
+        ]
+    },
+    {
+        "id": "a581edfd.29fd5",
+        "type": "server-events",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "event_type": "mobile_app_notification_action",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "waitForRunning": true,
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "d162065a.dffa98"
+            ]
+        ]
+    },
+    {
+        "id": "59bb3bfd.7a2d44",
+        "type": "server-state-changed",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.plant_",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 180,
+        "y": 520,
+        "wires": [
+            [
+                "59b50e29.9a074",
+                "b3b4940e.a168f8"
+            ],
+            [
+                "2537183.44607e8"
+            ]
+        ]
+    },
+    {
+        "id": "d162065a.dffa98",
+        "type": "switch",
+        "z": "57667353.82973c",
+        "name": "",
+        "property": "payload.event.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "notification\\.plant\\.input_boolean\\..*\\..*",
+                "vt": "str",
+                "case": true
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "a799b137.84642"
+            ]
+        ]
+    },
+    {
+        "id": "b3b4940e.a168f8",
+        "type": "function",
+        "z": "57667353.82973c",
+        "name": "Get correct input_datetime",
+        "func": "const entity = msg.payload.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\nif (msg.topic === 'datetime') {\n    return null;\n}\n\nif (msg.old_state === 'on') {\n    return null;\n}\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 160,
+        "y": 640,
+        "wires": [
+            [
+                "ed7ef6b7.8d8db8"
+            ]
+        ]
+    },
+    {
+        "id": "ed7ef6b7.8d8db8",
+        "type": "api-current-state",
+        "z": "57667353.82973c",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 430,
+        "y": 640,
+        "wires": [
+            [
+                "650c6278.2752bc"
+            ]
+        ]
+    },
+    {
+        "id": "650c6278.2752bc",
+        "type": "api-call-service",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{ entity_id }}\",\"datetime\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 700,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd5c5706.73dae8",
+        "type": "subflow:670bc302.cb732c",
+        "z": "57667353.82973c",
+        "name": "",
+        "x": 580,
+        "y": 180,
+        "wires": [
+            [],
+            []
+        ]
     }
 ]
