@@ -5449,7 +5449,7 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Format for notification/log",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.payload.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.payload.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.remind`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.payload.attributes.friendly_name})`,\n        \"entity_id\": `${msg.payload.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.payload.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.payload.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.remind`\n                },\n                {\n                    \"title\": \"Extend by a day\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.extend_day`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.payload.attributes.friendly_name})`,\n        \"entity_id\": `${msg.payload.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5467,14 +5467,17 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Find correct plant",
-        "func": "const action = msg.payload.event.action;\nconst re = /notification\\.plant\\.(input_boolean\\..*)\\..*/;\nconst groups = re.exec(action);\nif (groups && groups.length > 0) {\n    if (action.includes(\"watered\")) {\n        return [{ payload: groups[1] }, null];\n    }\n    \n    if (action.includes(\"remind\")) {\n        return [null, { payload: groups[1] }];\n    }\n\n}\nreturn [null, null];",
-        "outputs": 2,
+        "func": "const action = msg.payload.event.action;\nconst re = /notification\\.plant\\.(input_boolean\\..*)\\..*/;\nconst groups = re.exec(action);\nif (groups && groups.length > 0) {\n    if (action.includes(\"watered\")) {\n        return [null, { payload: groups[1] }, null];\n    }\n    \n    if (action.includes(\"remind\")) {\n        return [null, null, { payload: groups[1] }];\n    }\n    \n    if (action.includes(\"extend_day\")) {\n        return [{ payload: groups[1] }, null, null];\n    }\n\n}\nreturn [null, null, null];",
+        "outputs": 3,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 630,
+        "x": 610,
         "y": 440,
         "wires": [
+            [
+                "1d8695e4.dd840a"
+            ],
             [
                 "51294e2f.c12d"
             ],
@@ -5726,7 +5729,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 430,
+        "x": 410,
         "y": 440,
         "wires": [
             [
@@ -5811,6 +5814,74 @@
         "y": 180,
         "wires": [
             [],
+            []
+        ]
+    },
+    {
+        "id": "1d8695e4.dd840a",
+        "type": "function",
+        "z": "57667353.82973c",
+        "name": "Get correct input_number (days)",
+        "func": "const entity = msg.payload;\nconst numberEntity = entity.replace('input_boolean', 'input_number');\n\nreturn {\n    payload: numberEntity,\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "13953fd0.2cef3"
+            ]
+        ]
+    },
+    {
+        "id": "13953fd0.2cef3",
+        "type": "api-current-state",
+        "z": "57667353.82973c",
+        "name": "current days",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "{{ payload }}",
+        "state_type": "str",
+        "state_location": "state",
+        "override_payload": "msg",
+        "entity_location": "payload",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "cd106716.08f308"
+            ]
+        ]
+    },
+    {
+        "id": "cd106716.08f308",
+        "type": "api-call-service",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_number",
+        "service": "increment",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{ payload.entity_id }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 880,
+        "y": 360,
+        "wires": [
             []
         ]
     }
