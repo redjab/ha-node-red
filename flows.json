@@ -5479,7 +5479,8 @@
                 "1d8695e4.dd840a"
             ],
             [
-                "51294e2f.c12d"
+                "51294e2f.c12d",
+                "b3b4940e.a168f8"
             ],
             [
                 "5b1ced5b.fdb524"
@@ -5541,8 +5542,8 @@
         "name": "",
         "server": "3efaa203.1c443e",
         "version": 1,
-        "outputs": 1,
-        "halt_if": "",
+        "outputs": 2,
+        "halt_if": "off",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
@@ -5557,8 +5558,10 @@
         "y": 560,
         "wires": [
             [
-                "b2663c23.c9e85",
                 "5f9e6e1d.ebc3b"
+            ],
+            [
+                "b2663c23.c9e85"
             ]
         ]
     },
@@ -5588,7 +5591,7 @@
         "y": 560,
         "wires": [
             [
-                "d709b13b.7f155"
+                "59b50e29.9a074"
             ],
             []
         ]
@@ -5742,7 +5745,7 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Get correct input_datetime",
-        "func": "const entity = msg.data.entity_id;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
+        "func": "const entity = msg.data ? msg.data.entity_id : msg.payload;\nconst dateEntity = entity.replace('input_boolean', 'input_datetime');\n\nreturn {\n    \"entity_id\": dateEntity,\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
