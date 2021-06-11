@@ -194,8 +194,17 @@
         "type": "inject",
         "z": "d9fe96b5.8701c8",
         "name": "3 AM everyday ",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
         "repeat": "",
-        "crontab": "00 03 * * *",
+        "crontab": "00 03 * * 1,3,5,0",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -243,7 +252,7 @@
         "service_domain": "vacuum",
         "service": "set_fan_speed",
         "entityId": "vacuum.roborock",
-        "data": "{\"fan_speed\":\"max\"}",
+        "data": "{\"fan_speed\":\"medium\"}",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
@@ -492,10 +501,9 @@
                 "vt": "str"
             },
             {
-                "t": "regex",
-                "v": "notification\\.plant\\.input_boolean\\..*\\.watered",
-                "vt": "str",
-                "case": true
+                "t": "eq",
+                "v": "notification.garage.disable_warning",
+                "vt": "str"
             },
             {
                 "t": "eq",
@@ -523,7 +531,9 @@
             [
                 "e38a2c4c.2afee"
             ],
-            [],
+            [
+                "bdbc4bce.cbd0e8"
+            ],
             [
                 "72da23c9.44b4bc"
             ],
@@ -3386,7 +3396,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
+                "to": "{\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"},{\"title\":\"Disable warning\",\"action\":\"notification.garage.disable_warning\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -4962,7 +4972,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 670,
-        "y": 260,
+        "y": 320,
         "wires": [
             []
         ]
@@ -4985,7 +4995,7 @@
         "output_location_type": "none",
         "mustacheAltTags": false,
         "x": 640,
-        "y": 320,
+        "y": 380,
         "wires": [
             []
         ]
@@ -5412,16 +5422,20 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Get which plants need to be watered",
-        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet entities = msg.payload || [];\nentities = entities.filter((entity) => !entity.entity_id.includes('fake'));\nconst lastWateredEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_datetime');\n    return states[dateEntityName];\n});\n\nconst daysBetweenEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_number');\n    return states[dateEntityName];\n});\n\nconst current = new Date();\nlet toNotify = [];\n\nfor (let index = 0; index < entities.length; index++) {\n    const whenToWater = new Date(lastWateredEntities[index].state);\n    // convert to seconds\n    const duration = parseFloat(daysBetweenEntities[index].state) * 24 * 60 * 60;\n    \n    // minus 8 hours so it can notify earlier\n    whenToWater.setSeconds(whenToWater.getSeconds() + duration - 60*60*8);\n    \n    if (whenToWater <= current || entities[index].state === 'off') {\n        toNotify.push(entities[index]);\n    }\n\n}\n\nreturn { payload: toNotify };",
-        "outputs": 1,
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet entities = msg.payload || [];\nentities = entities.filter((entity) => !entity.entity_id.includes('fake'));\nconst lastWateredEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_datetime');\n    return states[dateEntityName];\n});\n\nconst daysBetweenEntities = entities.map((entity) => {\n    const dateEntityName = entity.entity_id.replace('input_boolean', 'input_number');\n    return states[dateEntityName];\n});\n\nconst current = new Date();\nlet toNotify = [];\nlet toTurnOff = [];\n\nfor (let index = 0; index < entities.length; index++) {\n    const whenToWater = new Date(lastWateredEntities[index].state);\n    // convert to seconds\n    const duration = parseFloat(daysBetweenEntities[index].state) * 24 * 60 * 60;\n    \n    let copy = new Date(whenToWater);\n    // minus 8 hours so it can notify earlier\n    copy.setSeconds(whenToWater.getSeconds() + duration - 60*60*8);\n    \n    if (copy <= current || entities[index].state === 'off') {\n        toNotify.push(entities[index]);\n    }\n    \n    copy = new Date(whenToWater);\n    copy.setSeconds(whenToWater.getSeconds() + duration);\n    \n    if (copy <= current) {\n        toTurnOff.push(entities[index]);\n    }\n\n\n}\n\nreturn [{ payload: toNotify }, {payload: toTurnOff}];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 590,
         "y": 120,
         "wires": [
             [
                 "56a3295.df430d8"
+            ],
+            [
+                "d44c0607.e2d488"
             ]
         ]
     },
@@ -5884,6 +5898,71 @@
         "mustacheAltTags": false,
         "x": 880,
         "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bdbc4bce.cbd0e8",
+        "type": "api-call-service",
+        "z": "b88bc227.1b73f",
+        "name": "Disable garage door warning",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.gargage_door_warning",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 680,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d44c0607.e2d488",
+        "type": "split",
+        "z": "57667353.82973c",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "c76284f0.3fe258"
+            ]
+        ]
+    },
+    {
+        "id": "c76284f0.3fe258",
+        "type": "api-call-service",
+        "z": "57667353.82973c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "{{ payload.entity_id }}",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 340,
+        "y": 240,
         "wires": [
             []
         ]
