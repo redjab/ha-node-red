@@ -204,7 +204,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 03 * * 1,3,5,0",
+        "crontab": "00 03 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -5242,6 +5242,7 @@
         "id": "b853e4.ecccfc2",
         "type": "server-state-changed",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "Modem on after 3 mins off",
         "server": "3efaa203.1c443e",
         "version": 1,
@@ -5965,6 +5966,35 @@
         "y": 240,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "1d4d42a4.5aa9ed",
+        "type": "inject",
+        "z": "57667353.82973c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "822040b7.781e7"
+            ]
         ]
     }
 ]
