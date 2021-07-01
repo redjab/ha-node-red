@@ -42,6 +42,13 @@
         "info": ""
     },
     {
+        "id": "6054ff63.2ff7c",
+        "type": "tab",
+        "label": "3D Printer",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -2488,6 +2495,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 280,
         "y": 1660,
         "wires": [
@@ -2525,7 +2533,7 @@
         "type": "exec",
         "z": "d9fe96b5.8701c8",
         "command": "/data/projects/nodered/update-ip.sh",
-        "addpay": true,
+        "addpay": "payload",
         "append": "",
         "useSpawn": "false",
         "timer": "",
@@ -5996,5 +6004,124 @@
                 "822040b7.781e7"
             ]
         ]
+    },
+    {
+        "id": "8e9ead73.ad817",
+        "type": "server-state-changed",
+        "z": "6054ff63.2ff7c",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "switch.3d_printer",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "a1d8209b.2dfc4"
+            ],
+            [
+                "4a77f124.d5bce"
+            ]
+        ]
+    },
+    {
+        "id": "461d97a6.418758",
+        "type": "exec",
+        "z": "6054ff63.2ff7c",
+        "command": "/data/projects/nodered/octoprint-connect.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Connect to octoprint",
+        "x": 720,
+        "y": 80,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a1d8209b.2dfc4",
+        "type": "trigger",
+        "z": "6054ff63.2ff7c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "5",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "461d97a6.418758"
+            ]
+        ]
+    },
+    {
+        "id": "4a77f124.d5bce",
+        "type": "change",
+        "z": "6054ff63.2ff7c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "a1d8209b.2dfc4"
+            ]
+        ]
+    },
+    {
+        "id": "39b04469.c571ac",
+        "type": "comment",
+        "z": "6054ff63.2ff7c",
+        "name": "Connect to octoprint when 3d printer is on",
+        "info": "",
+        "x": 180,
+        "y": 40,
+        "wires": []
     }
 ]
