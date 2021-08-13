@@ -8799,7 +8799,7 @@
         "server": "3efaa203.1c443e",
         "version": 2,
         "outputs": 2,
-        "halt_if": "off",
+        "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "entity_id": "input_boolean.vacation_mode",
@@ -8827,10 +8827,10 @@
         "x": 330,
         "y": 320,
         "wires": [
-            [],
             [
                 "c499881d.445368"
-            ]
+            ],
+            []
         ]
     },
     {
@@ -9262,7 +9262,7 @@
         "server": "3efaa203.1c443e",
         "version": 2,
         "outputs": 2,
-        "halt_if": "off",
+        "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "entity_id": "input_boolean.vacation_mode",
@@ -9304,7 +9304,7 @@
         "server": "3efaa203.1c443e",
         "version": 2,
         "outputs": 2,
-        "halt_if": "off",
+        "halt_if": "on",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "entity_id": "input_boolean.vacation_mode",
@@ -9336,6 +9336,146 @@
                 "9724333c.78381"
             ],
             []
+        ]
+    },
+    {
+        "id": "751e8480.66821c",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 1280,
+        "wires": [
+            [
+                "9a3d6a53.d9e2f8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9a3d6a53.d9e2f8",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 330,
+        "y": 1280,
+        "wires": [
+            [
+                "389c622b.2df77e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e7e04f69.8c482",
+        "type": "subflow:670bc302.cb732c",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "x": 540,
+        "y": 1340,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "389c622b.2df77e",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"},{\"title\":\"Disable warning\",\"action\":\"notification.garage.disable_warning\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 1280,
+        "wires": [
+            [
+                "e7e04f69.8c482"
+            ]
         ]
     }
 ]
