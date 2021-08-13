@@ -14,13 +14,6 @@
         "info": ""
     },
     {
-        "id": "b88bc227.1b73f",
-        "type": "tab",
-        "label": "Mobile action listeners",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "9889ef6.6e2771",
         "type": "tab",
         "label": "Event listeners",
@@ -45,6 +38,13 @@
         "id": "57667353.82973c",
         "type": "tab",
         "label": "Water plants",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f71ac145.59035",
+        "type": "tab",
+        "label": "Lock",
         "disabled": false,
         "info": ""
     },
@@ -173,76 +173,6 @@
         "cacheJson": false
     },
     {
-        "id": "fea39eb8.12411",
-        "type": "comment",
-        "z": "d9fe96b5.8701c8",
-        "name": "Notifiy about rain",
-        "info": "",
-        "x": 120,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "a4a51bd5.cbf1a8",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "d": true,
-        "name": "If it's rainy",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "weather.kpvu_hourly",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "rainy",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 100,
-        "y": 100,
-        "wires": [
-            [
-                "27015fcf.eaa1e"
-            ],
-            []
-        ]
-    },
-    {
         "id": "cfbda5ba.dea498",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
@@ -264,7 +194,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 120,
-        "y": 280,
+        "y": 80,
         "wires": [
             [
                 "ab8b3103.2ad76"
@@ -289,7 +219,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 710,
-        "y": 280,
+        "y": 80,
         "wires": [
             []
         ]
@@ -312,7 +242,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 520,
-        "y": 280,
+        "y": 80,
         "wires": [
             [
                 "795b7b3e.e3f064"
@@ -326,7 +256,7 @@
         "name": "Run vacumm every morning",
         "info": "",
         "x": 160,
-        "y": 240,
+        "y": 40,
         "wires": []
     },
     {
@@ -385,116 +315,11 @@
             }
         ],
         "x": 110,
-        "y": 380,
+        "y": 200,
         "wires": [
             [
                 "d46beef9.4f088"
             ],
-            []
-        ]
-    },
-    {
-        "id": "d5b4c56e.e9c588",
-        "type": "trigger-state",
-        "z": "d9fe96b5.8701c8",
-        "d": true,
-        "name": "Rain stopped",
-        "server": "3efaa203.1c443e",
-        "version": 0,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityid": "weather.kpvu_hourly",
-        "entityidfiltertype": "exact",
-        "debugenabled": false,
-        "constraints": [
-            {
-                "id": "p7a1tr6c15",
-                "targetType": "this_entity",
-                "targetValue": "",
-                "propertyType": "current_state",
-                "propertyValue": "new_state.state",
-                "comparatorType": "is_not",
-                "comparatorValueDatatype": "str",
-                "comparatorValue": "rainy"
-            },
-            {
-                "id": "vrfqo44y8r",
-                "targetType": "this_entity",
-                "targetValue": "",
-                "propertyType": "previous_state",
-                "propertyValue": "old_state.state",
-                "comparatorType": "is",
-                "comparatorValueDatatype": "str",
-                "comparatorValue": "rainy"
-            }
-        ],
-        "outputs": 2,
-        "customoutputs": [],
-        "outputinitially": false,
-        "state_type": "str",
-        "x": 110,
-        "y": 180,
-        "wires": [
-            [
-                "228dd1fe.a262ce"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "442ab0e0.9b202",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 480,
-        "y": 180,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "f5b4874.c820978",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 480,
-        "y": 100,
-        "wires": [
-            [],
             []
         ]
     },
@@ -516,7 +341,7 @@
             }
         ],
         "x": 480,
-        "y": 380,
+        "y": 200,
         "wires": [
             [],
             []
@@ -531,148 +356,6 @@
         "x": 160,
         "y": 40,
         "wires": []
-    },
-    {
-        "id": "623970e8.0aa2f",
-        "type": "server-events",
-        "z": "b88bc227.1b73f",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "event_type": "mobile_app_notification_action",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "waitForRunning": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "$outputData(\"eventData\").event_type",
-                "valueType": "jsonata"
-            },
-            {
-                "property": "event_type",
-                "propertyType": "msg",
-                "value": "$outputData(\"eventData\").event_type",
-                "valueType": "jsonata"
-            }
-        ],
-        "x": 190,
-        "y": 60,
-        "wires": [
-            [
-                "3c2f703.3aecf9"
-            ]
-        ]
-    },
-    {
-        "id": "3c2f703.3aecf9",
-        "type": "switch",
-        "z": "b88bc227.1b73f",
-        "name": "",
-        "property": "payload.event.action",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "notification.vacuum.roborock.find",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.garage.open",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.garage.close",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.garage.disable_warning",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.washing_machine.open",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.humidifier.fill",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "notification.3d_printer.turn_off",
-                "vt": "str"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 7,
-        "x": 430,
-        "y": 180,
-        "wires": [
-            [
-                "752d962a.3714c8"
-            ],
-            [
-                "586abfa1.56235"
-            ],
-            [
-                "e38a2c4c.2afee"
-            ],
-            [
-                "bdbc4bce.cbd0e8"
-            ],
-            [
-                "72da23c9.44b4bc"
-            ],
-            [
-                "da01d7df.4fbd18"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "752d962a.3714c8",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Find robot",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "vacuum",
-        "service": "locate",
-        "entityId": "vacuum.roborock",
-        "data": "{ \"entity_id\": \"vacuum.roborock\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 620,
-        "y": 80,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "3ea02219.60e39e",
@@ -771,55 +454,6 @@
         ]
     },
     {
-        "id": "586abfa1.56235",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Open garage",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "cover",
-        "service": "open_cover",
-        "entityId": "cover.garage_door",
-        "data": "{ \"entity_id\": \"cover.garage_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 630,
-        "y": 140,
-        "wires": [
-            [
-                "be42f3e1.aa2a1",
-                "499f21fb.529f2"
-            ]
-        ]
-    },
-    {
-        "id": "e38a2c4c.2afee",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Close garage",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "cover",
-        "service": "close_cover",
-        "entityId": "cover.garage_door",
-        "data": "{ \"entity_id\": \"cover.garage_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 630,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "8d434d29.85a88",
         "type": "api-call-service",
         "z": "9889ef6.6e2771",
@@ -836,8 +470,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 310,
-        "y": 60,
+        "x": 290,
+        "y": 40,
         "wires": [
             []
         ]
@@ -882,8 +516,8 @@
                 "valueType": "jsonata"
             }
         ],
-        "x": 130,
-        "y": 120,
+        "x": 110,
+        "y": 100,
         "wires": [
             [
                 "901be019.50f94"
@@ -941,7 +575,7 @@
             }
         ],
         "x": 120,
-        "y": 800,
+        "y": 740,
         "wires": [
             [
                 "b60867ef.dba148"
@@ -1000,7 +634,7 @@
             }
         ],
         "x": 120,
-        "y": 860,
+        "y": 800,
         "wires": [
             [
                 "230417ea.7965a8"
@@ -1059,7 +693,7 @@
             }
         ],
         "x": 120,
-        "y": 920,
+        "y": 860,
         "wires": [
             [
                 "b43bd907.3ae248"
@@ -1085,7 +719,7 @@
             }
         ],
         "x": 720,
-        "y": 900,
+        "y": 840,
         "wires": [
             [],
             []
@@ -1111,7 +745,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 800,
+        "y": 740,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -1138,7 +772,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 860,
+        "y": 800,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -1165,7 +799,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 920,
+        "y": 860,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -1179,7 +813,7 @@
         "name": "New package(s) delivered",
         "info": "",
         "x": 150,
-        "y": 760,
+        "y": 700,
         "wires": []
     },
     {
@@ -1233,7 +867,7 @@
             }
         ],
         "x": 150,
-        "y": 1040,
+        "y": 980,
         "wires": [
             [
                 "34239bb9.636774"
@@ -1259,7 +893,7 @@
             }
         ],
         "x": 560,
-        "y": 1040,
+        "y": 980,
         "wires": [
             [],
             []
@@ -1286,8 +920,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 120,
-        "y": 60,
+        "x": 100,
+        "y": 40,
         "wires": [
             [
                 "8d434d29.85a88"
@@ -1345,7 +979,7 @@
             }
         ],
         "x": 130,
-        "y": 980,
+        "y": 920,
         "wires": [
             [
                 "91d7fb52.d922d8"
@@ -1373,7 +1007,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 980,
+        "y": 920,
         "wires": [
             [
                 "ec5c4d8e.e2185"
@@ -1439,64 +1073,10 @@
         "initialize": "",
         "finalize": "",
         "x": 540,
-        "y": 900,
+        "y": 840,
         "wires": [
             [
                 "601b8ab1.27f8e4"
-            ]
-        ]
-    },
-    {
-        "id": "228dd1fe.a262ce",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Weather\",\"message\":\"⛅ It stopped raining\",\"data\":{\"tag\":\"weather.rain.stop\",\"priority\":\"normal\",\"ttl\":0}},\"log\":{\"name\":\"Weather (Node Red)\",\"entity_id\":\"weather.kpvu_hourly\",\"message\":\"notified rain stopped\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 180,
-        "wires": [
-            [
-                "442ab0e0.9b202"
-            ]
-        ]
-    },
-    {
-        "id": "27015fcf.eaa1e",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Weather\",\"message\":\"🌧️ It might be raining\",\"data\":{\"tag\":\"weather.rain.start\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Weather (Node Red)\",\"entity_id\":\"weather.kpvu_hourly\",\"message\":\"notified rain\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 280,
-        "y": 100,
-        "wires": [
-            [
-                "f5b4874.c820978"
             ]
         ]
     },
@@ -1520,7 +1100,7 @@
         "to": "",
         "reg": false,
         "x": 300,
-        "y": 380,
+        "y": 200,
         "wires": [
             [
                 "35e31cc.f48d0e4"
@@ -1632,7 +1212,7 @@
             }
         ],
         "x": 140,
-        "y": 1180,
+        "y": 1140,
         "wires": [
             [
                 "850099cd.2a80e8"
@@ -1669,7 +1249,7 @@
             }
         ],
         "x": 330,
-        "y": 1200,
+        "y": 1160,
         "wires": [
             [
                 "f33e2978.d2d158"
@@ -1728,7 +1308,7 @@
             }
         ],
         "x": 90,
-        "y": 1300,
+        "y": 1260,
         "wires": [
             [
                 "f33e2978.d2d158"
@@ -1765,7 +1345,7 @@
             }
         ],
         "x": 500,
-        "y": 1240,
+        "y": 1200,
         "wires": [
             [
                 "36b728b3.a353a8"
@@ -1791,7 +1371,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 640,
-        "y": 1300,
+        "y": 1260,
         "wires": [
             []
         ]
@@ -1803,7 +1383,7 @@
         "name": "Set dimmer according to sun position & TV state",
         "info": "",
         "x": 220,
-        "y": 1120,
+        "y": 1080,
         "wires": []
     },
     {
@@ -1826,7 +1406,7 @@
         "to": "",
         "reg": false,
         "x": 450,
-        "y": 1300,
+        "y": 1260,
         "wires": [
             [
                 "d3b259b7.fccef8"
@@ -1884,7 +1464,7 @@
             }
         ],
         "x": 90,
-        "y": 1380,
+        "y": 1340,
         "wires": [
             [
                 "75fc1d63.768cc4"
@@ -1921,7 +1501,7 @@
             }
         ],
         "x": 260,
-        "y": 1380,
+        "y": 1340,
         "wires": [
             [
                 "583192e7.17a02c"
@@ -1949,7 +1529,7 @@
         "to": "",
         "reg": false,
         "x": 460,
-        "y": 1380,
+        "y": 1340,
         "wires": [
             [
                 "d3b259b7.fccef8"
@@ -2007,7 +1587,7 @@
             }
         ],
         "x": 150,
-        "y": 1240,
+        "y": 1200,
         "wires": [
             [
                 "850099cd.2a80e8"
@@ -2065,8 +1645,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 240,
-        "y": 320,
+        "x": 220,
+        "y": 300,
         "wires": [
             [
                 "6fc54a8c.45b3d4"
@@ -2123,8 +1703,8 @@
                 "valueType": "triggerId"
             }
         ],
-        "x": 240,
-        "y": 220,
+        "x": 220,
+        "y": 200,
         "wires": [
             [
                 "2d5828c1.2bcb68"
@@ -2503,8 +2083,8 @@
                 "type": "num"
             }
         ],
-        "x": 570,
-        "y": 220,
+        "x": 550,
+        "y": 200,
         "wires": [
             []
         ]
@@ -2526,8 +2106,8 @@
                 "type": "num"
             }
         ],
-        "x": 570,
-        "y": 320,
+        "x": 550,
+        "y": 300,
         "wires": [
             []
         ]
@@ -2551,8 +2131,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
-        "y": 120,
+        "x": 310,
+        "y": 100,
         "wires": [
             [
                 "6fc54a8c.45b3d4",
@@ -2571,7 +2151,7 @@
         "initialize": "",
         "finalize": "",
         "x": 360,
-        "y": 1040,
+        "y": 980,
         "wires": [
             [
                 "15739cae.559ee3"
@@ -2629,7 +2209,7 @@
             }
         ],
         "x": 150,
-        "y": 1500,
+        "y": 1460,
         "wires": [
             [
                 "71c04cd.e7fc9b4"
@@ -2655,7 +2235,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 650,
-        "y": 1500,
+        "y": 1460,
         "wires": [
             []
         ]
@@ -2711,7 +2291,7 @@
             }
         ],
         "x": 160,
-        "y": 380,
+        "y": 280,
         "wires": [
             [
                 "48c4e4a2.43e3bc"
@@ -2748,7 +2328,7 @@
             }
         ],
         "x": 400,
-        "y": 380,
+        "y": 280,
         "wires": [
             [
                 "6e45d80e.63eab8",
@@ -2775,7 +2355,7 @@
             }
         ],
         "x": 800,
-        "y": 380,
+        "y": 280,
         "wires": [
             [],
             []
@@ -2801,7 +2381,7 @@
         "to": "",
         "reg": false,
         "x": 600,
-        "y": 380,
+        "y": 280,
         "wires": [
             [
                 "bb31d941.e17f28"
@@ -2833,7 +2413,7 @@
             }
         ],
         "x": 130,
-        "y": 440,
+        "y": 340,
         "wires": [
             [
                 "e9af206b.6f4e2"
@@ -2858,7 +2438,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 370,
-        "y": 440,
+        "y": 340,
         "wires": [
             []
         ]
@@ -2881,7 +2461,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 650,
-        "y": 440,
+        "y": 340,
         "wires": [
             []
         ]
@@ -2893,284 +2473,7 @@
         "name": "Internet Usage Warning",
         "info": "",
         "x": 140,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "c8d3225.cb870e",
-        "type": "comment",
-        "z": "d9fe96b5.8701c8",
-        "name": "IP address changed",
-        "info": "",
-        "x": 130,
-        "y": 1620,
-        "wires": []
-    },
-    {
-        "id": "2aed5089.0f3de",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "IP address",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "sensor.ip_address",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "(\\d*)\\.(\\d*)\\.(\\d*)\\.(\\d*)\\b",
-        "halt_if_type": "re",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 100,
-        "y": 1660,
-        "wires": [
-            [
-                "f7fc21a3.40a44",
-                "19ab0dfe.37a172"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "f7fc21a3.40a44",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "func": "return {\n    \"payload\": {\n        \"notification\": {\n            \"title\": \"IP address changed\",\n            \"message\": `🌐 ⚠️ Your IP address is now ${msg.payload}`,\n            \"data\": {\n                \"tag\": \"internet.ip.warn\",\n                \"priority\": \"high\",\n                \"ttl\": 0\n            }\n        },\n        \"log\": {\n            \"name\": \"IP address (Node Red)\",\n            \"entity_id\": \"sensor.ip_address\",\n            \"message\": \"notified changed\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 1660,
-        "wires": [
-            [
-                "10fff99c.cccc06"
-            ]
-        ]
-    },
-    {
-        "id": "10fff99c.cccc06",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 460,
-        "y": 1660,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "19ab0dfe.37a172",
-        "type": "exec",
-        "z": "d9fe96b5.8701c8",
-        "command": "/data/projects/nodered/update-ip.sh",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "oldrc": false,
-        "name": "Run update-ip.sh",
-        "x": 310,
-        "y": 1720,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "c5ec2597.8245f8",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Media player paused",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "media_player",
-        "entityidfiltertype": "substring",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "paused",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 130,
-        "y": 1860,
-        "wires": [
-            [
-                "49856246.1d1fcc"
-            ],
-            [
-                "d5ac8e28.031f3"
-            ]
-        ]
-    },
-    {
-        "id": "49856246.1d1fcc",
-        "type": "trigger",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "10",
-        "extend": true,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 370,
-        "y": 1860,
-        "wires": [
-            [
-                "5abde545.1ca3cc"
-            ]
-        ]
-    },
-    {
-        "id": "d5ac8e28.031f3",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 1920,
-        "wires": [
-            [
-                "49856246.1d1fcc"
-            ]
-        ]
-    },
-    {
-        "id": "5abde545.1ca3cc",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Turn off",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "media_player",
-        "service": "turn_off",
-        "entityId": "",
-        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 540,
-        "y": 1860,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1b61e899.329287",
-        "type": "comment",
-        "z": "d9fe96b5.8701c8",
-        "name": "Turn off speaker after 10 mins paused",
-        "info": "",
-        "x": 190,
-        "y": 1820,
+        "y": 240,
         "wires": []
     },
     {
@@ -3202,7 +2505,7 @@
         "initialize": "",
         "finalize": "",
         "x": 400,
-        "y": 1500,
+        "y": 1460,
         "wires": [
             [
                 "d1b99c80.7fc79"
@@ -3210,431 +2513,6 @@
             [
                 "c215c268.d4dbd"
             ]
-        ]
-    },
-    {
-        "id": "be42f3e1.aa2a1",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Turn on light",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "switch",
-        "service": "turn_on",
-        "entityId": "switch.cabinet_light",
-        "data": "{ \"entity_id\": \"switch.cabinet_light\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 830,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "499f21fb.529f2",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Open back door",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "lock",
-        "service": "unlock",
-        "entityId": "lock.back_door",
-        "data": "{ \"entity_id\": \"lock.back_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 840,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "cad44f85.13f6a",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Back Door unlocked",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "lock.back_door",
-        "entityidfiltertype": "exact",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "unlocked",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 130,
-        "y": 2000,
-        "wires": [
-            [
-                "c4559723.437258"
-            ],
-            [
-                "95826ba6.719328"
-            ]
-        ]
-    },
-    {
-        "id": "c4559723.437258",
-        "type": "trigger",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "15",
-        "extend": true,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 370,
-        "y": 2000,
-        "wires": [
-            [
-                "7ce5cedf.20459"
-            ]
-        ]
-    },
-    {
-        "id": "95826ba6.719328",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 2060,
-        "wires": [
-            [
-                "c4559723.437258",
-                "5a257f4a.c35a1"
-            ]
-        ]
-    },
-    {
-        "id": "7ce5cedf.20459",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Lock back door",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "lock",
-        "service": "lock",
-        "entityId": "lock.back_door",
-        "data": "{ \"entity_id\": \"lock.back_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 560,
-        "y": 2000,
-        "wires": [
-            [
-                "5a257f4a.c35a1"
-            ]
-        ]
-    },
-    {
-        "id": "e7ef2c28.29f4b",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ ⚠️ Back door lock jammed!\",\"data\":{\"tag\":\"lock.back_door.error\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified jammed\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 560,
-        "y": 2360,
-        "wires": [
-            [
-                "62f0d6b3.3db638"
-            ]
-        ]
-    },
-    {
-        "id": "62f0d6b3.3db638",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "x": 740,
-        "y": 2360,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "6811e4c7.efddec",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Back Door low battery",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "binary_sensor.back_door_lock_low_battery_level",
-        "entityidfiltertype": "exact",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 140,
-        "y": 2120,
-        "wires": [
-            [
-                "6810334d.3823cc"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "6810334d.3823cc",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ Back door lock has low battery\",\"data\":{\"tag\":\"lock.back_door.low_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified low battery\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 2120,
-        "wires": [
-            [
-                "2a7d9855.ce21e8"
-            ]
-        ]
-    },
-    {
-        "id": "2a7d9855.ce21e8",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "x": 560,
-        "y": 2120,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "c4cfbfda.92011",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Back Door critical battery",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "binary_sensor.back_door_lock_power_management_replace_battery_soon",
-        "entityidfiltertype": "exact",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 150,
-        "y": 2180,
-        "wires": [
-            [
-                "6887c24b.752f6c"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "6887c24b.752f6c",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ ⚠️ Back door lock has at critical battery level!\",\"data\":{\"tag\":\"lock.back_door.critical_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified critical battery level\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 2180,
-        "wires": [
-            [
-                "72cfcbbd.9cf054"
-            ]
-        ]
-    },
-    {
-        "id": "72cfcbbd.9cf054",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [],
-        "x": 560,
-        "y": 2180,
-        "wires": [
-            [],
-            []
         ]
     },
     {
@@ -4624,7 +3502,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 110,
-        "y": 1560,
+        "y": 1520,
         "wires": [
             [
                 "1cb02712.9c9a59"
@@ -4660,7 +3538,7 @@
             }
         ],
         "x": 330,
-        "y": 1560,
+        "y": 1520,
         "wires": [
             [
                 "d1b99c80.7fc79"
@@ -4686,7 +3564,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 650,
-        "y": 1560,
+        "y": 1520,
         "wires": [
             []
         ]
@@ -5357,507 +4235,6 @@
                 "d84e8051.7cbaf"
             ],
             []
-        ]
-    },
-    {
-        "id": "3a1734ff.f66c3c",
-        "type": "inject",
-        "z": "d9fe96b5.8701c8",
-        "name": "Check washer open",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 09 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 140,
-        "y": 460,
-        "wires": [
-            [
-                "2f36c481.ff36fc"
-            ]
-        ]
-    },
-    {
-        "id": "2f36c481.ff36fc",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Washer closed",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.washing_machine_open",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "x": 360,
-        "y": 460,
-        "wires": [
-            [
-                "ece4b2e0.a9fe6"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "58d79d93.8c6ac4",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 720,
-        "y": 460,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "ece4b2e0.a9fe6",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Washing machine is closed\",\"message\":\" ⚠️ Washing machine needs to be open!\",\"data\":{\"tag\":\"washing_machine.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.washing_machine.open\"}]}},\"log\":{\"name\":\"Washing Machine (Node Red)\",\"entity_id\":\"input_boolean.washing_machine_open\",\"message\":\"notified closed warning\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 540,
-        "y": 460,
-        "wires": [
-            [
-                "58d79d93.8c6ac4"
-            ]
-        ]
-    },
-    {
-        "id": "7f27f835.6c5048",
-        "type": "inject",
-        "z": "d9fe96b5.8701c8",
-        "name": "Check humidifier filled",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "00 22 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 150,
-        "y": 540,
-        "wires": [
-            [
-                "444d24d.96311dc",
-                "e5da3c63.84fad"
-            ]
-        ]
-    },
-    {
-        "id": "17e68f4b.b1d7b1",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 880,
-        "y": 600,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "8e88caaa.092b08",
-        "type": "change",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Humidifier needs to be filled\",\"message\":\" ⚠️ Humidifier needs to be filled!\",\"data\":{\"tag\":\"humidifier.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.humidifier.fill\"}]}},\"log\":{\"name\":\"Humidifier Filled (Node Red)\",\"entity_id\":\"input_boolean.humidifier_filled\",\"message\":\"notified not filled warning\",\"domain\":\"notify\"}}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 900,
-        "y": 540,
-        "wires": [
-            [
-                "17e68f4b.b1d7b1"
-            ]
-        ]
-    },
-    {
-        "id": "444d24d.96311dc",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Last filled",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_datetime.humidifier_filled",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "x": 120,
-        "y": 600,
-        "wires": [
-            [
-                "8de2244e.a54288"
-            ]
-        ]
-    },
-    {
-        "id": "8de2244e.a54288",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "> 60 hours",
-        "func": "const now = Date.now();\nconst lastFilled = new Date(msg.payload).getTime();\n// convert to hours\nconst duration = parseFloat(now - lastFilled) / (1000 * 60 * 60);\n\nif (duration > 60) {\n    return {\n        payload: true\n    };\n}\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 370,
-        "y": 600,
-        "wires": [
-            [
-                "9b7b26f0.3f9c38",
-                "28e14b7f.824894"
-            ]
-        ]
-    },
-    {
-        "id": "14f44ef5.8a7cf1",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Humidifier filled",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_boolean.humidifier_filled",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "0",
-        "forType": "num",
-        "forUnits": "minutes",
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 120,
-        "y": 660,
-        "wires": [
-            [
-                "f2f853d4.1dfde"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "fb6d520f.31ad7",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_datetime",
-        "service": "set_datetime",
-        "entityId": "",
-        "data": "{\"entity_id\":\"input_datetime.humidifier_filled\",\"datetime\":\"{{ payload }}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 580,
-        "y": 660,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f2f853d4.1dfde",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Current time",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 1,
-        "halt_if": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "sensor.date_time_iso",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "x": 330,
-        "y": 660,
-        "wires": [
-            [
-                "fb6d520f.31ad7"
-            ]
-        ]
-    },
-    {
-        "id": "9b7b26f0.3f9c38",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_off",
-        "entityId": "input_boolean.humidifier_filled",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 640,
-        "y": 600,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "72da23c9.44b4bc",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Washing machine open",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_on",
-        "entityId": "input_boolean.washing_machine_open",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 670,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "da01d7df.4fbd18",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Humidifier filled",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_on",
-        "entityId": "input_boolean.humidifier_filled",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 640,
-        "y": 380,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "bd47a6eb.3c0138",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Humidifier not filed",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.humidifier_filled",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "x": 530,
-        "y": 540,
-        "wires": [
-            [
-                "28e14b7f.824894"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "28e14b7f.824894",
-        "type": "delay",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "5",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "x": 720,
-        "y": 540,
-        "wires": [
-            [
-                "8e88caaa.092b08"
-            ]
         ]
     },
     {
@@ -6803,29 +5180,6 @@
         "queue": "none",
         "x": 880,
         "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "bdbc4bce.cbd0e8",
-        "type": "api-call-service",
-        "z": "b88bc227.1b73f",
-        "name": "Disable garage door warning",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_boolean",
-        "service": "turn_off",
-        "entityId": "input_boolean.gargage_door_warning",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 680,
-        "y": 260,
         "wires": [
             []
         ]
@@ -7888,587 +6242,6 @@
         "wires": []
     },
     {
-        "id": "3b5b4598.a2d2aa",
-        "type": "server-events",
-        "z": "d9fe96b5.8701c8",
-        "name": "Zwave door event",
-        "server": "3efaa203.1c443e",
-        "version": 1,
-        "event_type": "zwave_js_notification",
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "waitForRunning": true,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "$outputData(\"eventData\").event_type",
-                "valueType": "jsonata"
-            },
-            {
-                "property": "event_type",
-                "propertyType": "msg",
-                "value": "$outputData(\"eventData\").event_type",
-                "valueType": "jsonata"
-            }
-        ],
-        "x": 130,
-        "y": 2240,
-        "wires": [
-            [
-                "9ade8c42.e6e2d"
-            ]
-        ]
-    },
-    {
-        "id": "9ade8c42.e6e2d",
-        "type": "switch",
-        "z": "d9fe96b5.8701c8",
-        "name": "Filter by node id",
-        "property": "payload.event.node_id",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "7",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 340,
-        "y": 2240,
-        "wires": [
-            [
-                "9328cdd.309e53",
-                "954a13bf.333f2",
-                "5187bb6c.35f774"
-            ]
-        ]
-    },
-    {
-        "id": "9328cdd.309e53",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "input_text",
-        "service": "set_value",
-        "entityId": "input_text.back_door_status",
-        "data": "{\"value\":\"{{ payload.event.event_label }}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 590,
-        "y": 2240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "954a13bf.333f2",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "Lock jammed",
-        "func": "const event = msg.payload.event;\nif (event.type === 6 && event.event === 11) {\n    return true;\n}\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 2360,
-        "wires": [
-            [
-                "e7ef2c28.29f4b"
-            ]
-        ]
-    },
-    {
-        "id": "5187bb6c.35f774",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "zwave_js",
-        "service": "refresh_value",
-        "entityId": "lock.back_door",
-        "data": "",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 600,
-        "y": 2300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "eacfda72.eb0e18",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "d": true,
-        "name": "Motion sensitivity",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "input_number.front_door_camera_motion_sensitivity",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 100,
-        "y": 3100,
-        "wires": [
-            [
-                "d994bad3.c8ad68"
-            ]
-        ]
-    },
-    {
-        "id": "4df1247c.1a84cc",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "reolink_dev",
-        "service": "set_sensitivity",
-        "entityId": "",
-        "data": "{\"entity_id\":\"camera.front_door_camera\",\"sensitivity\":\"{{ payload }}\"}",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 510,
-        "y": 3100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "eb2b8b57.c017d8",
-        "type": "comment",
-        "z": "d9fe96b5.8701c8",
-        "name": "Front door camera",
-        "info": "",
-        "x": 110,
-        "y": 3060,
-        "wires": []
-    },
-    {
-        "id": "d994bad3.c8ad68",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "Convert to int",
-        "func": "msg.payload = parseInt(msg.payload);\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 290,
-        "y": 3100,
-        "wires": [
-            [
-                "4df1247c.1a84cc"
-            ]
-        ]
-    },
-    {
-        "id": "48f2f487.5deeec",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "name": "Motion detected",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "binary_sensor.front_person_motion",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 100,
-        "y": 3160,
-        "wires": [
-            [
-                "594f433e.48c83c"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "470f2b99.876264",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 500,
-        "y": 3160,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "594f433e.48c83c",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "Format",
-        "func": "\nreturn {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Front-door camera\",\n        \"message\": `🧍 Motion detected at front-door`,\n        \"data\": {\n            \"image\": \"/api/camera_proxy/camera.front_person\",\n            \"priority\": \"high\",\n            \"ttl\": 0,\n            \"url\": \"/lovelace-test/1\"\n        }\n    },\n    \"log\": {\n        \"name\": `Front-door camera`,\n        \"entity_id\": \"camera.front_door_camera\",\n        \"message\": \"notified motion\",\n        \"domain\": \"notify\"\n    }\n}\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 300,
-        "y": 3160,
-        "wires": [
-            [
-                "470f2b99.876264"
-            ]
-        ]
-    },
-    {
-        "id": "a6f85e0e.022e2",
-        "type": "server-state-changed",
-        "z": "d9fe96b5.8701c8",
-        "d": true,
-        "name": "Motion detected (night)",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "binary_sensor.front_door_camera_motion",
-        "entityidfiltertype": "exact",
-        "outputinitially": false,
-        "state_type": "str",
-        "haltifstate": "on",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 2,
-        "output_only_on_state_change": true,
-        "for": "70",
-        "forType": "num",
-        "forUnits": "seconds",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 120,
-        "y": 3220,
-        "wires": [
-            [
-                "80d763e4.32f7f"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "7bbc5594.85286c",
-        "type": "subflow:670bc302.cb732c",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "env": [
-            {
-                "name": "notification",
-                "value": "",
-                "type": "json"
-            },
-            {
-                "name": "log",
-                "value": "",
-                "type": "json"
-            }
-        ],
-        "x": 660,
-        "y": 3220,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "29df47ea.0c6648",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "Format",
-        "func": "\nreturn {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Front-door camera (night)\",\n        \"message\": `🧍 Motion detected at front-door`,\n        \"data\": {\n            \"tag\": \"motion.front_door.night\",\n            \"image\": \"/api/camera_proxy/camera.front_door_camera\",\n            \"priority\": \"high\",\n            \"ttl\": 0,\n            \"url\": \"/lovelace-test/1\"\n        }\n    },\n    \"log\": {\n        \"name\": `Front-door camera`,\n        \"entity_id\": \"camera.front_door_camera\",\n        \"message\": \"notified motion (night)\",\n        \"domain\": \"notify\"\n    }\n}\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 480,
-        "y": 3220,
-        "wires": [
-            [
-                "7bbc5594.85286c"
-            ]
-        ]
-    },
-    {
-        "id": "80d763e4.32f7f",
-        "type": "function",
-        "z": "d9fe96b5.8701c8",
-        "name": "Night time?",
-        "func": "const current = new Date().getHours();\n\nif (current >= 8 && current <= 20 ) {\n    return [{payload: true}, null];\n}\n    return [null, {payload: true}];\n",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 310,
-        "y": 3220,
-        "wires": [
-            [],
-            [
-                "29df47ea.0c6648"
-            ]
-        ]
-    },
-    {
-        "id": "8fea3bc.71fefc8",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Still unlocked",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 2,
-        "halt_if": "unlocked",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "lock.back_door",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 770,
-        "y": 2000,
-        "wires": [
-            [
-                "8e296b22.6d1d18"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "5a257f4a.c35a1",
-        "type": "trigger",
-        "z": "d9fe96b5.8701c8",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "5",
-        "extend": true,
-        "overrideDelay": false,
-        "units": "s",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 600,
-        "y": 2060,
-        "wires": [
-            [
-                "8fea3bc.71fefc8"
-            ]
-        ]
-    },
-    {
-        "id": "8e296b22.6d1d18",
-        "type": "api-call-service",
-        "z": "d9fe96b5.8701c8",
-        "name": "Lock back door",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "lock",
-        "service": "lock",
-        "entityId": "lock.back_door",
-        "data": "{ \"entity_id\": \"lock.back_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 940,
-        "y": 2000,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "da57f7c8.a65e88",
         "type": "server-state-changed",
         "z": "57667353.82973c",
@@ -8679,48 +6452,6 @@
         ]
     },
     {
-        "id": "e5da3c63.84fad",
-        "type": "api-current-state",
-        "z": "d9fe96b5.8701c8",
-        "name": "Not out",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.vacation_mode",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 360,
-        "y": 540,
-        "wires": [
-            [
-                "bd47a6eb.3c0138"
-            ],
-            []
-        ]
-    },
-    {
         "id": "ab8b3103.2ad76",
         "type": "api-current-state",
         "z": "d9fe96b5.8701c8",
@@ -8754,7 +6485,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 300,
-        "y": 280,
+        "y": 80,
         "wires": [
             [
                 "c499881d.445368"
@@ -8784,7 +6515,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 320,
+        "y": 140,
         "wires": [
             [
                 "33687b64.3c4b04"
@@ -8825,7 +6556,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 330,
-        "y": 320,
+        "y": 140,
         "wires": [
             [
                 "c499881d.445368"
@@ -9477,5 +7208,1766 @@
                 "e7e04f69.8c482"
             ]
         ]
+    },
+    {
+        "id": "c4e57a66.d47a08",
+        "type": "inject",
+        "z": "e2c67c6c.68265",
+        "name": "Check washer open",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "d7f57d61.8acea"
+            ]
+        ]
+    },
+    {
+        "id": "6c6d0c85.a031f4",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Washer closed",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.washing_machine_open",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 480,
+        "y": 500,
+        "wires": [
+            [
+                "5bc1f973.cccf68"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8e38cc4d.d3a51",
+        "type": "subflow:670bc302.cb732c",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 840,
+        "y": 500,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5bc1f973.cccf68",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Washing machine is closed\",\"message\":\" ⚠️ Washing machine needs to be open!\",\"data\":{\"tag\":\"washing_machine.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.washing_machine.open\"}]}},\"log\":{\"name\":\"Washing Machine (Node Red)\",\"entity_id\":\"input_boolean.washing_machine_open\",\"message\":\"notified closed warning\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 500,
+        "wires": [
+            [
+                "8e38cc4d.d3a51"
+            ]
+        ]
+    },
+    {
+        "id": "bed33bd.1ceb9c8",
+        "type": "inject",
+        "z": "e2c67c6c.68265",
+        "name": "Check humidifier filled",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 22 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "8463d72c.7811b8",
+                "79880a3e.261e84"
+            ]
+        ]
+    },
+    {
+        "id": "1a70d695.9df7b9",
+        "type": "subflow:670bc302.cb732c",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 760,
+        "y": 760,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8463d72c.7811b8",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Last filled",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_datetime.humidifier_filled",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 120,
+        "y": 680,
+        "wires": [
+            [
+                "1a3f1f09.3e6411"
+            ]
+        ]
+    },
+    {
+        "id": "1a3f1f09.3e6411",
+        "type": "function",
+        "z": "e2c67c6c.68265",
+        "name": "> 60 hours",
+        "func": "const now = Date.now();\nconst lastFilled = new Date(msg.payload).getTime();\n// convert to hours\nconst duration = parseFloat(now - lastFilled) / (1000 * 60 * 60);\n\nif (duration > 60) {\n    return {\n        payload: true\n    };\n}\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 680,
+        "wires": [
+            [
+                "c44dc0e7.266c1",
+                "b4a86946.5f9b88"
+            ]
+        ]
+    },
+    {
+        "id": "2c2d4d65.b76782",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Humidifier filled",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.humidifier_filled",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 140,
+        "y": 820,
+        "wires": [
+            [
+                "caa0a736.60a358"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7d986097.96bb9",
+        "type": "api-call-service",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "",
+        "data": "{\"entity_id\":\"input_datetime.humidifier_filled\",\"datetime\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 600,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "caa0a736.60a358",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 350,
+        "y": 820,
+        "wires": [
+            [
+                "7d986097.96bb9"
+            ]
+        ]
+    },
+    {
+        "id": "c44dc0e7.266c1",
+        "type": "api-call-service",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.humidifier_filled",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 640,
+        "y": 680,
+        "wires": [
+            [
+                "1a6b0551.e242fb"
+            ]
+        ]
+    },
+    {
+        "id": "d3ef83ba.31d6d",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Humidifier not filed",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.humidifier_filled",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "x": 530,
+        "y": 620,
+        "wires": [
+            [
+                "b4a86946.5f9b88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b4a86946.5f9b88",
+        "type": "delay",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 720,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79880a3e.261e84",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Not out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 360,
+        "y": 620,
+        "wires": [
+            [
+                "d3ef83ba.31d6d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7159cb79.824344",
+        "type": "comment",
+        "z": "e2c67c6c.68265",
+        "name": "Washer",
+        "info": "",
+        "x": 90,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "45a1b9c2.64a078",
+        "type": "comment",
+        "z": "e2c67c6c.68265",
+        "name": "Humidifier",
+        "info": "",
+        "x": 100,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d7f57d61.8acea",
+        "type": "api-current-state",
+        "z": "e2c67c6c.68265",
+        "name": "Not out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 320,
+        "y": 500,
+        "wires": [
+            [
+                "6c6d0c85.a031f4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1a6b0551.e242fb",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Humidifier needs to be filled\",\"message\":\" ⚠️ Humidifier needs to be filled!\",\"data\":{\"tag\":\"humidifier.warn\",\"actions\":[{\"title\":\"Done\",\"action\":\"notification.humidifier.fill\"}]}},\"log\":{\"name\":\"Humidifier Filled (Node Red)\",\"entity_id\":\"input_boolean.humidifier_filled\",\"message\":\"notified not filled warning\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 760,
+        "wires": [
+            [
+                "1a70d695.9df7b9"
+            ]
+        ]
+    },
+    {
+        "id": "269037ec.1f81d8",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door unlocked",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "lock.back_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "unlocked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 110,
+        "y": 40,
+        "wires": [
+            [
+                "71c592ae.961fec"
+            ],
+            [
+                "9d64bb94.c50608"
+            ]
+        ]
+    },
+    {
+        "id": "71c592ae.961fec",
+        "type": "trigger",
+        "z": "f71ac145.59035",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "15",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 350,
+        "y": 40,
+        "wires": [
+            [
+                "902adcf9.86dc8"
+            ]
+        ]
+    },
+    {
+        "id": "9d64bb94.c50608",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "71c592ae.961fec",
+                "f459300d.4e442"
+            ]
+        ]
+    },
+    {
+        "id": "902adcf9.86dc8",
+        "type": "api-call-service",
+        "z": "f71ac145.59035",
+        "name": "Lock back door",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "lock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 540,
+        "y": 40,
+        "wires": [
+            [
+                "f459300d.4e442"
+            ]
+        ]
+    },
+    {
+        "id": "9595f732.2197b8",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ ⚠️ Back door lock jammed!\",\"data\":{\"tag\":\"lock.back_door.error\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified jammed\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 400,
+        "wires": [
+            [
+                "100b4e2c.58c2e2"
+            ]
+        ]
+    },
+    {
+        "id": "100b4e2c.58c2e2",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "x": 720,
+        "y": 400,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "588397ba.e25538",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door low battery",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.back_door_lock_low_battery_level",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "a7eb486.e213cb8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a7eb486.e213cb8",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ Back door lock has low battery\",\"data\":{\"tag\":\"lock.back_door.low_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified low battery\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "d460290d.65e668"
+            ]
+        ]
+    },
+    {
+        "id": "d460290d.65e668",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "456d7137.a1999",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door critical battery",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.back_door_lock_power_management_replace_battery_soon",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "30fe3544.b54d9a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "30fe3544.b54d9a",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ 🔋️ ⚠️ Back door lock has at critical battery level!\",\"data\":{\"tag\":\"lock.back_door.critical_battery\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified critical battery level\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "5c02b253.c7970c"
+            ]
+        ]
+    },
+    {
+        "id": "5c02b253.c7970c",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "env": [],
+        "x": 540,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "409d1059.82a53",
+        "type": "server-events",
+        "z": "f71ac145.59035",
+        "name": "Zwave door event",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "event_type": "zwave_js_notification",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "waitForRunning": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            },
+            {
+                "property": "event_type",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 110,
+        "y": 280,
+        "wires": [
+            [
+                "5053b69a.47e1d8"
+            ]
+        ]
+    },
+    {
+        "id": "5053b69a.47e1d8",
+        "type": "switch",
+        "z": "f71ac145.59035",
+        "name": "Filter by node id",
+        "property": "payload.event.node_id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "7",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 320,
+        "y": 280,
+        "wires": [
+            [
+                "95288f0c.371ae",
+                "5ccaf334.06857c",
+                "87a6f89d.021988"
+            ]
+        ]
+    },
+    {
+        "id": "95288f0c.371ae",
+        "type": "api-call-service",
+        "z": "f71ac145.59035",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_text",
+        "service": "set_value",
+        "entityId": "input_text.back_door_status",
+        "data": "{\"value\":\"{{ payload.event.event_label }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 570,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ccaf334.06857c",
+        "type": "function",
+        "z": "f71ac145.59035",
+        "name": "Lock jammed",
+        "func": "const event = msg.payload.event;\nif (event.type === 6 && event.event === 11) {\n    return true;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 400,
+        "wires": [
+            [
+                "9595f732.2197b8"
+            ]
+        ]
+    },
+    {
+        "id": "87a6f89d.021988",
+        "type": "api-call-service",
+        "z": "f71ac145.59035",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "zwave_js",
+        "service": "refresh_value",
+        "entityId": "lock.back_door",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "755eff5c.efd3c",
+        "type": "api-current-state",
+        "z": "f71ac145.59035",
+        "name": "Still unlocked",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "unlocked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "lock.back_door",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 750,
+        "y": 40,
+        "wires": [
+            [
+                "6ca3c5db.dbf09c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f459300d.4e442",
+        "type": "trigger",
+        "z": "f71ac145.59035",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "5",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "755eff5c.efd3c"
+            ]
+        ]
+    },
+    {
+        "id": "6ca3c5db.dbf09c",
+        "type": "api-call-service",
+        "z": "f71ac145.59035",
+        "name": "Lock back door",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "lock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 800,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "71199d0a.fc0974",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "IP address changed",
+        "info": "",
+        "x": 130,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1cbf598e.e52d86",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "IP address",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.ip_address",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "(\\d*)\\.(\\d*)\\.(\\d*)\\.(\\d*)\\b",
+        "halt_if_type": "re",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 340,
+        "wires": [
+            [
+                "2431aa94.0a7fd6",
+                "66ca4295.a5723c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2431aa94.0a7fd6",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "func": "return {\n    \"payload\": {\n        \"notification\": {\n            \"title\": \"IP address changed\",\n            \"message\": `🌐 ⚠️ Your IP address is now ${msg.payload}`,\n            \"data\": {\n                \"tag\": \"internet.ip.warn\",\n                \"priority\": \"high\",\n                \"ttl\": 0\n            }\n        },\n        \"log\": {\n            \"name\": \"IP address (Node Red)\",\n            \"entity_id\": \"sensor.ip_address\",\n            \"message\": \"notified changed\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 340,
+        "wires": [
+            [
+                "87de062.dda07f8"
+            ]
+        ]
+    },
+    {
+        "id": "87de062.dda07f8",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "66ca4295.a5723c",
+        "type": "exec",
+        "z": "d9fe96b5.8701c8",
+        "command": "/data/projects/nodered/update-ip.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Run update-ip.sh",
+        "x": 310,
+        "y": 400,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f640e131.f8a82",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Media player paused",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "media_player",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "paused",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "8f336a3f.e3d058"
+            ],
+            [
+                "339aca96.9f5f36"
+            ]
+        ]
+    },
+    {
+        "id": "8f336a3f.e3d058",
+        "type": "trigger",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "10",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 540,
+        "wires": [
+            [
+                "4ab8a7ec.d7f988"
+            ]
+        ]
+    },
+    {
+        "id": "339aca96.9f5f36",
+        "type": "change",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "8f336a3f.e3d058"
+            ]
+        ]
+    },
+    {
+        "id": "4ab8a7ec.d7f988",
+        "type": "api-call-service",
+        "z": "d9fe96b5.8701c8",
+        "name": "Turn off",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "media_player",
+        "service": "turn_off",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{data.entity_id}}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 540,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbe9df85.db331",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Turn off speaker after 10 mins paused",
+        "info": "",
+        "x": 190,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7ed0a368.46fdfc",
+        "type": "server-events",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "event_type": "mobile_app_notification_action",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "waitForRunning": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            },
+            {
+                "property": "event_type",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 170,
+        "y": 420,
+        "wires": [
+            [
+                "528e4bba.47c1d4"
+            ]
+        ]
+    },
+    {
+        "id": "528e4bba.47c1d4",
+        "type": "switch",
+        "z": "9889ef6.6e2771",
+        "name": "",
+        "property": "payload.event.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "notification.vacuum.roborock.find",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.garage.open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.garage.close",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.garage.disable_warning",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.washing_machine.open",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.humidifier.fill",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "notification.3d_printer.turn_off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 7,
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "35fcc3dc.e337cc"
+            ],
+            [
+                "81988ba9.cf28c8"
+            ],
+            [
+                "a8d42039.b7909"
+            ],
+            [
+                "5bf3d2f0.95650c"
+            ],
+            [
+                "34037e3f.897562"
+            ],
+            [
+                "180816a3.09e219"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "35fcc3dc.e337cc",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Find robot",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "vacuum",
+        "service": "locate",
+        "entityId": "vacuum.roborock",
+        "data": "{ \"entity_id\": \"vacuum.roborock\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 320,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81988ba9.cf28c8",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Open garage",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "open_cover",
+        "entityId": "cover.garage_door",
+        "data": "{ \"entity_id\": \"cover.garage_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 330,
+        "y": 560,
+        "wires": [
+            [
+                "56466efe.bf5d5",
+                "7d1bb907.95f578"
+            ]
+        ]
+    },
+    {
+        "id": "a8d42039.b7909",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Close garage",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "cover",
+        "service": "close_cover",
+        "entityId": "cover.garage_door",
+        "data": "{ \"entity_id\": \"cover.garage_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 330,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "56466efe.bf5d5",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Turn on light",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.cabinet_light",
+        "data": "{ \"entity_id\": \"switch.cabinet_light\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 530,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d1bb907.95f578",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Open back door",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "lock",
+        "service": "unlock",
+        "entityId": "lock.back_door",
+        "data": "{ \"entity_id\": \"lock.back_door\" }",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 540,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "34037e3f.897562",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Washing machine open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.washing_machine_open",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 370,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "180816a3.09e219",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Humidifier filled",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.humidifier_filled",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 340,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5bf3d2f0.95650c",
+        "type": "api-call-service",
+        "z": "9889ef6.6e2771",
+        "name": "Disable garage door warning",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.gargage_door_warning",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 380,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d0ae2f26.dae6d",
+        "type": "comment",
+        "z": "9889ef6.6e2771",
+        "name": "Mobile actions",
+        "info": "",
+        "x": 90,
+        "y": 380,
+        "wires": []
     }
 ]
