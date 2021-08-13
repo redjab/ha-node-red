@@ -298,7 +298,7 @@
         "id": "c499881d.445368",
         "type": "api-call-service",
         "z": "d9fe96b5.8701c8",
-        "name": "Set max fan speed",
+        "name": "Set medium fan speed",
         "server": "3efaa203.1c443e",
         "version": 3,
         "debugenabled": false,
@@ -311,7 +311,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 510,
+        "x": 520,
         "y": 280,
         "wires": [
             [
@@ -9109,6 +9109,231 @@
         "wires": [
             [
                 "cd5c5706.73dae8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "52fdf50c.39204c",
+        "type": "server-state-changed",
+        "z": "6054ff63.2ff7c",
+        "name": "Camera toggle",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.octoprint_camera",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 900,
+        "wires": [
+            [
+                "a5b1a1e5.314a7"
+            ],
+            [
+                "5fc7f4b5.ad73bc"
+            ]
+        ]
+    },
+    {
+        "id": "9724333c.78381",
+        "type": "exec",
+        "z": "6054ff63.2ff7c",
+        "command": "/data/projects/nodered/octoprint-streamon.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Turn on camera",
+        "x": 460,
+        "y": 900,
+        "wires": [
+            [
+                "54a5564.c76f6a8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "17f4a99f.7e0e06",
+        "type": "exec",
+        "z": "6054ff63.2ff7c",
+        "command": "/data/projects/nodered/octoprint-streamoff.sh",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Turn off camera",
+        "x": 460,
+        "y": 980,
+        "wires": [
+            [
+                "d66d119d.e4e7d"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d66d119d.e4e7d",
+        "type": "subflow:a548685b.826b08",
+        "z": "6054ff63.2ff7c",
+        "name": "",
+        "env": [],
+        "x": 740,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "54a5564.c76f6a8",
+        "type": "api-call-service",
+        "z": "6054ff63.2ff7c",
+        "name": "Turn on printer",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.3d_printer",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 660,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5fc7f4b5.ad73bc",
+        "type": "api-current-state",
+        "z": "6054ff63.2ff7c",
+        "name": "Out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 270,
+        "y": 980,
+        "wires": [
+            [
+                "17f4a99f.7e0e06"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a5b1a1e5.314a7",
+        "type": "api-current-state",
+        "z": "6054ff63.2ff7c",
+        "name": "Out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 290,
+        "y": 900,
+        "wires": [
+            [
+                "9724333c.78381"
             ],
             []
         ]
