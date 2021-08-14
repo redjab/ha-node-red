@@ -6816,20 +6816,7 @@
         "entity_id": "input_boolean.vacation_mode",
         "state_type": "str",
         "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
+        "outputProperties": [],
         "override_topic": false,
         "state_location": "payload",
         "override_payload": "msg",
@@ -8968,6 +8955,22 @@
         "info": "",
         "x": 90,
         "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4a94f2cd.31b54c",
+        "type": "debug",
+        "z": "57667353.82973c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 280,
         "wires": []
     }
 ]
