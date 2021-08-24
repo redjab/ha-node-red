@@ -1023,7 +1023,7 @@
         "version": 3,
         "debugenabled": true,
         "service_domain": "notify",
-        "service": "all_phone_app",
+        "service": "{{payload.notify_whom}}",
         "entityId": "",
         "data": "$$.payload.notification",
         "dataType": "jsonata",
@@ -2481,16 +2481,18 @@
         "type": "function",
         "z": "670bc302.cb732c",
         "name": "",
-        "func": "if (msg && msg.payload && msg.payload.notification) {\n    let data = msg.payload.notification.data || {};\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n}\nreturn msg;",
+        "func": "if (msg && msg.payload) {\n    let notification = msg.payload.notification || {};\n    let data = notification.data || {};\n        \n    if (!data.notify_whom) {\n        msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app' })\n    }\n\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n    \n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 180,
         "y": 100,
         "wires": [
             [
-                "5a2b4568.2d2c5c"
+                "5a2b4568.2d2c5c",
+                "991689ab.9de768"
             ]
         ]
     },
@@ -6908,12 +6910,10 @@
         "timer": "",
         "oldrc": false,
         "name": "Turn on camera",
-        "x": 460,
+        "x": 800,
         "y": 900,
         "wires": [
-            [
-                "54a5564.c76f6a8"
-            ],
+            [],
             [],
             []
         ]
@@ -6966,10 +6966,12 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
+        "x": 460,
         "y": 900,
         "wires": [
-            []
+            [
+                "51428a41.750724"
+            ]
         ]
     },
     {
@@ -7051,7 +7053,7 @@
         "y": 900,
         "wires": [
             [
-                "9724333c.78381"
+                "54a5564.c76f6a8"
             ],
             []
         ]
@@ -7338,7 +7340,6 @@
         "y": 620,
         "wires": [
             [
-                "8463d72c.7811b8",
                 "79880a3e.261e84"
             ]
         ]
@@ -7558,7 +7559,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 640,
+        "x": 660,
         "y": 680,
         "wires": [
             [
@@ -7594,7 +7595,7 @@
                 "valueType": "entity"
             }
         ],
-        "x": 530,
+        "x": 570,
         "y": 620,
         "wires": [
             [
@@ -7618,7 +7619,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 720,
+        "x": 780,
         "y": 620,
         "wires": [
             []
@@ -7661,7 +7662,8 @@
         "y": 620,
         "wires": [
             [
-                "d3ef83ba.31d6d"
+                "d3ef83ba.31d6d",
+                "8463d72c.7811b8"
             ],
             []
         ]
@@ -7814,7 +7816,8 @@
         "y": 40,
         "wires": [
             [
-                "71c592ae.961fec"
+                "71c592ae.961fec",
+                "5e9ede4e.2ba56"
             ],
             [
                 "9d64bb94.c50608"
@@ -7918,7 +7921,7 @@
         "to": "",
         "reg": false,
         "x": 540,
-        "y": 400,
+        "y": 480,
         "wires": [
             [
                 "100b4e2c.58c2e2"
@@ -7931,7 +7934,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 720,
-        "y": 400,
+        "y": 480,
         "wires": [
             [],
             []
@@ -7988,7 +7991,7 @@
             }
         ],
         "x": 120,
-        "y": 160,
+        "y": 240,
         "wires": [
             [
                 "a7eb486.e213cb8"
@@ -8016,7 +8019,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 160,
+        "y": 240,
         "wires": [
             [
                 "d460290d.65e668"
@@ -8029,7 +8032,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 540,
-        "y": 160,
+        "y": 240,
         "wires": [
             [],
             []
@@ -8086,7 +8089,7 @@
             }
         ],
         "x": 130,
-        "y": 220,
+        "y": 300,
         "wires": [
             [
                 "30fe3544.b54d9a"
@@ -8114,7 +8117,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 220,
+        "y": 300,
         "wires": [
             [
                 "5c02b253.c7970c"
@@ -8128,7 +8131,7 @@
         "name": "",
         "env": [],
         "x": 540,
-        "y": 220,
+        "y": 300,
         "wires": [
             [],
             []
@@ -8175,7 +8178,7 @@
             }
         ],
         "x": 110,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "5053b69a.47e1d8"
@@ -8200,7 +8203,7 @@
         "repair": false,
         "outputs": 1,
         "x": 320,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "95288f0c.371ae",
@@ -8227,7 +8230,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 570,
-        "y": 280,
+        "y": 360,
         "wires": [
             []
         ]
@@ -8244,7 +8247,7 @@
         "finalize": "",
         "libs": [],
         "x": 310,
-        "y": 400,
+        "y": 480,
         "wires": [
             [
                 "9595f732.2197b8"
@@ -8269,7 +8272,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 580,
-        "y": 340,
+        "y": 420,
         "wires": [
             []
         ]
@@ -8970,6 +8973,244 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 700,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "51428a41.750724",
+        "type": "delay",
+        "z": "6054ff63.2ff7c",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "6",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 640,
+        "y": 900,
+        "wires": [
+            [
+                "9724333c.78381"
+            ]
+        ]
+    },
+    {
+        "id": "5e9ede4e.2ba56",
+        "type": "api-current-state",
+        "z": "f71ac145.59035",
+        "name": "Out",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.vacation_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "53bc33b7.1702fc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "53bc33b7.1702fc",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"Back door lock opened\",\"message\":\"🔒️ ⚠️ Back door lock is open!\",\"data\":{\"tag\":\"lock.back_door.open\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified open\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 160,
+        "wires": [
+            [
+                "529a9fe1.b4e77"
+            ]
+        ]
+    },
+    {
+        "id": "529a9fe1.b4e77",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "env": [],
+        "x": 680,
+        "y": 160,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e82dd484.41e038",
+        "type": "server-state-changed",
+        "z": "d9fe96b5.8701c8",
+        "name": "Motion detected",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.front_person_motion",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 1660,
+        "wires": [
+            [
+                "3261309c.84dbc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3261309c.84dbc",
+        "type": "function",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "func": "return {\n    \"payload\": {\n        \"notification\": {\n            \"title\": \"Front-door camera\",\n            \"message\": `🧍 Motion detected at front-door`,\n            \"data\": {\n                \"image\": \"/api/camera_proxy/camera.front_person\",\n                \"priority\": \"high\",\n                \"ttl\": 0,\n                \"url\": \"/lovelace-test/1\"\n            }\n        },\n        \"log\": {\n            \"name\": `Front-door camera`,\n            \"entity_id\": \"camera.front_door_camera\",\n            \"message\": \"notified motion\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 1660,
+        "wires": [
+            [
+                "72abffd5.ba937"
+            ]
+        ]
+    },
+    {
+        "id": "72abffd5.ba937",
+        "type": "subflow:670bc302.cb732c",
+        "z": "d9fe96b5.8701c8",
+        "name": "",
+        "env": [
+            {
+                "name": "notification",
+                "value": "",
+                "type": "json"
+            },
+            {
+                "name": "log",
+                "value": "",
+                "type": "json"
+            }
+        ],
+        "x": 500,
+        "y": 1660,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bc06b0b9.b7238",
+        "type": "comment",
+        "z": "d9fe96b5.8701c8",
+        "name": "Front door camera",
+        "info": "",
+        "x": 130,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "991689ab.9de768",
+        "type": "debug",
+        "z": "670bc302.cb732c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
         "y": 280,
         "wires": []
     }
