@@ -2481,7 +2481,7 @@
         "type": "function",
         "z": "670bc302.cb732c",
         "name": "",
-        "func": "if (msg && msg.payload) {\n    let notification = msg.payload.notification || {};\n    let data = notification.data || {};\n        \n    if (!data.notify_whom) {\n        msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app' })\n    }\n\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n    \n}\n\nreturn msg;",
+        "func": "if (msg && msg.payload) {\n    let notification = msg.payload.notification || {};\n    let data = notification.data || {};\n        \n    if (!msg.payload.notify_whom) {\n        msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app' })\n    }\n\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n    \n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2491,8 +2491,7 @@
         "y": 100,
         "wires": [
             [
-                "5a2b4568.2d2c5c",
-                "991689ab.9de768"
+                "5a2b4568.2d2c5c"
             ]
         ]
     },
@@ -2521,6 +2520,7 @@
         "id": "86849de1.7c9e3",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "10:30 PM weekday ",
         "props": [
             {
@@ -2583,6 +2583,7 @@
         "id": "d77576d6.333c78",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "11:30 PM weekend",
         "props": [
             {
@@ -2612,6 +2613,7 @@
         "id": "b208104b.c619c",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "8:30 AM weekday ",
         "props": [
             {
@@ -2664,6 +2666,7 @@
         "id": "4a204f83.aa742",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
+        "d": true,
         "name": "9:30 AM weekend",
         "props": [
             {
@@ -3721,13 +3724,13 @@
         "id": "ef87250c.b33c88",
         "type": "switch",
         "z": "7593ec4d.460434",
-        "name": "Gone for >20 mins",
+        "name": "Gone for >10 mins",
         "property": "custom.time_passed_minutes",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "gte",
-                "v": "20",
+                "v": "10",
                 "vt": "num"
             },
             {
@@ -4676,11 +4679,12 @@
         "type": "function",
         "z": "57667353.82973c",
         "name": "Format for notification/log",
-        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.payload.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.payload.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.remind`\n                },\n                {\n                    \"title\": \"Extend by a day\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.extend_day`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.payload.attributes.friendly_name})`,\n        \"entity_id\": `${msg.payload.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    }\n}\n}",
+        "func": "return {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"Water plant\",\n        \"message\": `🌱 Your plant (${msg.payload.attributes.friendly_name}) needs a drink soon!`,\n        \"data\": {\n            \"tag\": `plant.water.${msg.payload.entity_id}`,\n            \"actions\": [\n                {\n                    \"title\": \"Done!\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.watered`\n                },\n                {\n                    \"title\": \"Remind me later\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.remind`\n                },\n                {\n                    \"title\": \"Extend by a day\",\n                    \"action\": `notification.plant.${msg.payload.entity_id}.extend_day`\n                }\n            ],\n            \"clickAction\": \"/lovelace-test/plants\"\n        }\n    },\n    \"log\": {\n        \"name\": `Plant (${msg.payload.attributes.friendly_name})`,\n        \"entity_id\": `${msg.payload.entity_id}`,\n        \"message\": \"notified needs watering\",\n        \"domain\": \"notify\"\n    },\n    \"notify_whom\": 'm_only'\n}\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 330,
         "y": 180,
         "wires": [
@@ -5805,7 +5809,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Print completed!\",\"message\":\"Print completed!\",\"data\":{\"tag\":\"print.completed\",\"image\":\"/api/camera_proxy/camera.voxelab_aquila_stream\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Turn printer off\",\"action\":\"notification.3d_printer.turn_off\"}]}},\"log\":{\"name\":\"3D print completed\",\"entity_id\":\"binary_sensor.octoprint_printing\",\"message\":\"notified done\",\"domain\":\"notify\"}}",
+                "to": "{\"notification\":{\"title\":\"Print completed!\",\"message\":\"Print completed!\",\"data\":{\"tag\":\"print.completed\",\"image\":\"/api/camera_proxy/camera.voxelab_aquila_stream\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Turn printer off\",\"action\":\"notification.3d_printer.turn_off\"}]}},\"log\":{\"name\":\"3D print completed\",\"entity_id\":\"binary_sensor.octoprint_printing\",\"message\":\"notified done\",\"domain\":\"notify\"},\"notify_whom\":\"m_only\"}",
                 "tot": "json"
             }
         ],
@@ -5989,7 +5993,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Print ready!\",\"message\":\"Print should be ready to take off bed\"},\"log\":{\"name\":\"3D print completed\",\"entity_id\":\"binary_sensor.octoprint_printing\",\"message\":\"notified ready to take off bed\",\"domain\":\"notify\"}}",
+                "to": "{\"notification\":{\"title\":\"Print ready!\",\"message\":\"Print should be ready to take off bed\"},\"log\":{\"name\":\"3D print completed\",\"entity_id\":\"binary_sensor.octoprint_printing\",\"message\":\"notified ready to take off bed\",\"domain\":\"notify\"},\"notify_whom\":\"m_only\"}",
                 "tot": "json"
             }
         ],
@@ -6412,7 +6416,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Printing\",\"message\":\"Still printing!\",\"data\":{\"tag\":\"print.snapshot\",\"image\":\"/api/camera_proxy/camera.voxelab_aquila_stream\"}}}",
+                "to": "{\"notification\":{\"title\":\"Printing\",\"message\":\"Still printing!\",\"data\":{\"tag\":\"print.snapshot\",\"image\":\"/api/camera_proxy/camera.voxelab_aquila_stream\"}},\"notify_whom\":\"m_only\"}",
                 "tot": "json"
             }
         ],
@@ -8961,22 +8965,6 @@
         "wires": []
     },
     {
-        "id": "4a94f2cd.31b54c",
-        "type": "debug",
-        "z": "57667353.82973c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 280,
-        "wires": []
-    },
-    {
         "id": "51428a41.750724",
         "type": "delay",
         "z": "6054ff63.2ff7c",
@@ -9199,19 +9187,32 @@
         "wires": []
     },
     {
-        "id": "991689ab.9de768",
-        "type": "debug",
-        "z": "670bc302.cb732c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 280,
-        "wires": []
+        "id": "ccb0489c.623118",
+        "type": "inject",
+        "z": "e2c67c6c.68265",
+        "name": "Check washer open",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 16 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "d7f57d61.8acea"
+            ]
+        ]
     }
 ]
