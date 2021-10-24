@@ -49,6 +49,13 @@
         "info": ""
     },
     {
+        "id": "96cf0f5b.b0f5e",
+        "type": "tab",
+        "label": "Thermostat",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -2520,7 +2527,6 @@
         "id": "86849de1.7c9e3",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "d": true,
         "name": "10:30 PM weekday ",
         "props": [
             {
@@ -2583,7 +2589,6 @@
         "id": "d77576d6.333c78",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "d": true,
         "name": "11:30 PM weekend",
         "props": [
             {
@@ -2613,7 +2618,6 @@
         "id": "b208104b.c619c",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "d": true,
         "name": "8:30 AM weekday ",
         "props": [
             {
@@ -2666,7 +2670,6 @@
         "id": "4a204f83.aa742",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "d": true,
         "name": "9:30 AM weekend",
         "props": [
             {
@@ -3885,6 +3888,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 740,
         "y": 740,
         "wires": [
@@ -4703,6 +4707,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 610,
         "y": 440,
         "wires": [
@@ -5034,6 +5039,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 160,
         "y": 640,
         "wires": [
@@ -5123,6 +5129,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 170,
         "y": 360,
         "wires": [
@@ -7974,6 +7981,11 @@
         "for": "0",
         "forType": "num",
         "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
         "outputProperties": [
             {
                 "property": "payload",
@@ -8072,6 +8084,11 @@
         "for": "0",
         "forType": "num",
         "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
         "outputProperties": [
             {
                 "property": "payload",
@@ -8199,7 +8216,7 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "7",
+                "v": "9",
                 "vt": "num"
             }
         ],
@@ -9212,6 +9229,1384 @@
         "wires": [
             [
                 "d7f57d61.8acea"
+            ]
+        ]
+    },
+    {
+        "id": "ed45ea6a.1ae328",
+        "type": "inject",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 20,
+        "wires": [
+            [
+                "9fb9c85e.cd00f8"
+            ]
+        ]
+    },
+    {
+        "id": "53a8b208.d7268c",
+        "type": "function",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Gather data",
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\nconst upstairsThermostat = states['climate.upstairs_thermostat'];\nconst upstairsMode = upstairsThermostat.state;\n\nlet upstairsTemp = {};\nlet upstairsState = {};\nlet upstairsTime = {};\nlet time = {};\n\nif (upstairsMode !== 'off') {\n    upstairsTemp.day = parseFloat(states[`input_number.${upstairsMode}_temp_day`].state);\n    upstairsTemp.night = parseFloat(states[`input_number.${upstairsMode}_temp_night`].state);\n    upstairsTemp.away = parseFloat(states[`input_number.${upstairsMode}_temp_away`].state);\n\n    time.day_start_weekday = states[`input_datetime.${upstairsMode}_day_start_weekday`].state;\n    time.day_start_weekend = states[`input_datetime.${upstairsMode}_day_start_weekend`].state;\n    time.night_start_weekday = states[`input_datetime.${upstairsMode}_night_start_weekday`].state;\n    time.night_start_weekend = states[`input_datetime.${upstairsMode}_night_start_weekend`].state;\n}\n\nupstairsTemp.current = parseFloat(upstairsThermostat.attributes.current_temperature);\nupstairsTemp.target = parseFloat(upstairsThermostat.attributes.temperature);\nupstairsTemp.previous = parseFloat(states['input_number.previous_temperature'].state);\n\nupstairsState.hvac = states['sensor.upstairs_thermostat_hvac_action'].state;\nupstairsState.hvac_mode = upstairsMode;\nupstairsState.fan = states['sensor.upstairs_thermostat_fan_state'].state;\nupstairsState.fan_mode = upstairsThermostat.attributes.fan_mode;\n\nupstairsTime.hvac_last_started = states['input_datetime.hvac_last_started'].state;\nupstairsTime.hvac_last_stopped = states['input_datetime.hvac_last_stopped'].state;\nupstairsTime.hvac_fan_last_started = states['input_datetime.hvac_fan_last_started'].state;\nupstairsTime.hvac_fan_last_stopped = states['input_datetime.hvac_fan_last_stopped'].state;\n\nconst outside = parseFloat(states['weather.weather'].state !== 'unavailable' ? \n    states['weather.weather'].attributes.temperature :\n    states['weather.openweathermap'].state !== 'unavailable' ? \n    states['weather.openweathermap'].attributes.temperature :\n    upstairsTemp.current);\n    \nconst away = states['sensor.away'].state === 'True';\nconst vacation = states['input_boolean.vacation_mode'].state === 'on';\nreturn {\n    payload: {\n        upstairs: {\n            temp: upstairsTemp,\n            state: upstairsState,\n            time: upstairsTime,\n        },\n        time,\n        outside,\n        away,\n        vacation\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "b01e1228.dc41a",
+                "60773c6c.8bafd4",
+                "c0e8a442.84ce08"
+            ]
+        ]
+    },
+    {
+        "id": "5bad29e9.3df878",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Hvac action changed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.upstairs_thermostat_hvac_action",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "idle",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 110,
+        "y": 700,
+        "wires": [
+            [
+                "9bb6b054.a36b6"
+            ],
+            [
+                "b4ea7723.d95748"
+            ]
+        ]
+    },
+    {
+        "id": "fdc41c57.c040a",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set last started",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "input_datetime.hvac_last_started",
+        "data": "{\t   \"datetime\":\"{{ payload }}\"\t}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 480,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bb47daf.9293d4",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set last stopped",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "input_datetime.hvac_last_stopped",
+        "data": "{\t   \"datetime\":\"{{ payload }}\"\t}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 480,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb8238b4.ff3bc8",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Hvac fan state changed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.upstairs_thermostat_fan_state",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "Idle / off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is_not",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 860,
+        "wires": [
+            [
+                "ed63ccc4.c6b35"
+            ],
+            [
+                "f659cedb.8c3fb"
+            ]
+        ]
+    },
+    {
+        "id": "9bb6b054.a36b6",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 310,
+        "y": 700,
+        "wires": [
+            [
+                "fdc41c57.c040a"
+            ]
+        ]
+    },
+    {
+        "id": "b4ea7723.d95748",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 310,
+        "y": 760,
+        "wires": [
+            [
+                "4bb47daf.9293d4"
+            ]
+        ]
+    },
+    {
+        "id": "f9c283fe.7949b",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set last started",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "input_datetime.hvac_fan_last_started",
+        "data": "{\t   \"datetime\":\"{{ payload }}\"\t}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 520,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "76fb0329.5df51c",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set last stopped",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_datetime",
+        "service": "set_datetime",
+        "entityId": "input_datetime.hvac_fan_last_stopped",
+        "data": "{\t   \"datetime\":\"{{ payload }}\"\t}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 520,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed63ccc4.c6b35",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 350,
+        "y": 860,
+        "wires": [
+            [
+                "f9c283fe.7949b"
+            ]
+        ]
+    },
+    {
+        "id": "f659cedb.8c3fb",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Current time",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.date_time_iso",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 350,
+        "y": 920,
+        "wires": [
+            [
+                "76fb0329.5df51c"
+            ]
+        ]
+    },
+    {
+        "id": "9a48aeab.ba6ca",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Hvac fan on for 35 mins",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.upstairs_thermostat_fan_state",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "Running / running low",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "35",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 1040,
+        "wires": [
+            [
+                "24ee19c6.928506"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a8499109.faa1b",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set fan to auto",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_fan_mode",
+        "entityId": "climate.upstairs_thermostat",
+        "data": "{\"fan_mode\":\"Auto low\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 360,
+        "y": 1160,
+        "wires": [
+            [
+                "ae7abcf0.179ad"
+            ]
+        ]
+    },
+    {
+        "id": "ddb735d2.aac068",
+        "type": "function",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Should run fan?",
+        "func": "const time = msg.payload.upstairs.time;\nconst temp = msg.payload.upstairs.temp;\nconst state = msg.payload.upstairs.state;\n\nconst fan_mode = state.fan_mode;\nconst hvac_mode = state.hvac_mode;\nconst vacation = msg.payload.vacation;\n\nconst heat = state.hvac_mode === 'heat';\n\nconst hvac_last_stopped = new Date(time.hvac_last_stopped);\nconst hvac_fan_last_stopped = new Date(time.hvac_fan_last_stopped);\n\nconst last_stopped = hvac_last_stopped < hvac_fan_last_stopped ? hvac_fan_last_stopped : hvac_last_stopped;\nlast_stopped.setSeconds(last_stopped.getSeconds() + (vacation ? 6 : 3)*60*60);\n\nconst hvac_running = state.hvac !== 'idle';\nconst fan_running = state.fan !== 'Idle / off';\nconst fan_cir_mode = fan_mode === 'Circulation';\nconst temp_changed = heat ? temp.current > temp.previous : temp.current < temp.previous;\n\nconst should_run = new Date() >= last_stopped && \n    !hvac_running && \n    !fan_running &&\n    !fan_cir_mode &&\n    !temp_changed;\n\nreturn {\n    payload: {\n        should_run,\n        should_run_at: last_stopped,\n        fan_cir_mode,\n        temp_changed\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "5f965ae1.2224a4",
+                "d2005cb2.1f367"
+            ]
+        ]
+    },
+    {
+        "id": "5f965ae1.2224a4",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "property": "payload.should_run",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "a8399af3.442548"
+            ]
+        ]
+    },
+    {
+        "id": "a8399af3.442548",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set fan to low (on)",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_fan_mode",
+        "entityId": "climate.upstairs_thermostat",
+        "data": "{\"fan_mode\":\"Low\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 750,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c0e8a442.84ce08",
+        "type": "delay",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "ddb735d2.aac068"
+            ]
+        ]
+    },
+    {
+        "id": "ae7abcf0.179ad",
+        "type": "delay",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 340,
+        "y": 1220,
+        "wires": [
+            [
+                "44c22302.87103c"
+            ]
+        ]
+    },
+    {
+        "id": "44c22302.87103c",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Thermorstat state",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "climate.upstairs_thermostat",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 370,
+        "y": 1280,
+        "wires": [
+            [
+                "9335eb55.8ef848"
+            ]
+        ]
+    },
+    {
+        "id": "9335eb55.8ef848",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "retry",
+        "property": "data.attributes.fan_mode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "Auto low",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 1340,
+        "wires": [
+            [
+                "24ee19c6.928506"
+            ]
+        ]
+    },
+    {
+        "id": "bc349fab.34bb5",
+        "type": "inject",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1100,
+        "wires": [
+            [
+                "24ee19c6.928506"
+            ]
+        ]
+    },
+    {
+        "id": "24ee19c6.928506",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Thermorstat state",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "climate.upstairs_thermostat",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 350,
+        "y": 1040,
+        "wires": [
+            [
+                "80ba867f.cf3328"
+            ]
+        ]
+    },
+    {
+        "id": "80ba867f.cf3328",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Not circulation mode",
+        "property": "data.attributes.fan_mode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "Circulation",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 1100,
+        "wires": [
+            [
+                "a8499109.faa1b"
+            ]
+        ]
+    },
+    {
+        "id": "b04aae6d.cdb77",
+        "type": "comment",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Prevent fan from being on for too long",
+        "info": "",
+        "x": 170,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "becea10d.07ef3",
+        "type": "debug",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b01e1228.dc41a",
+        "type": "function",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Should run hvac?",
+        "func": "const payload = msg.payload;\nconst upstairs = payload.upstairs;\nconst outside = payload.outside;\nconst away = payload.away;\n\nconst temp = upstairs.temp;\nconst state = upstairs.state;\nconst hvac_running = state.hvac !== 'idle';\n\nconst time = payload.time;\nconst heat = state.hvac_mode === 'heat';\n\nconst current_day = new Date().getDay();\nconst is_weekday = current_day < 6 && current_day !== 0;\n\n// count Friday as weekend and Sunday as weekday for night\nconst is_weekday_night = current_day !== 5 && current_day !== 6;\n\nconst current_time = new Date();\n\nconst midnight = new Date();\nmidnight.setHours(0);\nmidnight.setMinutes(0);\nmidnight.setMilliseconds(0);\n\nconst day_night_str = is_weekday ? 'day' : 'end';\nconst day_night_str_night = is_weekday_night ? 'day' : 'end';\n\nlet day_start = timeStringToDate(time[`day_start_week${day_night_str}`]);\nlet night_start = timeStringToDate(time[`night_start_week${day_night_str_night}`]);\n\nconst is_day_schedule = current_time >= day_start &&\n                current_time < night_start;\n                \nconst temp_target_schedule = away ? temp.away : (is_day_schedule ? temp.day : temp.night);\n\nconst temp_diff = Math.abs(temp_target_schedule - outside);\nconst breakpoints = [\n    { diff: 20, adjust: 1.5, hours_to_cooldown: 2, hours_to_heatup: 2 },\n    { diff: 14, adjust: 1.5, hours_to_cooldown: 3, hours_to_heatup: 3 },\n    { diff: 7, adjust: 1, hours_to_cooldown: 5, hours_to_heatup: 4 },\n    { diff: 5, adjust: 1, hours_to_cooldown: 7, hours_to_heatup: 4 },\n    { diff: 2, adjust: 0.5, hours_to_cooldown: 12, hours_to_heatup: 5 }\n];\n\nlet temp_adjust = 0;\nlet hours_to_cooldown = 12;\nlet hours_to_heatup = 4;\n\nfor (let index = 0; index < breakpoints.length; index++){\n    const breakpoint = breakpoints[index];\n    if (breakpoint.diff <= temp_diff) {\n        temp_adjust = breakpoint.adjust;\n        hours_to_cooldown = breakpoint.hours_to_cooldown;\n        hours_to_heatup = breakpoint.hours_to_heatup;\n        break;\n    } \n}\n\nif (heat) {\n    night_start.setHours(night_start.getHours() - hours_to_cooldown);\n    if (night_start < midnight) {\n        night_start.setDate(current_time.getDate());\n    }\n} else {\n    day_start.setHours(day_start.getHours() - hours_to_heatup);\n}\n\nconst is_day = current_time >= day_start &&\n                current_time < night_start;\n                \nconst temp_target = away ? temp.away : (is_day ? temp.day : temp.night);\nlet temp_adjusted = temp_target;\n\nif (heat) {\n    temp_adjusted = temp_target + temp_adjust;\n} else {\n    temp_adjusted = temp_target - temp_adjust;\n}\n\nlet temp_adjusted_opposite_limit = temp_target + (1 * (heat ? -1 : 1));\n\n// if we already reach the target temp with adjustment (e.g 22 + 1.5)\n// then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\nif (!hvac_running && ((heat && temp.current > temp_adjusted_opposite_limit) || \n    (!heat && temp.current < temp_adjusted_opposite_limit))) {\n    temp_adjusted = temp_adjusted_opposite_limit;\n}\n\nconst should_run = temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        temp_adjusted,\n        temp_diff,\n        day_start,\n        night_start,\n        is_day,\n        hours_to_cooldown,\n        hours_to_heatup\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "becea10d.07ef3",
+                "e8616b7.2c9cb98"
+            ]
+        ]
+    },
+    {
+        "id": "60773c6c.8bafd4",
+        "type": "debug",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e8616b7.2c9cb98",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "property": "payload.should_run",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "959ed834.cec908"
+            ]
+        ]
+    },
+    {
+        "id": "959ed834.cec908",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set temp",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.upstairs_thermostat",
+        "data": "{\"temperature\":\"{{ payload.temp_adjusted }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "472145e9.07508c"
+            ]
+        ]
+    },
+    {
+        "id": "30cb86cf.48928a",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Temp changed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.upstairs_thermostat_current_temperature",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 640,
+        "wires": [
+            [
+                "e4a7ef5d.270f9"
+            ]
+        ]
+    },
+    {
+        "id": "e4a7ef5d.270f9",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set previous temp",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_number",
+        "service": "set_value",
+        "entityId": "input_number.previous_temperature",
+        "data": "{\"value\":\"{{ data.old_state.state }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 330,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2005cb2.1f367",
+        "type": "debug",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e4a11c73.6aced",
+        "type": "server-events",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "server": "3efaa203.1c443e",
+        "version": 1,
+        "event_type": "call_service",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "waitForRunning": true,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "$outputData(\"eventData\").event_type",
+                "valueType": "jsonata"
+            }
+        ],
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "5d11f6d9.4fc778"
+            ]
+        ]
+    },
+    {
+        "id": "5d11f6d9.4fc778",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "property": "payload.event.service_data.entity_id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "climate.upstairs_thermostat",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "4870a234.d2dc6c"
+            ]
+        ]
+    },
+    {
+        "id": "9fb9c85e.cd00f8",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Manual control off",
+        "server": "3efaa203.1c443e",
+        "version": 2,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_boolean.upstairs_thermostat_manual_control",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "53a8b208.d7268c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4870a234.d2dc6c",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "property": "payload.context.user_id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "e697ba7c71564eed8f744d3011159ff6",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "86eb3abb.3f63f8"
+            ]
+        ]
+    },
+    {
+        "id": "86eb3abb.3f63f8",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Turn on manual control",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_on",
+        "entityId": "input_boolean.upstairs_thermostat_manual_control",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 620,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d02a340.5f504",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Manual control on",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.upstairs_thermostat_manual_control",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "",
+        "forType": "num",
+        "forUnits": "hours",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 110,
+        "y": 480,
+        "wires": [
+            [
+                "48629864.ef6cb8"
+            ],
+            [
+                "64edf37b.fad46c"
+            ]
+        ]
+    },
+    {
+        "id": "d3695e2f.7b4d7",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Turn off manual control",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_boolean",
+        "service": "turn_off",
+        "entityId": "input_boolean.upstairs_thermostat_manual_control",
+        "data": "",
+        "dataType": "jsonata",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 560,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "48629864.ef6cb8",
+        "type": "trigger",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "2",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 350,
+        "y": 480,
+        "wires": [
+            [
+                "d3695e2f.7b4d7"
+            ]
+        ]
+    },
+    {
+        "id": "64edf37b.fad46c",
+        "type": "change",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "48629864.ef6cb8"
+            ]
+        ]
+    },
+    {
+        "id": "c39d004d.31a2b",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Away",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "sensor.away",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 70,
+        "y": 320,
+        "wires": [
+            [
+                "9fb9c85e.cd00f8"
+            ]
+        ]
+    },
+    {
+        "id": "57259a44.c08604",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set temp",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.upstairs_thermostat",
+        "data": "{\"temperature\":\"{{ payload.temp_adjusted }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 740,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "472145e9.07508c",
+        "type": "delay",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "57259a44.c08604"
             ]
         ]
     }
