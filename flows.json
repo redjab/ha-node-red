@@ -9257,7 +9257,7 @@
         "y": 20,
         "wires": [
             [
-                "9fb9c85e.cd00f8"
+                "e380df7b.37f5a"
             ]
         ]
     },
@@ -9708,11 +9708,10 @@
         "finalize": "",
         "libs": [],
         "x": 440,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
-                "5f965ae1.2224a4",
-                "d2005cb2.1f367"
+                "5f965ae1.2224a4"
             ]
         ]
     },
@@ -9732,7 +9731,7 @@
         "repair": false,
         "outputs": 1,
         "x": 590,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
                 "a8399af3.442548"
@@ -9757,7 +9756,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 750,
-        "y": 160,
+        "y": 100,
         "wires": [
             []
         ]
@@ -9778,7 +9777,7 @@
         "randomUnits": "seconds",
         "drop": false,
         "x": 280,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
                 "ddb735d2.aac068"
@@ -9993,7 +9992,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 410,
-        "y": 300,
+        "y": 140,
         "wires": []
     },
     {
@@ -10001,18 +10000,17 @@
         "type": "function",
         "z": "96cf0f5b.b0f5e",
         "name": "Should run hvac (upstairs)?",
-        "func": "const payload = msg.payload;\nconst upstairs = payload.upstairs;\nconst outside = payload.outside;\nconst away = payload.away;\n\nconst temp = upstairs.temp;\nconst time = upstairs.time;\nconst state = upstairs.state;\nconst hvac_running = state.hvac !== 'idle';\n\nconst heat = state.heat;\n\nconst current_day = new Date().getDay();\nconst is_weekday = current_day < 6 && current_day !== 0;\n\n// count Friday as weekend and Sunday as weekday for night\nconst is_weekday_night = current_day !== 5 && current_day !== 6;\n\nconst current_time = new Date();\n\nconst midnight = new Date();\nmidnight.setHours(0);\nmidnight.setMinutes(0);\nmidnight.setMilliseconds(0);\n\nconst day_night_str = is_weekday ? 'day' : 'end';\nconst day_night_str_night = is_weekday_night ? 'day' : 'end';\n\nlet day_start = timeStringToDate(time[`day_start_week${day_night_str}`]);\nlet night_start = timeStringToDate(time[`night_start_week${day_night_str_night}`]);\n\nconst is_day_schedule = current_time >= day_start &&\n                current_time < night_start;\n\nconst temp_target_schedule = away ? temp.away : (is_day_schedule ? temp.day : temp.night);\n\nconst temp_diff = Math.abs(temp_target_schedule - outside);\nconst breakpoints = [\n    { diff: 20, adjust: 1.5, hours_to_cooldown: 3, hours_to_heatup: 2 },\n    { diff: 14, adjust: 1.5, hours_to_cooldown: 5, hours_to_heatup: 3 },\n    { diff: 7, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 4 },\n    { diff: 4, adjust: 1, hours_to_cooldown: 7, hours_to_heatup: 4 },\n    { diff: 2, adjust: 0.5, hours_to_cooldown: 12, hours_to_heatup: 5 }\n];\n\nlet temp_adjust = 0;\nlet hours_to_cooldown = 12;\nlet hours_to_heatup = 4;\n\nfor (let index = 0; index < breakpoints.length; index++){\n    const breakpoint = breakpoints[index];\n    if (breakpoint.diff <= temp_diff) {\n        temp_adjust = breakpoint.adjust;\n        hours_to_cooldown = breakpoint.hours_to_cooldown;\n        hours_to_heatup = breakpoint.hours_to_heatup;\n        break;\n    } \n}\n\nif (heat) {\n    night_start.setHours(night_start.getHours() - hours_to_cooldown);\n    if (night_start < midnight) {\n        night_start.setDate(current_time.getDate());\n    }\n} else {\n    day_start.setHours(day_start.getHours() - hours_to_heatup);\n}\n\nconst is_day = current_time >= day_start &&\n                current_time < night_start;\nconst ran_today = new Date(upstairs.temp.hvac_last_stopped) <= midnight;\nconst is_day_or_run = is_day || (is_day_schedule && ran_today);\n\nconst temp_target = away ? temp.away : \n    (is_day_or_run ? temp.day : temp.night);\n    \nlet temp_adjusted = temp_target;\n\nif (heat) {\n    temp_adjusted = temp_target + temp_adjust;\n} else {\n    temp_adjusted = temp_target - temp_adjust;\n}\n\nlet temp_adjusted_opposite_limit = temp_target + ((is_day ? 1 : 0.5) * (heat ? -1 : 1));\n\n// if we already reach the target temp with adjustment (e.g 22 + 1.5)\n// then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\nif ((heat && temp.current > temp_adjusted_opposite_limit) || \n    (!heat && temp.current < temp_adjusted_opposite_limit)) {\n    temp_adjusted = temp_adjusted_opposite_limit;\n}\n\nconst should_run = !hvac_running && temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        temp_adjusted,\n        temp_diff,\n        day_start,\n        night_start,\n        is_day_schedule,\n        is_day,\n        hours_to_cooldown,\n        hours_to_heatup\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
+        "func": "const payload = msg.payload;\nconst upstairs = payload.upstairs;\nconst outside = payload.outside;\nconst away = payload.away;\n\nconst temp = upstairs.temp;\nconst time = upstairs.time;\nconst state = upstairs.state;\nconst hvac_running = state.hvac !== 'idle';\n\nconst heat = state.heat;\n\nconst current_day = new Date().getDay();\nconst is_weekday = current_day < 6 && current_day !== 0;\n\n// count Friday as weekend and Sunday as weekday for night\nconst is_weekday_night = current_day !== 5 && current_day !== 6;\n\nconst current_time = new Date();\n\nconst midnight = new Date();\nmidnight.setHours(0);\nmidnight.setMinutes(0);\nmidnight.setMilliseconds(0);\n\nconst day_night_str = is_weekday ? 'day' : 'end';\nconst day_night_str_night = is_weekday_night ? 'day' : 'end';\n\nlet day_start = timeStringToDate(time[`day_start_week${day_night_str}`]);\nlet night_start = timeStringToDate(time[`night_start_week${day_night_str_night}`]);\n\nconst is_day_schedule = current_time >= day_start &&\n                current_time < night_start;\n\nconst temp_target_schedule = away ? temp.away : (is_day_schedule ? temp.day : temp.night);\n\nconst temp_diff = Math.abs(temp_target_schedule - outside);\nconst breakpoints = [\n    { diff: 20, adjust: 1.5, hours_to_cooldown: 3, hours_to_heatup: 2 },\n    { diff: 14, adjust: 1.5, hours_to_cooldown: 5, hours_to_heatup: 3 },\n    { diff: 7, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 4 },\n    { diff: 4, adjust: 1, hours_to_cooldown: 7, hours_to_heatup: 4 },\n    { diff: 2, adjust: 0.5, hours_to_cooldown: 12, hours_to_heatup: 5 }\n];\n\nlet temp_adjust = 0;\nlet hours_to_cooldown = 12;\nlet hours_to_heatup = 4;\n\nfor (let index = 0; index < breakpoints.length; index++){\n    const breakpoint = breakpoints[index];\n    if (breakpoint.diff <= temp_diff) {\n        temp_adjust = breakpoint.adjust;\n        hours_to_cooldown = breakpoint.hours_to_cooldown;\n        hours_to_heatup = breakpoint.hours_to_heatup;\n        break;\n    } \n}\n\nif (heat) {\n    night_start.setHours(night_start.getHours() - hours_to_cooldown);\n    if (night_start < midnight) {\n        night_start.setDate(current_time.getDate());\n    }\n} else {\n    day_start.setHours(day_start.getHours() - hours_to_heatup);\n}\n\nconst is_day = current_time >= day_start &&\n                current_time < night_start;\nconst ran_today = new Date(upstairs.temp.hvac_last_stopped) <= midnight;\nconst is_day_or_run = is_day || (is_day_schedule && ran_today);\n\nconst temp_target = away ? temp.away : \n    (is_day_or_run ? temp.day : temp.night);\n    \nlet temp_adjusted = temp_target;\n\nif (heat) {\n    temp_adjusted = temp_target + temp_adjust;\n} else {\n    temp_adjusted = temp_target - temp_adjust;\n}\n\nlet temp_adjusted_opposite_limit = temp_target + ((is_day ? 1 : 0.5) * (heat ? -1 : 1));\n\n// if we already reach the target temp with adjustment (e.g 22 + 1.5)\n// then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\nif ((heat && temp.current > temp_adjusted_opposite_limit) || \n    (!heat && temp.current < temp_adjusted_opposite_limit)) {\n    temp_adjusted = temp_adjusted_opposite_limit;\n}\n\nconst should_run = !hvac_running &&\n    !state.manual_control &&\n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        temp_adjusted,\n        temp_diff,\n        day_start,\n        night_start,\n        is_day_schedule,\n        is_day,\n        hours_to_cooldown,\n        hours_to_heatup\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 160,
-        "y": 240,
+        "y": 180,
         "wires": [
             [
-                "e8616b7.2c9cb98",
-                "becea10d.07ef3"
+                "e8616b7.2c9cb98"
             ]
         ]
     },
@@ -10030,7 +10028,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 330,
-        "y": 100,
+        "y": 40,
         "wires": []
     },
     {
@@ -10049,7 +10047,7 @@
         "repair": false,
         "outputs": 1,
         "x": 410,
-        "y": 240,
+        "y": 180,
         "wires": [
             [
                 "959ed834.cec908"
@@ -10074,7 +10072,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 580,
-        "y": 240,
+        "y": 180,
         "wires": [
             []
         ]
@@ -10205,48 +10203,6 @@
             [
                 "ed770406.9e7de8"
             ]
-        ]
-    },
-    {
-        "id": "9fb9c85e.cd00f8",
-        "type": "api-current-state",
-        "z": "96cf0f5b.b0f5e",
-        "name": "Manual control off",
-        "server": "3efaa203.1c443e",
-        "version": 2,
-        "outputs": 2,
-        "halt_if": "off",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "input_boolean.upstairs_thermostat_manual_control",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 110,
-        "y": 80,
-        "wires": [
-            [
-                "e380df7b.37f5a"
-            ],
-            []
         ]
     },
     {
@@ -10410,69 +10366,6 @@
         "wires": [
             [
                 "48629864.ef6cb8"
-            ]
-        ]
-    },
-    {
-        "id": "c39d004d.31a2b",
-        "type": "server-state-changed",
-        "z": "96cf0f5b.b0f5e",
-        "name": "Away",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "exposeToHomeAssistant": false,
-        "haConfig": [
-            {
-                "property": "name",
-                "value": ""
-            },
-            {
-                "property": "icon",
-                "value": ""
-            }
-        ],
-        "entityidfilter": "sensor.away",
-        "entityidfiltertype": "exact",
-        "outputinitially": true,
-        "state_type": "str",
-        "haltifstate": "",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "outputs": 1,
-        "output_only_on_state_change": true,
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "ignorePrevStateNull": false,
-        "ignorePrevStateUnknown": false,
-        "ignorePrevStateUnavailable": false,
-        "ignoreCurrentStateUnknown": false,
-        "ignoreCurrentStateUnavailable": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "eventData"
-            },
-            {
-                "property": "topic",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "triggerId"
-            }
-        ],
-        "x": 70,
-        "y": 320,
-        "wires": [
-            [
-                "9fb9c85e.cd00f8"
             ]
         ]
     },
@@ -10784,17 +10677,18 @@
         "type": "function",
         "z": "96cf0f5b.b0f5e",
         "name": "Gather data",
-        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet hvac_common = {};\nlet upstairs = getHvacInfo('upstairs', states);\nlet downstairs = getHvacInfo('downstairs', states);\n\nhvac_common.hvac_last_started = states['input_datetime.hvac_last_started'].state;\nhvac_common.hvac_last_stopped = states['input_datetime.hvac_last_stopped'].state;\nhvac_common.hvac_fan_last_started = states['input_datetime.hvac_fan_last_started'].state;\nhvac_common.hvac_fan_last_stopped = states['input_datetime.hvac_fan_last_stopped'].state;\n\n\nconst priate_weather = parseFloat(states['weather.weather'].state !== 'unavailable' ? \n    states['weather.weather'].attributes.temperature :\n    upstairs.temp.current);\n    \nconst open_weather = parseFloat(states['weather.openweathermap'].state !== 'unavailable' ? \n    states['weather.openweathermap'].attributes.temperature :\n    upstairs.temp.current);\n    \nlet outside = priate_weather;\n\nif (upstairs.state.heat && priate_weather > open_weather) {\n    outside = open_weather;\n}\n\nif (!upstairs.state.heat && priate_weather < open_weather) {\n    outside = open_weather;\n}\n\nconst away = states['sensor.away'].state === 'True';\nconst vacation = states['input_boolean.vacation_mode'].state === 'on';\nreturn {\n    payload: {\n        upstairs,\n        downstairs,\n        hvac_common,\n        outside,\n        away,\n        vacation\n    }\n};\n\nfunction getHvacInfo(floor, states) {\n    const thermostat = states[`climate.${floor}_thermostat`];\n    const mode = thermostat.state;\n    \n    let temp = {};\n    let state = {};\n    let time = {};\n\n    if (mode !== 'off') {\n        temp.night = parseFloat(states[`input_number.${mode}_temp_night`].state);\n\n        if (mode === 'heat' && floor === 'downstairs') {\n            temp.meal = parseFloat(states[`input_number.${mode}_temp_meal`].state);\n        }\n        \n        if (floor === 'upstairs') {\n            temp.day = parseFloat(states[`input_number.${mode}_temp_day`].state);\n            temp.away = parseFloat(states[`input_number.${mode}_temp_away`].state);\n        \n            time.day_start_weekday = states[`input_datetime.${mode}_day_start_weekday`].state;\n            time.day_start_weekend = states[`input_datetime.${mode}_day_start_weekend`].state;\n            time.night_start_weekday = states[`input_datetime.${mode}_night_start_weekday`].state;\n            time.night_start_weekend = states[`input_datetime.${mode}_night_start_weekend`].state;\n        }\n    }\n    \n    temp.current = parseFloat(thermostat.attributes.current_temperature);\n    temp.target = parseFloat(thermostat.attributes.temperature);\n\n    state.hvac = states[`sensor.${floor}_thermostat_hvac_action`].state;\n    state.hvac_mode = mode;\n    state.fan = states[`sensor.${floor}_thermostat_fan_state`].state;\n    state.fan_mode = thermostat.attributes.fan_mode;\n    state.heat = state.hvac_mode === 'heat';\n    return { temp, time, state }\n}",
+        "func": "const states = global.get('homeassistant.homeAssistant.states');\n\nlet hvac_common = {};\nlet upstairs = getHvacInfo('upstairs', states);\nlet downstairs = getHvacInfo('downstairs', states);\n\nhvac_common.hvac_last_started = states['input_datetime.hvac_last_started'].state;\nhvac_common.hvac_last_stopped = states['input_datetime.hvac_last_stopped'].state;\nhvac_common.hvac_fan_last_started = states['input_datetime.hvac_fan_last_started'].state;\nhvac_common.hvac_fan_last_stopped = states['input_datetime.hvac_fan_last_stopped'].state;\n\n\nconst priate_weather = parseFloat(states['weather.weather'].state !== 'unavailable' ? \n    states['weather.weather'].attributes.temperature :\n    upstairs.temp.current);\n    \nconst open_weather = parseFloat(states['weather.openweathermap'].state !== 'unavailable' ? \n    states['weather.openweathermap'].attributes.temperature :\n    upstairs.temp.current);\n    \nlet outside = priate_weather;\n\nif (upstairs.state.heat && priate_weather > open_weather) {\n    outside = open_weather;\n}\n\nif (!upstairs.state.heat && priate_weather < open_weather) {\n    outside = open_weather;\n}\n\nconst away = states['sensor.away'].state === 'True';\nconst vacation = states['input_boolean.vacation_mode'].state === 'on';\nreturn {\n    payload: {\n        upstairs,\n        downstairs,\n        hvac_common,\n        outside,\n        away,\n        vacation\n    }\n};\n\nfunction getHvacInfo(floor, states) {\n    const thermostat = states[`climate.${floor}_thermostat`];\n    const mode = thermostat.state;\n    \n    let temp = {};\n    let state = {};\n    let time = {};\n\n    if (mode !== 'off') {\n        temp.night = parseFloat(states[`input_number.${mode}_temp_night`].state);\n        temp.day = parseFloat(states[`input_number.${mode}_temp_day`].state);\n        temp.away = parseFloat(states[`input_number.${mode}_temp_away`].state);\n        \n        state.manual_control = states[`input_boolean.${floor}_thermostat_manual_control`].state === 'on';\n        \n        if (floor === 'downstairs') {\n            state.tv = states['media_player.living_room_tv'];\n            time.meal_start = states['input_datetime.heat_meal_start'].state;\n            \n            if (mode === 'heat') {\n                temp.meal = parseFloat(states[`input_number.${mode}_temp_meal`].state);\n            }\n        }\n        \n        if (floor === 'upstairs') {\n            time.day_start_weekday = states[`input_datetime.${mode}_day_start_weekday`].state;\n            time.day_start_weekend = states[`input_datetime.${mode}_day_start_weekend`].state;\n            time.night_start_weekday = states[`input_datetime.${mode}_night_start_weekday`].state;\n            time.night_start_weekend = states[`input_datetime.${mode}_night_start_weekend`].state;\n        }\n    }\n    \n    temp.current = parseFloat(thermostat.attributes.current_temperature);\n    temp.target = parseFloat(thermostat.attributes.temperature);\n\n    state.hvac = states[`sensor.${floor}_thermostat_hvac_action`].state;\n    state.hvac_mode = mode;\n    state.fan = states[`sensor.${floor}_thermostat_fan_state`].state;\n    state.fan_mode = thermostat.attributes.fan_mode;\n    state.heat = state.hvac_mode === 'heat';\n    return { temp, time, state }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 110,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
                 "c0e8a442.84ce08",
+                "23e45788.0e7a38",
                 "b01e1228.dc41a",
                 "60773c6c.8bafd4"
             ]
@@ -10814,7 +10708,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 100,
+        "y": 40,
         "wires": []
     },
     {
@@ -10895,6 +10789,72 @@
             [
                 "86eb3abb.3f63f8"
             ]
+        ]
+    },
+    {
+        "id": "23e45788.0e7a38",
+        "type": "function",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Should run hvac (downstairs)?",
+        "func": "const payload = msg.payload;\nconst downstairs = payload.downstairs;\n\nconst temp = downstairs.temp;\nconst time = downstairs.time;\nconst state = downstairs.state;\n\nconst tv = state.tv;\nconst hvac_running = state.hvac !== 'idle';\nconst heat = state.heat;\n\nconst now = new Date();\n\nconst tv_last_changed = new Date(tv.last_changed);\n\nconst dinner_time_start = timeStringToDate(time.meal_start);\nconst dinner_time_end = new Date(dinner_time_start);\ndinner_time_end.setHours(dinner_time_end.getHours() + 2);\n\nconst dinner_time_after = new Date(tv_last_changed);\ndinner_time_after.setMinutes(dinner_time_after.getMinutes() + 30);\n\nconst dinner_time = tv.state === 'on' && \n    now >= dinner_time_start && \n    now <= dinner_time_after;\n\nlet temp_target = heat ? temp.night : temp.day;\nconst temp_diff = Math.abs(temp_target - temp.current);\n\nif (heat && dinner_time && temp_diff > 2) {\n    temp_target = temp.meal;\n}\n\nlet temp_adjusted = temp_target;\n\nif (!dinner_time) {\n    let temp_adjusted_opposite_limit = temp_target + 0.5 * (heat ? -1 : 1);\n    \n    // if we already reach the target temp with adjustment (e.g 22 + 1.5)\n    // then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\n    if ((heat && temp.current > temp_adjusted_opposite_limit) || \n        (!heat && temp.current < temp_adjusted_opposite_limit)) {\n        temp_adjusted = temp_adjusted_opposite_limit;\n    }\n}\n\nconst should_run = !hvac_running && \n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        dinner_time,\n        temp_diff,\n        temp_adjusted,\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "dfe98ce7.13a84",
+                "becea10d.07ef3"
+            ]
+        ]
+    },
+    {
+        "id": "dfe98ce7.13a84",
+        "type": "switch",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "property": "payload.should_run",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "ec75050b.4394f8"
+            ]
+        ]
+    },
+    {
+        "id": "ec75050b.4394f8",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set temp",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_temperature",
+        "entityId": "climate.downstairs_thermostat",
+        "data": "{\"temperature\":\"{{ payload.temp_adjusted }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 580,
+        "y": 240,
+        "wires": [
+            []
         ]
     }
 ]
