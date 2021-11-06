@@ -9300,8 +9300,8 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "sensor.upstairs_thermostat_hvac_action",
-        "entityidfiltertype": "exact",
+        "entityidfilter": "sensor\\..*_thermostat_hvac_action",
+        "entityidfiltertype": "regex",
         "outputinitially": false,
         "state_type": "str",
         "haltifstate": "idle",
@@ -9412,7 +9412,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "sensor.upstairs_thermostat_fan_state",
+        "entityidfilter": "sensor\\..*_thermostat_fan_state",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -9722,7 +9722,7 @@
         "type": "function",
         "z": "96cf0f5b.b0f5e",
         "name": "Should run fan?",
-        "func": "const time = msg.payload.upstairs.time;\nconst temp = msg.payload.upstairs.temp;\nconst state = msg.payload.upstairs.state;\n\nconst fan_mode = state.fan_mode;\nconst hvac_mode = state.hvac_mode;\nconst vacation = msg.payload.vacation;\n\nconst heat = state.hvac_mode === 'heat';\n\nconst hvac_last_stopped = new Date(time.hvac_last_stopped);\nconst hvac_fan_last_stopped = new Date(time.hvac_fan_last_stopped);\n\nconst last_stopped = hvac_last_stopped < hvac_fan_last_stopped ? hvac_fan_last_stopped : hvac_last_stopped;\nlast_stopped.setSeconds(last_stopped.getSeconds() + (vacation ? 6 : 3.5)*60*60);\n\nconst hvac_running = state.hvac !== 'idle';\nconst fan_running = state.fan !== 'Idle / off';\nconst fan_cir_mode = fan_mode === 'Circulation';\nconst temp_changed = heat ? temp.current > temp.previous : temp.current < temp.previous;\n\nconst should_run = new Date() >= last_stopped && \n    !hvac_running && \n    !fan_running &&\n    !fan_cir_mode &&\n    !temp_changed;\n\nreturn {\n    payload: {\n        should_run,\n        should_run_at: last_stopped,\n        fan_cir_mode,\n        temp_changed\n    }\n};",
+        "func": "const time = msg.payload.upstairs.time;\nconst state = msg.payload.upstairs.state;\n\nconst fan_mode = state.fan_mode;\nconst hvac_mode = state.hvac_mode;\nconst vacation = msg.payload.vacation;\n\nconst hvac_last_stopped = new Date(time.hvac_last_stopped);\nconst hvac_fan_last_stopped = new Date(time.hvac_fan_last_stopped);\n\nconst last_stopped = hvac_last_stopped < hvac_fan_last_stopped ? hvac_fan_last_stopped : hvac_last_stopped;\nlast_stopped.setSeconds(last_stopped.getSeconds() + (vacation ? 6 : 3.5)*60*60);\n\nconst hvac_running = state.hvac !== 'idle';\nconst fan_running = state.fan !== 'Idle / off';\nconst fan_cir_mode = fan_mode === 'Circulation';\n\nconst should_run = new Date() >= last_stopped && \n    !hvac_running && \n    !fan_running &&\n    !fan_cir_mode;\n\nreturn {\n    payload: {\n        should_run,\n        should_run_at: last_stopped,\n        fan_cir_mode\n    }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -10378,8 +10378,8 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "input_boolean.upstairs_thermostat_manual_control",
-        "entityidfiltertype": "exact",
+        "entityidfilter": "input_boolean\\..*_thermostat_manual_control",
+        "entityidfiltertype": "regex",
         "outputinitially": true,
         "state_type": "str",
         "haltifstate": "on",
@@ -10436,9 +10436,9 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.upstairs_thermostat_manual_control",
-        "data": "",
-        "dataType": "jsonata",
+        "entityId": "",
+        "data": "{\"entity_id\":\"{{ topic }}\"}",
+        "dataType": "json",
         "mergecontext": "",
         "mustacheAltTags": false,
         "outputProperties": [],
@@ -10463,7 +10463,7 @@
         "overrideDelay": false,
         "units": "hr",
         "reset": "",
-        "bytopic": "all",
+        "bytopic": "topic",
         "topic": "topic",
         "outputs": 1,
         "x": 350,
