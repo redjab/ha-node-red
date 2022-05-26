@@ -243,7 +243,7 @@
         "type": "function",
         "z": "670bc302.cb732c",
         "name": "",
-        "func": "if (msg && msg.payload) {\n    let notification = msg.payload.notification || {};\n    let data = notification.data || {};\n        \n    if (!msg.payload.notify_whom) {\n        msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app' })\n    }\n\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n    \n    if (data.clickAction) {\n        msg.payload.notification.data.url = data.clickAction;\n    }\n    \n}\n\nreturn msg;",
+        "func": "if (msg && msg.payload) {\n    let notification = msg.payload.notification || {};\n    let data = notification.data || {};\n        \n    if (!msg.payload.notify_whom) {\n        msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app_except_chrome' })\n    }\n    \n    if (notification.message === \"clear_notification\" &&  [\"all_phone_app\", \"chrome\"].includes(msg.payload.notify_whom)) {\n        if (msg.payload.notify_whom === \"all_phone_app\") {\n            msg.payload = Object.assign(msg.payload, { notify_whom: 'all_phone_app_except_chrome' });\n        } else {\n            msg.payload = Object.assign(msg.payload, { notify_whom: '' });\n        }\n    }\n\n    if (!data.clickAction) {\n        msg.payload.notification.data = Object.assign(data, { clickAction: '/lovelace-test/default_view' });\n    }\n    \n    if (data.clickAction) {\n        msg.payload.notification.data.url = data.clickAction;\n    }\n    \n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -722,7 +722,7 @@
         "id": "cfbda5ba.dea498",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "10 AM everyday ",
+        "name": "4 AM everyday ",
         "props": [
             {
                 "p": "payload"
@@ -733,12 +733,12 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 10 * * 1,2,3,4,5",
+        "crontab": "00 04 * * 1,2,3,4,5",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 130,
+        "x": 120,
         "y": 80,
         "wires": [
             [
@@ -756,7 +756,7 @@
         "debugenabled": false,
         "service_domain": "vacuum",
         "service": "start",
-        "entityId": "vacuum.roborock",
+        "entityId": "vacuum.valetudo_roborock",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
@@ -797,7 +797,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "vacuum.roborock",
+        "entityidfilter": "vacuum.valetudo_roborock",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -1356,7 +1356,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"vacuum.error\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}},\"log\":{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}}",
+                "to": "{\"notification\":{\"title\":\"Roborock Vacuum\",\"message\":\"🧹️ ⚠️ Vacuum in error state\",\"data\":{\"tag\":\"vacuum.error\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Find robot\",\"action\":\"notification.vacuum.roborock.find\"}]}},\"log\":{\"name\":\"Roborock (Node Red)\",\"entity_id\":\"vacuum.valetudo_roborock\",\"message\":\"notified error\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -2585,7 +2585,7 @@
         "id": "f3cd1e52.b5b22",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "10 AM every other day ",
+        "name": "4 AM every other day ",
         "props": [
             {
                 "p": "payload"
@@ -2601,7 +2601,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "payloadType": "date",
-        "x": 150,
+        "x": 140,
         "y": 180,
         "wires": [
             [
@@ -2805,7 +2805,7 @@
                 "type": "json"
             }
         ],
-        "x": 460,
+        "x": 480,
         "y": 340,
         "wires": [
             [],
@@ -3045,7 +3045,7 @@
         "type": "function",
         "z": "d9fe96b5.8701c8",
         "name": "",
-        "func": "return {\n    \"payload\": {\n        \"notification\": {\n            \"title\": \"Front-door camera\",\n            \"message\": `🧍 Motion detected at front-door`,\n            \"data\": {\n                \"image\": \"/api/camera_proxy/camera.front_person\",\n                \"priority\": \"high\",\n                \"ttl\": 0,\n                \"url\": \"/lovelace-test/1\"\n            }\n        },\n        \"log\": {\n            \"name\": `Front-door camera`,\n            \"entity_id\": \"camera.front_door_camera\",\n            \"message\": \"notified motion\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n",
+        "func": "return {\n    \"payload\": {\n        \"notify_whom\": \"all_phone_app\",\n        \"notification\": {\n            \"title\": \"Front-door camera\",\n            \"message\": `🧍 Motion detected at front-door`,\n            \"data\": {\n                \"image\": \"/api/camera_proxy/camera.front_person\",\n                \"priority\": \"high\",\n                \"ttl\": 0,\n                \"url\": \"/lovelace-test/1\"\n            }\n        },\n        \"log\": {\n            \"name\": `Front-door camera`,\n            \"entity_id\": \"camera.front_door_camera\",\n            \"message\": \"notified motion\",\n            \"domain\": \"notify\"\n        }\n    }\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3354,7 +3354,7 @@
         "id": "fa2a4a9ee3eea89e",
         "type": "inject",
         "z": "d9fe96b5.8701c8",
-        "name": "9 AM weekend",
+        "name": "5 AM weekend",
         "props": [
             {
                 "p": "payload"
@@ -3365,7 +3365,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "00 09 * * 6,0",
+        "crontab": "00 05 * * 6,0",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
@@ -5105,8 +5105,8 @@
         "debugenabled": false,
         "service_domain": "vacuum",
         "service": "locate",
-        "entityId": "vacuum.roborock",
-        "data": "{ \"entity_id\": \"vacuum.roborock\" }",
+        "entityId": "vacuum.valetudo_roborock",
+        "data": "{ \"entity_id\": \"vacuum.valetudo_roborock\" }",
         "dataType": "json",
         "mergecontext": "",
         "mustacheAltTags": false,
@@ -5987,8 +5987,8 @@
         "id": "1a3f1f09.3e6411",
         "type": "function",
         "z": "e2c67c6c.68265",
-        "name": "> 60 hours",
-        "func": "const now = Date.now();\nconst lastFilled = new Date(msg.payload).getTime();\n// convert to hours\nconst duration = parseFloat(now - lastFilled) / (1000 * 60 * 60);\n\nif (duration > 60) {\n    return {\n        payload: true\n    };\n}\nreturn null;",
+        "name": "> 80 hours",
+        "func": "const now = Date.now();\nconst lastFilled = new Date(msg.payload).getTime();\n// convert to hours\nconst duration = parseFloat(now - lastFilled) / (1000 * 60 * 60);\n\nif (duration > 80) {\n    return {\n        payload: true\n    };\n}\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6057,7 +6057,8 @@
         "y": 820,
         "wires": [
             [
-                "caa0a736.60a358"
+                "caa0a736.60a358",
+                "b32cd353ed0a8d92"
             ],
             []
         ]
@@ -6141,7 +6142,7 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 660,
+        "x": 600,
         "y": 680,
         "wires": [
             [
@@ -6341,8 +6342,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
-        "y": 760,
+        "x": 840,
+        "y": 680,
         "wires": [
             [
                 "1a70d695.9df7b9"
@@ -6379,6 +6380,124 @@
         ]
     },
     {
+        "id": "2e65f50e728d8cb7",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "Clear notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"washing_machine.warn\"}},\"log\":{\"name\":\"Washing Machine (Node Red) clear_notification\",\"entity_id\":\"input_boolean.washing_machine_open\",\"message\":\"cleared notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 440,
+        "wires": [
+            [
+                "8e38cc4d.d3a51"
+            ]
+        ]
+    },
+    {
+        "id": "c8d74a4a61beb0d5",
+        "type": "server-state-changed",
+        "z": "e2c67c6c.68265",
+        "name": "Washer open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.washing_machine_open",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "2e65f50e728d8cb7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b32cd353ed0a8d92",
+        "type": "change",
+        "z": "e2c67c6c.68265",
+        "name": "Clear notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"humidifier.warn\"}},\"log\":{\"name\":\"Humidifier Filled (Node Red) clear_notification\",\"entity_id\":\"input_boolean.humidifier_filled\",\"message\":\"cleared notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 760,
+        "wires": [
+            [
+                "1a70d695.9df7b9"
+            ]
+        ]
+    },
+    {
         "id": "a9609c01.ce21b",
         "type": "server-state-changed",
         "z": "7593ec4d.460434",
@@ -6408,6 +6527,11 @@
         "for": "0",
         "forType": "num",
         "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
         "outputProperties": [
             {
                 "property": "payload",
@@ -6553,7 +6677,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"},{\"title\":\"Disable warning\",\"action\":\"notification.garage.disable_warning\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
+                "to": "{\"notify_whom\":\"all_phone_app\",\"notification\":{\"title\":\"Garage door\",\"message\":\" ⚠️ Garage door is open!\",\"data\":{\"tag\":\"garage_door.open\",\"priority\":\"high\",\"ttl\":0,\"actions\":[{\"title\":\"Close\",\"action\":\"notification.garage.close\"},{\"title\":\"Disable warning\",\"action\":\"notification.garage.disable_warning\"}]}},\"log\":{\"name\":\"Garage door (Node Red)\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified is open\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -7462,8 +7586,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 660,
-        "y": 900,
+        "x": 780,
+        "y": 820,
         "wires": [
             [
                 "92035a81.0a3688"
@@ -8091,7 +8215,7 @@
         "type": "subflow:670bc302.cb732c",
         "z": "7593ec4d.460434",
         "name": "",
-        "x": 540,
+        "x": 600,
         "y": 1340,
         "wires": [
             [],
@@ -8119,6 +8243,336 @@
         "reg": false,
         "x": 540,
         "y": 1280,
+        "wires": [
+            [
+                "e7e04f69.8c482"
+            ]
+        ]
+    },
+    {
+        "id": "f1738497f071e056",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door closed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "closed",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "9b944e4f0f28dc6a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9b944e4f0f28dc6a",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"garage_door.open\"}},\"log\":{\"name\":\"Garage door (Node Red) clear_notification\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "111871a0.bad0ae"
+            ]
+        ]
+    },
+    {
+        "id": "dda07f19f36c680e",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 330,
+        "y": 860,
+        "wires": [
+            [
+                "cc758e714cade3d5"
+            ],
+            [
+                "ba0215660a17aeb4",
+                "70976513788fca8f"
+            ]
+        ]
+    },
+    {
+        "id": "cc758e714cade3d5",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"tracker.home\"}},\"log\":{\"name\":\"Garage door (Node Red) clear_notification\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 860,
+        "wires": [
+            [
+                "a74bc448.ba6c08"
+            ]
+        ]
+    },
+    {
+        "id": "ba0215660a17aeb4",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"tracker.home.warning\"}},\"log\":{\"name\":\"Garage door (Node Red) clear_notification\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 900,
+        "wires": [
+            [
+                "92035a81.0a3688"
+            ]
+        ]
+    },
+    {
+        "id": "70976513788fca8f",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"tracker.away\"}},\"log\":{\"name\":\"Garage door (Node Red) clear_notification\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 940,
+        "wires": [
+            [
+                "a1c016c8.f65298"
+            ]
+        ]
+    },
+    {
+        "id": "cf205e12f0201a90",
+        "type": "server-state-changed",
+        "z": "7593ec4d.460434",
+        "name": "Garage door closed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "cover.garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "closed",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 130,
+        "y": 1340,
+        "wires": [
+            [
+                "a6da86f902597223"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a6da86f902597223",
+        "type": "change",
+        "z": "7593ec4d.460434",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"garage_door.open\"}},\"log\":{\"name\":\"Garage door (Node Red) clear_notification\",\"entity_id\":\"cover.garage_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 1340,
         "wires": [
             [
                 "e7e04f69.8c482"
@@ -8765,9 +9219,7 @@
         "x": 90,
         "y": 240,
         "wires": [
-            [
-                "c76284f0.3fe258"
-            ]
+            []
         ]
     },
     {
@@ -9067,7 +9519,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ ⚠️ Back door lock jammed!\",\"data\":{\"tag\":\"lock.back_door.error\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified jammed\",\"domain\":\"notify\"}}",
+                "to": "{\"notify_whom\":\"all_phone_app\",\"notification\":{\"title\":\"Back door lock\",\"message\":\"🔒️ ⚠️ Back door lock jammed!\",\"data\":{\"tag\":\"lock.back_door.error\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified jammed\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -9077,7 +9529,7 @@
         "to": "",
         "reg": false,
         "x": 540,
-        "y": 480,
+        "y": 640,
         "wires": [
             [
                 "100b4e2c.58c2e2"
@@ -9090,7 +9542,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 720,
-        "y": 480,
+        "y": 640,
         "wires": [
             [],
             []
@@ -9152,12 +9604,14 @@
             }
         ],
         "x": 120,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "a7eb486.e213cb8"
             ],
-            []
+            [
+                "f3316a7a68bce925"
+            ]
         ]
     },
     {
@@ -9180,7 +9634,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "d460290d.65e668"
@@ -9193,7 +9647,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 540,
-        "y": 240,
+        "y": 300,
         "wires": [
             [],
             []
@@ -9219,7 +9673,7 @@
         ],
         "entityidfilter": "binary_sensor.back_door_lock_power_management_replace_battery_soon",
         "entityidfiltertype": "exact",
-        "outputinitially": true,
+        "outputinitially": false,
         "state_type": "str",
         "haltifstate": "on",
         "halt_if_type": "str",
@@ -9255,12 +9709,14 @@
             }
         ],
         "x": 130,
-        "y": 300,
+        "y": 400,
         "wires": [
             [
                 "30fe3544.b54d9a"
             ],
-            []
+            [
+                "1acd5b83bb9fd923"
+            ]
         ]
     },
     {
@@ -9283,7 +9739,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 300,
+        "y": 400,
         "wires": [
             [
                 "5c02b253.c7970c"
@@ -9297,7 +9753,7 @@
         "name": "",
         "env": [],
         "x": 540,
-        "y": 300,
+        "y": 400,
         "wires": [
             [],
             []
@@ -9344,7 +9800,7 @@
             }
         ],
         "x": 110,
-        "y": 360,
+        "y": 520,
         "wires": [
             [
                 "5053b69a.47e1d8"
@@ -9369,7 +9825,7 @@
         "repair": false,
         "outputs": 1,
         "x": 320,
-        "y": 360,
+        "y": 520,
         "wires": [
             [
                 "95288f0c.371ae",
@@ -9396,7 +9852,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 570,
-        "y": 360,
+        "y": 520,
         "wires": [
             []
         ]
@@ -9413,7 +9869,7 @@
         "finalize": "",
         "libs": [],
         "x": 310,
-        "y": 480,
+        "y": 640,
         "wires": [
             [
                 "9595f732.2197b8"
@@ -9438,7 +9894,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 580,
-        "y": 420,
+        "y": 580,
         "wires": [
             []
         ]
@@ -9591,7 +10047,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"notification\":{\"title\":\"Back door lock opened\",\"message\":\"🔒️ ⚠️ Back door lock is open!\",\"data\":{\"tag\":\"lock.back_door.open\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified open\",\"domain\":\"notify\"}}",
+                "to": "{\"notify_whom\":\"all_phone_app\",\"notification\":{\"title\":\"Back door lock opened\",\"message\":\"🔒️ ⚠️ Back door lock is open!\",\"data\":{\"tag\":\"lock.back_door.open\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door lock (Node Red)\",\"entity_id\":\"lock.back_door\",\"message\":\"notified open\",\"domain\":\"notify\"}}",
                 "tot": "json"
             }
         ],
@@ -9618,6 +10074,240 @@
         "y": 160,
         "wires": [
             [],
+            []
+        ]
+    },
+    {
+        "id": "7cd25e2631de95ca",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"lock.back_door.open\"}},\"log\":{\"name\":\"Back door lock (Node Red) clear_notification\",\"entity_id\":\"lock.back_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "529a9fe1.b4e77"
+            ]
+        ]
+    },
+    {
+        "id": "8de05c610498ea79",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door locked",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "lock.back_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "locked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "7cd25e2631de95ca"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f3316a7a68bce925",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"lock.back_door.low_battery\"}},\"log\":{\"name\":\"Back door lock low battery (Node Red) clear_notification\",\"entity_id\":\"lock.back_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 365,
+        "y": 347,
+        "wires": [
+            [
+                "d460290d.65e668"
+            ]
+        ]
+    },
+    {
+        "id": "1acd5b83bb9fd923",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"lock.back_door.critical_battery\"}},\"log\":{\"name\":\"Back door lock battery critical (Node Red) clear_notification\",\"entity_id\":\"lock.back_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "5c02b253.c7970c"
+            ]
+        ]
+    },
+    {
+        "id": "b96182c83a6e0f3a",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door locked",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "lock.back_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "locked",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 320,
+        "y": 720,
+        "wires": [
+            [
+                "a39b071c904525f6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a39b071c904525f6",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"lock.back_door.error\"}},\"log\":{\"name\":\"Back door lock jammed (Node Red) clear_notification\",\"entity_id\":\"lock.back_door\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 720,
+        "wires": [
             []
         ]
     },
@@ -10409,7 +11099,7 @@
         "type": "function",
         "z": "96cf0f5b.b0f5e",
         "name": "Should run hvac (upstairs)?",
-        "func": "const payload = msg.payload;\nconst upstairs = payload.upstairs;\nconst outside = payload.outside;\nconst away = payload.away;\n\nconst temp = upstairs.temp;\nconst time = upstairs.time;\nconst state = upstairs.state;\nconst hvac_running = state.hvac !== 'idle';\n\nconst heat = state.heat;\n\nconst current_day = new Date().getDay();\nconst is_weekday = current_day < 6 && current_day !== 0;\n\n// count Friday as weekend and Sunday as weekday for night\nconst is_weekday_night = current_day !== 5 && current_day !== 6;\n\nconst current_time = new Date();\n\nconst midnight = new Date();\nmidnight.setHours(0);\nmidnight.setMinutes(0);\nmidnight.setMilliseconds(0);\n\nconst day_night_str = is_weekday ? 'day' : 'end';\nconst day_night_str_night = is_weekday_night ? 'day' : 'end';\n\nlet day_start = timeStringToDate(time[`day_start_week${day_night_str}`]);\nlet night_start = timeStringToDate(time[`night_start_week${day_night_str_night}`]);\n\nconst is_day_schedule = current_time >= day_start &&\n                current_time < night_start;\n\nconst temp_target_schedule = away ? temp.away : (is_day_schedule ? temp.day : temp.night);\n\nconst temp_diff = Math.abs(temp_target_schedule - outside);\nconst breakpoints = [\n    { diff: 20, adjust: 1, hours_to_cooldown: 5.5, hours_to_heatup: 2 },\n    { diff: 14, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 3 },\n    { diff: 7, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 4 },\n    { diff: 4, adjust: 1, hours_to_cooldown: 7, hours_to_heatup: 4 },\n    { diff: 2, adjust: 0.5, hours_to_cooldown: 12, hours_to_heatup: 5 }\n];\n\nlet temp_adjust = 0;\nlet hours_to_cooldown = 12;\nlet hours_to_heatup = 4;\n\nfor (let index = 0; index < breakpoints.length; index++){\n    const breakpoint = breakpoints[index];\n    if (breakpoint.diff <= temp_diff) {\n        temp_adjust = breakpoint.adjust;\n        hours_to_cooldown = breakpoint.hours_to_cooldown;\n        hours_to_heatup = breakpoint.hours_to_heatup;\n        break;\n    } \n}\n\nif (heat) {\n    night_start.setHours(night_start.getHours() - hours_to_cooldown);\n    if (night_start < midnight) {\n        night_start.setDate(current_time.getDate());\n    }\n} else {\n    day_start.setHours(day_start.getHours() - hours_to_heatup);\n}\n\nconst is_day = current_time >= day_start &&\n                current_time < night_start;\nconst ran_today = new Date(upstairs.temp.hvac_last_stopped) <= midnight;\nconst is_day_or_run = is_day || (is_day_schedule && ran_today);\n\nconst temp_target = away ? temp.away : \n    (is_day_or_run ? temp.day : temp.night);\n    \nlet temp_adjusted = temp_target;\n\nif (heat) {\n    temp_adjusted = temp_target + temp_adjust;\n} else {\n    temp_adjusted = temp_target - temp_adjust;\n}\n\nlet temp_adjusted_opposite_limit = temp_target + ((is_day ? 1 : 0.5) * (heat ? -1 : 1));\n\n// if we already reach the target temp with adjustment (e.g 22 + 1.5)\n// then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\nif ((heat && temp.current > temp_adjusted_opposite_limit) || \n    (!heat && temp.current < temp_adjusted_opposite_limit)) {\n    temp_adjusted = temp_adjusted_opposite_limit;\n}\n\nconst should_run = !hvac_running &&\n    !state.manual_control &&\n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        temp_adjusted,\n        temp_diff,\n        day_start,\n        night_start,\n        is_day_schedule,\n        is_day,\n        hours_to_cooldown,\n        hours_to_heatup\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
+        "func": "const payload = msg.payload;\nconst upstairs = payload.upstairs;\nconst outside = payload.outside;\nconst away = payload.away;\n\nconst temp = upstairs.temp;\nconst time = upstairs.time;\nconst state = upstairs.state;\nconst hvac_running = state.hvac !== 'idle';\n\nconst heat = state.heat;\n\nif(state.hvac_mode === \"off\") {\n    return {\n        payload: {\n            should_run: false\n        }\n    }\n}\nconst current_day = new Date().getDay();\nconst is_weekday = current_day < 6 && current_day !== 0;\n\n// count Friday as weekend and Sunday as weekday for night\nconst is_weekday_night = current_day !== 5 && current_day !== 6;\n\nconst current_time = new Date();\n\nconst midnight = new Date();\nmidnight.setHours(0);\nmidnight.setMinutes(0);\nmidnight.setMilliseconds(0);\n\nconst day_night_str = is_weekday ? 'day' : 'end';\nconst day_night_str_night = is_weekday_night ? 'day' : 'end';\n\nlet day_start = timeStringToDate(time[`day_start_week${day_night_str}`]);\nlet night_start = timeStringToDate(time[`night_start_week${day_night_str_night}`]);\n\nconst is_day_schedule = current_time >= day_start &&\n                current_time < night_start;\n\nconst temp_target_schedule = away ? temp.away : (is_day_schedule ? temp.day : temp.night);\n\nconst temp_diff = Math.abs(temp_target_schedule - outside);\nconst breakpoints = [\n    { diff: 20, adjust: 1, hours_to_cooldown: 5.5, hours_to_heatup: 2 },\n    { diff: 14, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 3 },\n    { diff: 7, adjust: 1, hours_to_cooldown: 6, hours_to_heatup: 5 },\n    { diff: 4, adjust: 1, hours_to_cooldown: 7, hours_to_heatup: 6 },\n    { diff: 2, adjust: 0.5, hours_to_cooldown: 12, hours_to_heatup: 8 }\n];\n\nconst last_breakpoint = breakpoints[breakpoints.length - 1];\nlet temp_adjust = last_breakpoint.adjust;\nlet hours_to_cooldown = last_breakpoint.hours_to_cooldown;\nlet hours_to_heatup = last_breakpoint.hours_to_heatup;\n\nfor (let index = 0; index < breakpoints.length; index++){\n    const breakpoint = breakpoints[index];\n    if (breakpoint.diff <= temp_diff) {\n        temp_adjust = breakpoint.adjust;\n        hours_to_cooldown = breakpoint.hours_to_cooldown;\n        hours_to_heatup = breakpoint.hours_to_heatup;\n        break;\n    } \n}\n\nif (heat) {\n    night_start.setHours(night_start.getHours() - hours_to_cooldown);\n    if (night_start < midnight) {\n        night_start.setDate(current_time.getDate());\n    }\n} else {\n    day_start.setHours(day_start.getHours() - hours_to_heatup);\n}\n\nconst is_day = current_time >= day_start &&\n                current_time < night_start;\nconst ran_today = new Date(upstairs.temp.hvac_last_stopped) <= midnight;\nconst is_day_or_run = is_day || (is_day_schedule && ran_today);\n\nconst temp_target = away ? temp.away : \n    (is_day_or_run ? temp.day : temp.night);\n    \nlet temp_adjusted = temp_target;\n\nif (heat) {\n    temp_adjusted = temp_target + temp_adjust;\n} else {\n    temp_adjusted = temp_target - temp_adjust;\n}\n\nlet temp_adjusted_opposite_limit = temp_target + ((is_day ? 1 : 0.5) * (heat ? -1 : 1));\n\n// if we already reach the target temp with adjustment (e.g 22 + 1.5)\n// then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\nif ((heat && temp.current > temp_adjusted_opposite_limit) || \n    (!heat && temp.current < temp_adjusted_opposite_limit)) {\n    temp_adjusted = temp_adjusted_opposite_limit;\n}\n\nconst should_run = !hvac_running &&\n    !state.manual_control &&\n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        temp_adjusted,\n        temp_diff,\n        day_start,\n        night_start,\n        is_day_schedule,\n        is_day,\n        hours_to_cooldown,\n        hours_to_heatup\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -10419,7 +11109,8 @@
         "y": 180,
         "wires": [
             [
-                "e8616b7.2c9cb98"
+                "e8616b7.2c9cb98",
+                "becea10d.07ef3"
             ]
         ]
     },
@@ -10868,7 +11559,7 @@
         "type": "function",
         "z": "96cf0f5b.b0f5e",
         "name": "Should run hvac (downstairs)?",
-        "func": "const payload = msg.payload;\nconst downstairs = payload.downstairs;\n\nconst temp = downstairs.temp;\nconst time = downstairs.time;\nconst state = downstairs.state;\n\nconst tv_history = msg.tv_history;\nconst tv = state.tv;\nconst hvac_running = state.hvac !== 'idle';\nconst heat = state.heat;\n\nconst now = new Date();\n\nconst tv_last_changed = new Date(tv.last_changed);\n\nconst dinner_time_start = timeStringToDate(time.meal_start);\nconst dinner_time_end = new Date(dinner_time_start);\ndinner_time_end.setHours(dinner_time_end.getHours() + 2);\n\nconst tv_on = tv_history.filter((x) => {\n    const last_changed = new Date(x.last_changed);\n    return x.state === 'on' &&\n        last_changed >= dinner_time_start &&\n        last_changed <= dinner_time_end;\n});\nconst on_more_than_once = tv_on.length > 1;\n\nlet dinner_time_after = new Date(tv_last_changed);\nif (tv_last_changed < dinner_time_start) {\n     dinner_time_after = new Date(dinner_time_start);\n}\n\ndinner_time_after.setMinutes(dinner_time_after.getMinutes() + 15);\n\nconst dinner_time = tv.state === 'on' && \n    !on_more_than_once &&\n    state.light === 'off' &&\n    now >= dinner_time_start && \n    now <= dinner_time_after;\n\nlet temp_target = heat ? temp.night : temp.day;\nconst temp_diff_inside = Math.abs(temp.meal - temp.current);\n\nif (heat && dinner_time && temp_diff_inside > 2) {\n    temp_target = temp.meal;\n}\n\nlet temp_adjusted = temp_target;\n\nif (!dinner_time) {\n    temp_adjusted = temp_target + 1 * (heat ? 1 : -1);\n    let temp_adjusted_opposite_limit = temp_target + 0.5 * (heat ? -1 : 1);\n    \n    // if we already reach the target temp with adjustment (e.g 22 + 1.5)\n    // then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\n    if ((heat && temp.current > temp_adjusted_opposite_limit) || \n        (!heat && temp.current < temp_adjusted_opposite_limit)) {\n        temp_adjusted = temp_adjusted_opposite_limit;\n    }\n}\n\nconst should_run = !hvac_running &&\n    !state.manual_control &&\n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        on_more_than_once,\n        dinner_time,\n        temp_diff_inside,\n        temp_adjusted\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
+        "func": "const payload = msg.payload;\nconst downstairs = payload.downstairs;\n\nconst temp = downstairs.temp;\nconst time = downstairs.time;\nconst state = downstairs.state;\n\nconst tv_history = msg.tv_history;\nconst tv = state.tv;\nconst hvac_running = state.hvac !== 'idle';\nconst heat = state.heat;\n\nif(state.hvac_mode === \"off\") {\n    return {\n        payload: {\n            should_run: false\n        }\n    }\n}\n\nconst now = new Date();\n\nconst tv_last_changed = new Date(tv.last_changed);\n\nconst dinner_time_start = timeStringToDate(time.meal_start);\nconst dinner_time_end = new Date(dinner_time_start);\ndinner_time_end.setHours(dinner_time_end.getHours() + 2);\n\nconst tv_on = tv_history.filter((x) => {\n    const last_changed = new Date(x.last_changed);\n    return x.state === 'on' &&\n        last_changed >= dinner_time_start &&\n        last_changed <= dinner_time_end;\n});\nconst on_more_than_once = tv_on.length > 1;\n\nlet dinner_time_after = new Date(tv_last_changed);\nif (tv_last_changed < dinner_time_start) {\n     dinner_time_after = new Date(dinner_time_start);\n}\n\ndinner_time_after.setMinutes(dinner_time_after.getMinutes() + 15);\n\nconst dinner_time = tv.state === 'on' && \n    !on_more_than_once &&\n    state.light === 'off' &&\n    now >= dinner_time_start && \n    now <= dinner_time_after;\n\nlet temp_target = heat ? temp.night : temp.day;\nconst temp_diff_inside = heat ? Math.abs(temp.meal - temp.current) : 0;\n\nif (heat && dinner_time && temp_diff_inside > 2) {\n    temp_target = temp.meal;\n}\n\nlet temp_adjusted = temp_target;\n\nif (!dinner_time) {\n    temp_adjusted = temp_target + 1 * (heat ? 1 : -1);\n    let temp_adjusted_opposite_limit = temp_target + 0.5 * (heat ? -1 : 1);\n    \n    // if we already reach the target temp with adjustment (e.g 22 + 1.5)\n    // then set it back to the original target temp with 0.5 adjustment (e.g 22 - 0.5)\n    if ((heat && temp.current > temp_adjusted_opposite_limit) || \n        (!heat && temp.current < temp_adjusted_opposite_limit)) {\n        temp_adjusted = temp_adjusted_opposite_limit;\n    }\n}\n\nconst should_run = !hvac_running &&\n    !state.manual_control &&\n    temp_adjusted != temp.target;\n\nreturn {\n    payload: {\n        should_run,\n        on_more_than_once,\n        dinner_time,\n        temp_diff_inside,\n        temp_adjusted\n    }\n};\n\nfunction timeStringToDate(time_string) {\n    const date = new Date();\n    const split = time_string.split(':');\n    date.setHours(split[0]);\n    date.setMinutes(split[1]);\n    return date;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -10879,7 +11570,7 @@
         "wires": [
             [
                 "dfe98ce7.13a84",
-                "becea10d.07ef3"
+                "8d51204b196bd3cb"
             ]
         ]
     },
@@ -10941,7 +11632,7 @@
         "entityid": "media_player.living_room_tv",
         "entityidtype": "is",
         "useRelativeTime": true,
-        "relativeTime": "3h",
+        "relativeTime": "5h",
         "flatten": true,
         "output_type": "array",
         "output_location_type": "msg",
@@ -10953,5 +11644,22 @@
                 "23e45788.0e7a38"
             ]
         ]
+    },
+    {
+        "id": "8d51204b196bd3cb",
+        "type": "debug",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 320,
+        "wires": []
     }
 ]
