@@ -7061,6 +7061,11 @@
         "for": "0",
         "forType": "num",
         "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
         "outputProperties": [
             {
                 "property": "payload",
@@ -7658,7 +7663,7 @@
                 "type": "json"
             }
         ],
-        "x": 500,
+        "x": 700,
         "y": 980,
         "wires": [
             [],
@@ -7684,7 +7689,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 300,
+        "x": 500,
         "y": 980,
         "wires": [
             [
@@ -7988,8 +7993,8 @@
         "y": 980,
         "wires": [
             [
-                "35ff688c.a37368",
-                "d84e8051.7cbaf"
+                "d84e8051.7cbaf",
+                "60e0d70b857896c9"
             ],
             []
         ]
@@ -8480,8 +8485,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 310,
-        "y": 940,
+        "x": 330,
+        "y": 920,
         "wires": [
             [
                 "a1c016c8.f65298"
@@ -8577,6 +8582,46 @@
             [
                 "e7e04f69.8c482"
             ]
+        ]
+    },
+    {
+        "id": "60e0d70b857896c9",
+        "type": "api-current-state",
+        "z": "7593ec4d.460434",
+        "name": "Garage door open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "open",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "cover.garage_door",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "x": 310,
+        "y": 980,
+        "wires": [
+            [
+                "35ff688c.a37368"
+            ],
+            []
         ]
     },
     {
@@ -9452,7 +9497,7 @@
         "y": 40,
         "wires": [
             [
-                "902adcf9.86dc8"
+                "b0aaad378d4adab9"
             ]
         ]
     },
@@ -9475,12 +9520,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 360,
+        "x": 320,
         "y": 100,
         "wires": [
             [
-                "71c592ae.961fec",
-                "f459300d.4e442"
+                "71c592ae.961fec"
             ]
         ]
     },
@@ -9501,12 +9545,10 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 540,
+        "x": 720,
         "y": 40,
         "wires": [
-            [
-                "f459300d.4e442"
-            ]
+            []
         ]
     },
     {
@@ -9529,7 +9571,7 @@
         "to": "",
         "reg": false,
         "x": 540,
-        "y": 640,
+        "y": 740,
         "wires": [
             [
                 "100b4e2c.58c2e2"
@@ -9542,7 +9584,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 720,
-        "y": 640,
+        "y": 740,
         "wires": [
             [],
             []
@@ -9604,7 +9646,7 @@
             }
         ],
         "x": 120,
-        "y": 300,
+        "y": 400,
         "wires": [
             [
                 "a7eb486.e213cb8"
@@ -9634,7 +9676,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 300,
+        "y": 400,
         "wires": [
             [
                 "d460290d.65e668"
@@ -9647,7 +9689,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "x": 540,
-        "y": 300,
+        "y": 400,
         "wires": [
             [],
             []
@@ -9709,7 +9751,7 @@
             }
         ],
         "x": 130,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "30fe3544.b54d9a"
@@ -9739,7 +9781,7 @@
         "to": "",
         "reg": false,
         "x": 360,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "5c02b253.c7970c"
@@ -9753,7 +9795,7 @@
         "name": "",
         "env": [],
         "x": 540,
-        "y": 400,
+        "y": 500,
         "wires": [
             [],
             []
@@ -9800,7 +9842,7 @@
             }
         ],
         "x": 110,
-        "y": 520,
+        "y": 620,
         "wires": [
             [
                 "5053b69a.47e1d8"
@@ -9825,7 +9867,7 @@
         "repair": false,
         "outputs": 1,
         "x": 320,
-        "y": 520,
+        "y": 620,
         "wires": [
             [
                 "95288f0c.371ae",
@@ -9852,7 +9894,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 570,
-        "y": 520,
+        "y": 620,
         "wires": [
             []
         ]
@@ -9869,7 +9911,7 @@
         "finalize": "",
         "libs": [],
         "x": 310,
-        "y": 640,
+        "y": 740,
         "wires": [
             [
                 "9595f732.2197b8"
@@ -9894,100 +9936,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 580,
-        "y": 580,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "755eff5c.efd3c",
-        "type": "api-current-state",
-        "z": "f71ac145.59035",
-        "name": "Still unlocked",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "outputs": 2,
-        "halt_if": "unlocked",
-        "halt_if_type": "str",
-        "halt_if_compare": "is",
-        "entity_id": "lock.back_door",
-        "state_type": "str",
-        "blockInputOverrides": false,
-        "outputProperties": [
-            {
-                "property": "payload",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entityState"
-            },
-            {
-                "property": "data",
-                "propertyType": "msg",
-                "value": "",
-                "valueType": "entity"
-            }
-        ],
-        "for": 0,
-        "forType": "num",
-        "forUnits": "minutes",
-        "override_topic": false,
-        "state_location": "payload",
-        "override_payload": "msg",
-        "entity_location": "data",
-        "override_data": "msg",
-        "x": 750,
-        "y": 40,
-        "wires": [
-            [
-                "6ca3c5db.dbf09c"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "f459300d.4e442",
-        "type": "trigger",
-        "z": "f71ac145.59035",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "nul",
-        "op2type": "payl",
-        "duration": "5",
-        "extend": true,
-        "overrideDelay": false,
-        "units": "s",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 580,
-        "y": 100,
-        "wires": [
-            [
-                "755eff5c.efd3c"
-            ]
-        ]
-    },
-    {
-        "id": "6ca3c5db.dbf09c",
-        "type": "api-call-service",
-        "z": "f71ac145.59035",
-        "name": "Lock back door",
-        "server": "3efaa203.1c443e",
-        "version": 3,
-        "debugenabled": false,
-        "service_domain": "lock",
-        "service": "lock",
-        "entityId": "lock.back_door",
-        "data": "{ \"entity_id\": \"lock.back_door\" }",
-        "dataType": "json",
-        "mergecontext": "",
-        "mustacheAltTags": false,
-        "outputProperties": [],
-        "queue": "none",
-        "x": 800,
-        "y": 100,
+        "y": 680,
         "wires": [
             []
         ]
@@ -10028,7 +9977,7 @@
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
-        "x": 330,
+        "x": 130,
         "y": 160,
         "wires": [
             [
@@ -10056,7 +10005,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 320,
         "y": 160,
         "wires": [
             [
@@ -10070,7 +10019,7 @@
         "z": "f71ac145.59035",
         "name": "",
         "env": [],
-        "x": 680,
+        "x": 540,
         "y": 160,
         "wires": [
             [],
@@ -10096,11 +10045,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
-        "y": 220,
+        "x": 370,
+        "y": 320,
         "wires": [
             [
-                "529a9fe1.b4e77"
+                "675009a2de6e817b"
             ]
         ]
     },
@@ -10160,7 +10109,7 @@
             }
         ],
         "x": 100,
-        "y": 220,
+        "y": 320,
         "wires": [
             [
                 "7cd25e2631de95ca"
@@ -10188,7 +10137,7 @@
         "to": "",
         "reg": false,
         "x": 365,
-        "y": 347,
+        "y": 447,
         "wires": [
             [
                 "d460290d.65e668"
@@ -10215,7 +10164,7 @@
         "to": "",
         "reg": false,
         "x": 370,
-        "y": 460,
+        "y": 560,
         "wires": [
             [
                 "5c02b253.c7970c"
@@ -10278,7 +10227,7 @@
             }
         ],
         "x": 320,
-        "y": 720,
+        "y": 820,
         "wires": [
             [
                 "a39b071c904525f6"
@@ -10306,8 +10255,210 @@
         "to": "",
         "reg": false,
         "x": 550,
-        "y": 720,
+        "y": 820,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "675009a2de6e817b",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "env": [],
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b0aaad378d4adab9",
+        "type": "api-current-state",
+        "z": "f71ac145.59035",
+        "name": "Door closed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "binary_sensor.back_door_sensor",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 510,
+        "y": 40,
+        "wires": [
+            [
+                "902adcf9.86dc8"
+            ],
+            [
+                "ac2389b6f1c04ed1"
+            ]
+        ]
+    },
+    {
+        "id": "ac2389b6f1c04ed1",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notify_whom\":\"all_phone_app\",\"notification\":{\"title\":\"Back door is open\",\"message\":\"⚠️ Back door is open!\",\"data\":{\"tag\":\"sensor.back_door.open\",\"priority\":\"high\",\"ttl\":0}},\"log\":{\"name\":\"Back door sensor (Node Red)\",\"entity_id\":\"binary_sensor.back_door_sensor\",\"message\":\"notified open\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 100,
+        "wires": [
+            [
+                "582043461767f7f2"
+            ]
+        ]
+    },
+    {
+        "id": "582043461767f7f2",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "env": [],
+        "x": 740,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4caea3562cd53d1e",
+        "type": "server-state-changed",
+        "z": "f71ac145.59035",
+        "name": "Back Door closed",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.back_door_sensor",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "0a6ab15402c02b58"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0a6ab15402c02b58",
+        "type": "change",
+        "z": "f71ac145.59035",
+        "name": "clear_notification",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notification\":{\"title\":\"clear_notification\",\"message\":\"clear_notification\",\"data\":{\"tag\":\"sensor.back_door.open\"}},\"log\":{\"name\":\"Back door sensor (Node Red) clear_notification\",\"entity_id\":\"sensor.back_door_sensor\",\"message\":\"notified clear_notification\",\"domain\":\"notify\"}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f7613ffdf4d4658d",
+        "type": "subflow:670bc302.cb732c",
+        "z": "f71ac145.59035",
+        "name": "",
+        "env": [],
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [],
             []
         ]
     },
