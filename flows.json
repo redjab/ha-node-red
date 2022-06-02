@@ -56,14 +56,6 @@
         "info": ""
     },
     {
-        "id": "69a5cdf516e5d205",
-        "type": "tab",
-        "label": "Water leak",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "670bc302.cb732c",
         "type": "subflow",
         "name": "Notify HA apps",
@@ -1967,7 +1959,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 2440,
+        "y": 1980,
         "wires": [
             [
                 "c53610bc.f065d"
@@ -1992,7 +1984,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 720,
-        "y": 2440,
+        "y": 1980,
         "wires": [
             []
         ]
@@ -2004,7 +1996,7 @@
         "name": "Humidifier",
         "info": "",
         "x": 100,
-        "y": 2400,
+        "y": 1940,
         "wires": []
     },
     {
@@ -2029,7 +2021,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 140,
-        "y": 2500,
+        "y": 2040,
         "wires": [
             [
                 "c53610bc.f065d"
@@ -2058,7 +2050,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 130,
-        "y": 2560,
+        "y": 2100,
         "wires": [
             [
                 "39525052.942af"
@@ -2083,7 +2075,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 360,
-        "y": 2560,
+        "y": 2100,
         "wires": [
             []
         ]
@@ -2110,7 +2102,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 130,
-        "y": 2620,
+        "y": 2160,
         "wires": [
             [
                 "39525052.942af"
@@ -2257,7 +2249,7 @@
         "state_type": "str",
         "enableInput": true,
         "x": 90,
-        "y": 2740,
+        "y": 2280,
         "wires": [
             [
                 "51eb4fd.f6670b"
@@ -2283,7 +2275,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 290,
-        "y": 2740,
+        "y": 2280,
         "wires": [
             [
                 "2dc9c39.e172d3c"
@@ -2310,7 +2302,7 @@
         "to": "",
         "reg": false,
         "x": 250,
-        "y": 2800,
+        "y": 2340,
         "wires": [
             [
                 "51eb4fd.f6670b"
@@ -2335,7 +2327,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 470,
-        "y": 2740,
+        "y": 2280,
         "wires": [
             []
         ]
@@ -2347,7 +2339,7 @@
         "name": "Winix turn off turbo after 1 hour",
         "info": "",
         "x": 150,
-        "y": 2700,
+        "y": 2240,
         "wires": []
     },
     {
@@ -2389,7 +2381,7 @@
         "state_type": "str",
         "enableInput": true,
         "x": 100,
-        "y": 2800,
+        "y": 2340,
         "wires": [
             [
                 "df0907e7.efa2c8"
@@ -2449,7 +2441,7 @@
             }
         ],
         "x": 130,
-        "y": 2920,
+        "y": 2460,
         "wires": [
             [
                 "92c686bc.e47f38"
@@ -2479,7 +2471,7 @@
         "to": "",
         "reg": false,
         "x": 190,
-        "y": 2980,
+        "y": 2520,
         "wires": [
             [
                 "92c686bc.e47f38"
@@ -2504,7 +2496,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 390,
-        "y": 2920,
+        "y": 2460,
         "wires": [
             [
                 "240f1e6a.5425f2"
@@ -2529,7 +2521,7 @@
         "outputProperties": [],
         "queue": "none",
         "x": 570,
-        "y": 2920,
+        "y": 2460,
         "wires": [
             []
         ]
@@ -2541,7 +2533,7 @@
         "name": "Modem turn on after 3 mins off",
         "info": "",
         "x": 140,
-        "y": 2880,
+        "y": 2420,
         "wires": []
     },
     {
@@ -2699,7 +2691,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 360,
-        "y": 2440,
+        "y": 1980,
         "wires": [
             [
                 "d17130ef.a4efd"
@@ -3138,7 +3130,7 @@
         "entity_location": "data",
         "override_data": "msg",
         "x": 540,
-        "y": 2440,
+        "y": 1980,
         "wires": [
             [
                 "36cbf9fa.832436"
@@ -3442,7 +3434,7 @@
             }
         ],
         "x": 80,
-        "y": 3100,
+        "y": 2640,
         "wires": [
             [
                 "fe505c232dac2acc",
@@ -3463,7 +3455,7 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 3100,
+        "y": 2640,
         "wires": [
             [
                 "327398d29a86664e"
@@ -3482,7 +3474,7 @@
         "stream": false,
         "addname": "",
         "x": 230,
-        "y": 3100,
+        "y": 2640,
         "wires": [
             [
                 "5351078cd69f6a5b"
@@ -3495,7 +3487,7 @@
         "z": "d9fe96b5.8701c8",
         "name": "",
         "x": 560,
-        "y": 3100,
+        "y": 2640,
         "wires": [
             [],
             []
@@ -3505,7 +3497,7 @@
         "id": "4fc2d24cd846ec85",
         "type": "api-call-service",
         "z": "d9fe96b5.8701c8",
-        "name": "",
+        "name": "Announce leak",
         "server": "3efaa203.1c443e",
         "version": 3,
         "debugenabled": false,
@@ -3518,8 +3510,8 @@
         "mustacheAltTags": false,
         "outputProperties": [],
         "queue": "none",
-        "x": 300,
-        "y": 3180,
+        "x": 260,
+        "y": 2720,
         "wires": [
             []
         ]
@@ -3531,7 +3523,7 @@
         "name": "Water leak detection",
         "info": "",
         "x": 110,
-        "y": 3060,
+        "y": 2600,
         "wires": []
     },
     {
@@ -11967,6 +11959,472 @@
         "statusType": "auto",
         "x": 510,
         "y": 320,
+        "wires": []
+    },
+    {
+        "id": "45a40847d7d5751e",
+        "type": "comment",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Turn off HVAC when window open",
+        "info": "",
+        "x": 160,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "f667120e5818030d",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Window open",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.window_sensor",
+        "entityidfiltertype": "substring",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 90,
+        "y": 1460,
+        "wires": [
+            [
+                "3f1655f80ca08c28"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "af94c44d8e41cb37",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set last HVAC state",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "input_text",
+        "service": "set_value",
+        "entityId": "input_text.last_hvac_mode",
+        "data": "{\"value\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 490,
+        "y": 1460,
+        "wires": [
+            [
+                "51d7d5b36fab5ddc"
+            ]
+        ]
+    },
+    {
+        "id": "3f1655f80ca08c28",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Thermorstat state",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "climate.upstairs_thermostat",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 290,
+        "y": 1460,
+        "wires": [
+            [
+                "af94c44d8e41cb37"
+            ]
+        ]
+    },
+    {
+        "id": "51d7d5b36fab5ddc",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Turn off HVAC",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_hvac_mode",
+        "entityId": "climate.upstairs_thermostat, climate.downstairs_thermostat",
+        "data": "{\"hvac_mode\":\"off\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 700,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a70280a6835501d",
+        "type": "api-call-service",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Set HVAC back",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_hvac_mode",
+        "entityId": "climate.upstairs_thermostat, climate.downstairs_thermostat",
+        "data": "{\"hvac_mode\":\"{{ payload }}\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 480,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e2629d5e3f08c86e",
+        "type": "api-current-state",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Last HVAC state",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "input_text.last_hvac_mode",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 280,
+        "y": 1580,
+        "wires": [
+            [
+                "4a70280a6835501d"
+            ]
+        ]
+    },
+    {
+        "id": "545962cbb34d7186",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Window open >45 mins",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.window_sensor",
+        "entityidfiltertype": "substring",
+        "outputinitially": true,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 120,
+        "y": 1700,
+        "wires": [
+            [
+                "3cc1b102e9ef823e"
+            ],
+            [
+                "d5dca87efeacbcb2"
+            ]
+        ]
+    },
+    {
+        "id": "f49ed754787c53cf",
+        "type": "comment",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Warning window",
+        "info": "",
+        "x": 100,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "3cc1b102e9ef823e",
+        "type": "trigger",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "45",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "topic",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 1700,
+        "wires": [
+            [
+                "1451ca6d3cdc3f75"
+            ]
+        ]
+    },
+    {
+        "id": "d5dca87efeacbcb2",
+        "type": "change",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 140,
+        "y": 1760,
+        "wires": [
+            [
+                "3cc1b102e9ef823e"
+            ]
+        ]
+    },
+    {
+        "id": "1451ca6d3cdc3f75",
+        "type": "function",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "func": "const data = msg.data;\nconst attrs = data.new_state.attributes;\nreturn {\n    \"payload\": {\n    \"notification\": {\n        \"title\": \"⚠️ 🪟 Window is open\",\n        \"message\": `${attrs.friendly_name} is open for >45 minutes`,\n        \"data\": {\n            \"priority\": \"high\",\n            \"ttl\": 0,\n            \"tag\": `window.open.${data.entity_id}`,\n        }\n    },\n    \"log\": {\n        \"name\": `${attrs.friendly_name}`,\n        \"entity_id\": `${data.entity_id}`,\n        \"message\": \"notified open\",\n        \"domain\": \"notify\"\n    },\n    \"notify_whom\": 'm_only'\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 1700,
+        "wires": [
+            [
+                "1b046688352db6d4"
+            ]
+        ]
+    },
+    {
+        "id": "1b046688352db6d4",
+        "type": "subflow:670bc302.cb732c",
+        "z": "96cf0f5b.b0f5e",
+        "name": "",
+        "x": 720,
+        "y": 1700,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b80b9e64999040ec",
+        "type": "server-state-changed",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Window close",
+        "server": "3efaa203.1c443e",
+        "version": 3,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.window_sensor",
+        "entityidfiltertype": "substring",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": 0,
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "eventData"
+            },
+            {
+                "property": "topic",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "x": 90,
+        "y": 1580,
+        "wires": [
+            [],
+            [
+                "e2629d5e3f08c86e"
+            ]
+        ]
+    },
+    {
+        "id": "e0b4b357dab7a48c",
+        "type": "comment",
+        "z": "96cf0f5b.b0f5e",
+        "name": "Turn HVAC on when window close",
+        "info": "",
+        "x": 160,
+        "y": 1540,
         "wires": []
     }
 ]
