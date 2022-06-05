@@ -3546,7 +3546,7 @@
         ],
         "entityidfilter": "switch.guest_bathroom_fan",
         "entityidfiltertype": "exact",
-        "outputinitially": false,
+        "outputinitially": true,
         "state_type": "str",
         "haltifstate": "on",
         "halt_if_type": "str",
